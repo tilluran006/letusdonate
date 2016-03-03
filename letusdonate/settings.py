@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'donate',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -77,7 +78,7 @@ WSGI_APPLICATION = 'letusdonate.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'donate',
+        'NAME': 'donation',
         'USER': 'root',
         'PASSWORD': '',
     }
