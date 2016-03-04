@@ -1,0 +1,18 @@
+body{
+	background-image: url(../img/front.jpg),url(../img/back2.jpg);
+	background-repeat: no-repeat;
+}
+#about{
+
+	padding-top: 40px;
+}
+#about-head{
+	color:#58ACFA;
+	font-size: 32px;
+}
+#about-content{
+	font-size: 20px;
+	color: #424242;
+	text-align: justify;
+	text-justify:inter-word;
+}
