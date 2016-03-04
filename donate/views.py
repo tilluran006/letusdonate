@@ -24,10 +24,13 @@ def signin(request):
         # elif isinstance(user, NGO):
         #     pass
 
-def signup(request):
+def register(request):
     pass
 
-def home(request, dummy):
+def signup(request):
+    return render(request, 'register.html')
+
+def home(request):
     return render(request, 'main.html')
 
 def login(request):

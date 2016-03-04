@@ -19,8 +19,11 @@ from donate.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^signin', signin, name="signin"),
+    url(r'^register', register, name="register"),
+
+    url(r'^$', home, name="home"),
     url(r'^login', login, name="login"),
     url(r'^signup$', signup, name="signup"),
-    url(r'^(home)?$', home, name="home"),
-    url(r'^signin', signin, name="signin"),
 ]
+
