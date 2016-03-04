@@ -6,19 +6,16 @@ from django.db import models
 # Create your models here.
 
 class UserClass(User):
-    ACCOUNT_TYPES = (('donor', 'donor'), ('admin', 'admin'), ('ngo', 'NGO'), ('vol', 'volunteer'))
+    # ACCOUNT_TYPES = (('donor', 'donor'), ('admin', 'admin'), ('ngo', 'NGO'), ('vol', 'volunteer'))
     dob = models.DateField(auto_now=True, verbose_name="Date of Birth")
     address = models.CharField(max_length=100)
     pincode = models.IntegerField()
     phone = models.IntegerField()
-    account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPES)
+    # account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPES)
 
 
 class Donor(UserClass):
     collection_time = models.CharField(max_length=20)
-
-    def create_post(self):
-        pass
 
 
 class Admin(UserClass):
