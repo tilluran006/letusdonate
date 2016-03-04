@@ -5,7 +5,8 @@ from django.db import models
 
 # Create your models here.
 
-class UserClass(User):
+class UserClass(models.Model):
+    user = models.OneToOneField(User, related_name='role')
     # ACCOUNT_TYPES = (('donor', 'donor'), ('admin', 'admin'), ('ngo', 'NGO'), ('vol', 'volunteer'))
     dob = models.DateField(auto_now=True, verbose_name="Date of Birth")
     address = models.CharField(max_length=100)
