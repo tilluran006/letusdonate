@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Create an Event</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row" style="background-image: url('front.jpg'); padding: 20px">
+			<div class="col-sm-8">
+				<center><img src="Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></center>
+			</div>
+  			<div class="col-sm-4">
+  				<center><h1><p>
+      			<a href="about.html"><button type="button" class="btn btn-primary btn-lg">About</button></a>
+  				<a href="setting.html"><button type="button" class="btn btn-primary btn-lg">Setting</button></a>   
+  				<a href="test.html"><button type="button" class="btn btn-primary btn-lg">Logout</button></a> 
+  				</p></h1></center>
+  			</div>
+		</div>
+
+		<div class="row" style="padding-top: 50px">
+			<div class="row">
+				<div class="col-sm-offset-3	 col-sm-6">	
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<strong>NGO Registration</strong>
+						</div>
+						<div class="panel-body">
+							<form class="form-horizontal" role="form">
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label">Name</label>
+									<div class="col-sm-9">
+										<input input="text" class="form-control" id="inputEmail3" rows=5 placeholder="Name" required="">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label">Description</label>
+									<div class="col-sm-9">
+										<textarea class="form-control" row="5" placeholder="Description" required=""></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label">Phone</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="inputEmail3" placeholder="Phone" required="" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="inputEmail3" class="col-sm-3 control-label">Email</label>
+									<div class="col-sm-9">
+										<input type="email" class="form-control" id="inputEmail3" placeholder="Email" required="" />
+									</div>
+								</div>
+								<div class="form-group">
+          							<label for="inputEmail3" class="col-sm-3 control-label">Select an image</label>
+            						<div class="col-sm-9">
+                						<input type="file" name="files[]" id="js-upload-files" multiple>
+              						</div>	
+              					</div>
+								<div class="form-group-last">
+									<div class="col-sm-offset-5 col-sm-9">
+										<a href=""><button type="submit" class="btn btn-success btn-sm" id="imagesubmit">Confirm</button></a>
+										<button type="reset" class="btn btn-default btn-sm">Reset</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>
+		<script src="ngoregister.js"></script>
+</body>
+
+</html>
