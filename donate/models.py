@@ -5,30 +5,41 @@ from django.db import models
 
 # Create your models here.
 
-class UserClass(models.Model):
-    user = models.OneToOneField(User, related_name='role')
+# class UserClass(models.Model):
+
     # ACCOUNT_TYPES = (('donor', 'donor'), ('admin', 'admin'), ('ngo', 'NGO'), ('vol', 'volunteer'))
-    dob = models.DateField(auto_now=True, verbose_name="Date of Birth")
-    address = models.CharField(max_length=100)
-    pincode = models.IntegerField()
-    phone = models.IntegerField()
+
     # account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPES)
 
 
-class Donor(UserClass):
+class Donor(models.Model):
+    user = models.OneToOneField(User, related_name='donor')
+    address = models.CharField(max_length=100)
+    pincode = models.IntegerField()
+    phone = models.BigIntegerField()
+
     collection_time = models.CharField(max_length=20)
 
 
-class Admin(UserClass):
-    pass
+class Admin(models.Model):
+    user = models.OneToOneField(User, related_name='admin')
+    address = models.CharField(max_length=100)
+    pincode = models.IntegerField()
+    phone = models.BigIntegerField()
 
 
-class Volunteer(UserClass):
-    pass
+class Volunteer(models.Model):
+    user = models.OneToOneField(User, related_name='volunteer')
+    address = models.CharField(max_length=100)
+    pincode = models.IntegerField()
+    phone = models.BigIntegerField()
 
 
-class NGO(UserClass):
-    pass
+class NGO(models.Model):
+    user = models.OneToOneField(User, related_name='ngo')
+    address = models.CharField(max_length=100)
+    pincode = models.IntegerField()
+    phone = models.BigIntegerField()
 
 
 class Event(models.Model):

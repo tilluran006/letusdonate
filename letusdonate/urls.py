@@ -20,10 +20,15 @@ from donate.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^signin', signin, name="signin"),
-    url(r'^register', register, name="register"),
+    url(r'^register$', register, name="register"),
+    url(r'^logout', log_out, name="logout"),
+    url(r'^contact', contact, name="contact"),  # Donor,volunteer contact: To be shown after signup
+    # url(r'^((donor)|(volunteer)|(ngo))/?$', dashboard, name="dashboard"),
+    url(r'^<user_type>/?$', dashboard, name="dashboard"),
 
-    url(r'^$', home, name="home"),
-    url(r'^login', login, name="login"),
+    url(r'^$', home, name="home"),  # Before logging in
+    url(r'^login', log_in, name="login"),
     url(r'^signup$', signup, name="signup"),
+    url(r'^<user_type>/settings$', settings, name="settings"),
 ]
 

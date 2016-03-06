@@ -62,5 +62,6 @@ target/
 .ipynb_checkpoints
 
 .idea/
-donate/migrations/
+migrations/
+tmp/
 
