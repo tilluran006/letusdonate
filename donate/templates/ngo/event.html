@@ -20,40 +20,41 @@
 						<strong>Create an Event	</strong>
 					</div>
 					<div class="panel-body">
-						<form class="form-horizontal" role="form">
+						<form class="form-horizontal" role="form" action="{% url 'create_event' %}" method="post">
+							{% csrf_token %}
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-3 control-label">Type of Event</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputEmail3" placeholder="Event Type" required="" />
+									<input type="text" class="form-control" id="inputEmail3" name="type" placeholder="Event Type" required="" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-3 control-label">Name of Event</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputEmail3" placeholder="Event Name" required="" />
+									<input type="text" class="form-control" id="inputEmail3" name="name" placeholder="Event Name" required="" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-3 control-label">Location of Event</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputEmail3" placeholder="Location" required="" />
+									<input type="text" class="form-control" id="inputEmail3" name="location" placeholder="Location" required="" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-3 control-label">Time</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputEmail3" placeholder="Time" required="" />
+									<input type="text" class="form-control" id="inputEmail3" name="type" placeholder="Time" required="" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-3 control-label">Description</label>
 								<div class="col-sm-9">
-									<textarea class="form-control" id="inputEmail3" rows="6" placeholder="Say something about the event" required=""></textarea>
+									<textarea class="form-control" id="inputEmail3" name="description" rows="6" placeholder="Say something about the event" required=""></textarea>
 								</div>
 							</div>
 							<div class="form-group-last">
 								<div class="col-sm-offset-3 col-sm-9">
-									<a href=""><button type="submit" class="btn btn-success btn-sm">Type of Event</button></a>
+									<a href=""><button type="submit" class="btn btn-success btn-sm">Submit</button></a>
 									<button type="reset" class="btn btn-default btn-sm">Reset</button>
 								</div>
 							</div>

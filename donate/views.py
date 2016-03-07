@@ -49,7 +49,7 @@ def register(request):
                 ngo.save()
                 #Return render(Next page)
         else:
-            return render(request, reverse(register), {"error_message": 'Username already taken'})
+            return render(request, reverse(signup), {"error_message": 'Username already taken'})
 
 
 def contact(request):
@@ -61,15 +61,25 @@ def contact(request):
             pass
 
 
-def dashboard(request, user_type):
+def dashboard(request):
     # If donor render donor/donor.html
     # else render volunteer/<>.html
     # else ngo/<>.html
     pass
 
+def create_ad(request):
+    #Check if donor
+    #Add to db
+    pass
+
+def create_event(request):
+    # Check if volunteer
+    # Add to db
+    pass
+
 def settings(request):
-    #if donor then display
-    return render(request, 'donor/settings.html')
+    # Update db based on user type
+    pass
 
 def log_out(request):
     #Code for logout
@@ -86,5 +96,5 @@ def home(request):
     return render(request, 'home.html')
 
 def log_in(request):
-    return render(request, 'login.html')
+    return render(request, 'login.html', {"error_message": ''})
 
