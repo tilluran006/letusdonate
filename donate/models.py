@@ -40,6 +40,8 @@ class NGO(models.Model):
     address = models.CharField(max_length=100)
     pincode = models.IntegerField()
     phone = models.BigIntegerField()
+    description = models.CharField(max_length=200)
+    image = models.ImageField()
 
 
 class Event(models.Model):
@@ -57,5 +59,5 @@ class Donation(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, db_constraint=False)
 
     location = models.CharField(max_length=20)
-    status = models.CharField(max_length=10, choices=STATUS)
+    status = models.CharField(max_length=10, choices=STATUS, default='donor')
 
