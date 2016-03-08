@@ -1,4 +1,4 @@
 body{
-	background-image: url(image/front.jpg),url(image/back2.jpg);
+	background-image: url(../img/front.jpg),url(../img/back2.jpg);
 	background-repeat: no-repeat;
 }
