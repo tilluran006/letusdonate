@@ -18,17 +18,22 @@ from django.contrib import admin
 from donate.views import *
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^signin', signin, name="signin"),
+    #Same for all@
+    url(r'^admin/$', admin.site.urls),
+    url(r'^signin$', signin, name="signin"),
     url(r'^register$', register, name="register"),
-    url(r'^logout', log_out, name="logout"),
-    url(r'^contact', contact, name="contact"),  # Donor,volunteer contact: To be shown after signup
-    # url(r'^((donor)|(volunteer)|(ngo))/?$', dashboard, name="dashboard"),
-    url(r'^<user_type>/?$', dashboard, name="dashboard"),
-
+    url(r'^logout$', log_out, name="logout"),
     url(r'^$', home, name="home"),  # Before logging in
-    url(r'^login', log_in, name="login"),
+    url(r'^login$', log_in, name="login"),
     url(r'^signup$', signup, name="signup"),
-    url(r'^<user_type>/settings$', settings, name="settings"),
+
+    #user specific
+    url(r'^create_event$', create_event, name="create_event"),
+    url(r'^create_ad$', create_ad, name="create_ad"),
+
+    #different view for each user
+    url(r'^contact$', contact, name="contact"),  # Donor,volunteer contact: To be shown after signup
+    url(r'^dashboard/?$', dashboard, name="dashboard"),
+    url(r'^settings$', settings, name="settings"),
 ]
 
