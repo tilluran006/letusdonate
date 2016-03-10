@@ -57,6 +57,7 @@ class Donation(models.Model):
     STATUS = (('donor', 'With Donor'), ('vol', 'With volunteer'), ('ngo', 'With NGO'))
     donor = models.ForeignKey(Donor, on_delete=models.CASCADE, db_constraint=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE, db_constraint=False)
+    quantity = models.IntegerField()
 
     location = models.CharField(max_length=20)
     status = models.CharField(max_length=10, choices=STATUS, default='donor')

@@ -77,8 +77,8 @@ def dashboard(request):
 def create_ad(request):
     user = request.user
     if user.is_authenticated() and user.donor:
-        item = Item.
-        donation = Donation(donor=user.donor, )
+        ###item = Item
+        ###donation = Donation(donor=user.donor, )
         return render(request, reverse('dashboard'))
 
 def create_event(request):

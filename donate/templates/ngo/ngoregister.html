@@ -19,7 +19,7 @@
 			</div>
   			<div class="col-sm-4">
   				<center><h1><p>
-      			<a href="../about.html"><button type="button" class="btn btn-primary btn-lg">About</button></a>
+      		
   				<a href="settings.html"><button type="button" class="btn btn-primary btn-lg">Setting</button></a>
   				<a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg">Logout</button></a>
   				</p></h1></center>
@@ -34,7 +34,8 @@
 							<strong>NGO Registration</strong>
 						</div>
 						<div class="panel-body">
-							<form class="form-horizontal" role="form">
+							<form class="form-horizontal" role="form" action="{% url 'contact' %}" method="post">
+								{% csrf_token %}
 								<div class="form-group">
 									<label for="inputEmail3" class="col-sm-3 control-label">Name</label>
 									<div class="col-sm-9">
@@ -53,12 +54,7 @@
 										<input type="text" class="form-control" id="inputEmail3" name="phone" placeholder="Phone" required="" />
 									</div>
 								</div>
-								<!--<div class="form-group">-->
-									<!--<label for="inputEmail3" class="col-sm-3 control-label">Email</label>-->
-									<!--<div class="col-sm-9">-->
-										<!--<input type="email" class="form-control" id="inputEmail3" name="email" placeholder="Email" required="" />-->
-									<!--</div>-->
-								<!--</div>-->
+
 								<div class="form-group">
           							<label for="inputEmail3" class="col-sm-3 control-label">Select an image</label>
             						<div class="col-sm-9">
