@@ -24,8 +24,6 @@ def signin(request):
 
 def register(request):
     if request.method == 'POST':
-        context = {}
-        context.update(csrf(request))
         user = User.objects.create_user(
             username=request.POST['username'],
             email=request.POST['email'],
@@ -36,16 +34,18 @@ def register(request):
         if type == 'donor':
             donor = Donor(user=user)
             donor.save()
-            context['user_name'] = request.POST['username']
+            context = {'user_name': request.POST['username']}
             context.update(csrf(request))
             return render(request, 'donor/contact.html', context)
         elif type == 'vol':
             volunteer = Volunteer(user=user)
             volunteer.save()
+            context = {}
             return render(request, '', context) ### Add volunteer page
         else:
             ngo = NGO(user=user)
             ngo.save()
+            context = {}
             return render(request, 'ngo/ngoregister.html', context)
         # else:
         #     return render(request, reverse(signup), {"error_message": 'Username already taken'})
@@ -58,6 +58,7 @@ def contact(request):
         donor.address = request.POST['address']
         donor.pincode = request.POST['pin']
         donor.phone = request.POST['phone']
+        donor.save()
     elif request.user.volunteer:
         pass
     elif user.ngo:
@@ -66,7 +67,8 @@ def contact(request):
         ngo.description = request.POST['description']
         ngo.phone = request.POST['phone']
         ngo.pincode = request.POST['pin']
-
+        ngo.save()
+    user = authenticate(username=user)
     login(request, user)
     return render(request, reverse(dashboard))
 
