@@ -15,10 +15,10 @@ from django.db import models
 class Donor(models.Model):
     user = models.OneToOneField(User, related_name='donor')
     address = models.CharField(max_length=100)
-    pincode = models.IntegerField()
-    phone = models.BigIntegerField()
+    pincode = models.IntegerField(default=0)
+    phone = models.BigIntegerField(default=0)
 
-    collection_time = models.CharField(max_length=20)
+    collection_time = models.CharField(max_length=20) ##Not required currently
 
 
 class Admin(models.Model):
@@ -41,7 +41,7 @@ class NGO(models.Model):
     pincode = models.IntegerField()
     phone = models.BigIntegerField()
     description = models.CharField(max_length=200)
-    image = models.ImageField()
+    # image = models.ImageField()
 
 
 class Event(models.Model):
