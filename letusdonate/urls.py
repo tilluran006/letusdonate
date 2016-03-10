@@ -18,10 +18,10 @@ from django.contrib import admin
 from donate.views import *
 
 urlpatterns = [
-    #Same for all@
-    url(r'^admin/$', admin.site.urls),
+    #Same for all
+    url(r'^admin/', admin.site.urls),
     url(r'^signin$', signin, name="signin"),
-    url(r'^register$', register, name="register"),
+    url(r'^register', register, name="register"),
     url(r'^logout$', log_out, name="logout"),
     url(r'^$', home, name="home"),  # Before logging in
     url(r'^login$', log_in, name="login"),
