@@ -26,10 +26,10 @@
     <div class="col-sm-9">
       <div class="row" style="padding-top: 60px">
         <div class="col-sm-4 col-sm-offset-2" id="createad">
-            <a href="create_ad.html"><img src="../../static/img/create-ad.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+            <a href="{% url 'create_ad_view' %}"><img src="../../static/img/create-ad.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
         </div>
         <div class="col-sm-4">
-            <a href="joinas.html"><img src="../../static/img/joinas.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+            <a href="{% url 'join_as_vol' %}"><img src="../../static/img/joinas.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
         </div>
       </div>
       <div class="row" style="padding-top: 40px">
@@ -45,7 +45,7 @@
             <a href="itemdonation.html"><img src="../../static/img/itemdonation.png" class="img-circle" alt="Cinque Terre" width="156" height="156"> </a>
         </div>
         <div class="col-sm-4">
-            <a href="guidelines.html"><img src="../../static/img/guidelines.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+            <a href="{% url 'guidelines' %}"><img src="../../static/img/guidelines.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
         </div>
       </div>
     </div>
