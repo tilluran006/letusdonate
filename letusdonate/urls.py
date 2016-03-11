@@ -24,16 +24,21 @@ urlpatterns = [
     url(r'^register', register, name="register"),
     url(r'^logout$', log_out, name="logout"),
     url(r'^$', home, name="home"),  # Before logging in
-    url(r'^login$', log_in, name="login"),
     url(r'^signup$', signup, name="signup"),
+
+    #Dummy views
+    url(r'^login$', log_in, name="login"),
+    url(r'^create_ads', create_ad_view, name="create_ad_view"),
 
     #user specific
     url(r'^create_event$', create_event, name="create_event"),
     url(r'^create_ad$', create_ad, name="create_ad"),
+    url(r'^join_as_vol$', join_as_vol, name="join_as_vol"),
 
     #different view for each user
     url(r'^contact$', contact, name="contact"),  # Donor,volunteer contact: To be shown after signup
     url(r'^dashboard/?$', dashboard, name="dashboard"),
     url(r'^settings$', settings, name="settings"),
+    url(r'^guidelines$', guidelines, name="guidelines"),
 ]
 
