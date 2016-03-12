@@ -15,33 +15,33 @@ from django.db import models
 class Donor(models.Model):
     user = models.OneToOneField(User, related_name='donor')
     address = models.CharField(max_length=100)
-    pincode = models.IntegerField()
-    phone = models.BigIntegerField()
+    pincode = models.IntegerField(default=0)
+    phone = models.BigIntegerField(default=0)
 
-    collection_time = models.CharField(max_length=20)
+    collection_time = models.CharField(max_length=20) ##Not required currently
 
 
 class Admin(models.Model):
     user = models.OneToOneField(User, related_name='admin')
     address = models.CharField(max_length=100)
-    pincode = models.IntegerField()
-    phone = models.BigIntegerField()
+    pincode = models.IntegerField(default=0)
+    phone = models.BigIntegerField(default=0)
 
 
 class Volunteer(models.Model):
     user = models.OneToOneField(User, related_name='volunteer')
     address = models.CharField(max_length=100)
-    pincode = models.IntegerField()
-    phone = models.BigIntegerField()
+    pincode = models.IntegerField(default=0)
+    phone = models.BigIntegerField(default=0)
 
 
 class NGO(models.Model):
     user = models.OneToOneField(User, related_name='ngo')
     address = models.CharField(max_length=100)
-    pincode = models.IntegerField()
-    phone = models.BigIntegerField()
+    pincode = models.IntegerField(default=0)
+    phone = models.BigIntegerField(default=0)
     description = models.CharField(max_length=200)
-    image = models.ImageField()
+    # image = models.ImageField()
 
 
 class Event(models.Model):
@@ -57,6 +57,7 @@ class Donation(models.Model):
     STATUS = (('donor', 'With Donor'), ('vol', 'With volunteer'), ('ngo', 'With NGO'))
     donor = models.ForeignKey(Donor, on_delete=models.CASCADE, db_constraint=False)
     item = models.ForeignKey(Item, on_delete=models.CASCADE, db_constraint=False)
+    quantity = models.IntegerField(default=0)
 
     location = models.CharField(max_length=20)
     status = models.CharField(max_length=10, choices=STATUS, default='donor')
