@@ -49,24 +49,25 @@ def register(request):
 
 
 def contact(request):
-    user = User.objects.get(username=request.POST['user_name'])
-    if hasattr(user, 'donor'):
-        donor = user.donor
-        donor.address = request.POST['address']
-        donor.pincode = request.POST['pin']
-        donor.phone = request.POST['phone']
-        donor.save()
-    elif hasattr(user, 'volunteer'):
-        pass
-    elif hasattr(user, 'ngo'):
-        ngo = user.ngo
-        ngo.description = request.POST['description']
-        ngo.phone = request.POST['phone']
-        # ngo.pincode = request.POST['pin']
-        ngo.save()
-        user.first_name = request.POST['name']
-        user.save()
-    return HttpResponseRedirect(reverse('login'))
+    if request.method == 'POST':
+        user = User.objects.get(username=request.POST['user_name'])
+        if hasattr(user, 'donor'):
+            donor = user.donor
+            donor.address = request.POST['address']
+            donor.pincode = request.POST['pin']
+            donor.phone = request.POST['phone']
+            donor.save()
+        elif hasattr(user, 'volunteer'):
+            pass
+        elif hasattr(user, 'ngo'):
+            ngo = user.ngo
+            ngo.description = request.POST['description']
+            ngo.phone = request.POST['phone']
+            # ngo.pincode = request.POST['pin']
+            ngo.save()
+            user.first_name = request.POST['name']
+            user.save()
+        return HttpResponseRedirect(reverse('login'))
 
 
 def dashboard(request):
@@ -128,6 +129,18 @@ def settings(request):
             elif hasattr(user, 'ngo'):
                 pass
 
+def view_events(request):
+    user = request.user
+    if user.is_authenticated() and hasattr(user, 'donor'):
+        context = {'events': Event.objects.all()}
+        return render(request, 'donor/viewEvents.html', context)
+
+def ngo_list(request):      # Donor
+    user = request.user
+    if user.is_authenticated() and hasattr(user, 'donor'):
+        context = {'ngos': NGO.objects.all()}
+        return render(request, 'donor/ngoList.html', context)
+
 def log_out(request):
     if request.user.is_authenticated():
         logout(request)
@@ -160,6 +173,16 @@ def create_ad_view(request):
         context.update(csrf(request))
         return render(request, 'donor/create_ad.html', context)
 
+def settings_view(request):
+    user = request.user
+    if user.is_authenticated():
+        if hasattr(user, 'donor'):
+            return render(request, 'donor/settings.html')
+        elif hasattr(user, 'volunteer'):
+            pass
+        elif hasattr(user, 'ngo'):
+            pass
+
 def guidelines(request):
     user = request.user
     if user.is_authenticated():
@@ -169,11 +192,6 @@ def guidelines(request):
             pass
         elif hasattr(user, 'ngo'):
             pass
-
-def events(request):    #For donor
-    user = request.user
-    if user.is_authenticated() and hasattr(user, 'donor'):
-        pass
 
 def join_as_vol(request):
     user = request.user
