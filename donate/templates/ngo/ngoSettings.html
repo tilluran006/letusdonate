@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Letusdonate</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body background="../../static/img/back.jpg">
+
+<div class="container-fluid">
+	<div class="row" style="padding: 20px">
+ 		<div class="col-sm-8">
+ 			<center><a href="donor.html"><img src="../../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></a></center>
+ 		</div>
+  		<div class="col-sm-4">
+  			<center><h1><p>
+  			<a href="settings.html"><button type="button" class="btn btn-primary btn-lg">Setting</button></a>
+  			<a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg">Logout</button></a>
+  			</p></h1></center>
+  		</div>
+
+		<div class="row" style="padding-top: 150px">
+			<div class="col-sm-offset-3	 col-sm-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>Change-info</strong>
+					</div>
+					<div class="panel-body">
+						<form class="form-horizontal" role="form" action="{% url 'settings' %}" method="post">
+							{% csrf_token %}
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-3 control-label">Change Name</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="inputEmail3" name="pincode" placeholder="Name" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-3 control-label">Address</label>
+								<div class="col-sm-9">
+									<textarea class="form-control" id="inputEmail3" name="address" rows=5 placeholder="Address"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-3 control-label">Pincode</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="inputEmail3" name="pincode" placeholder="Pincode" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-3 control-label">Mobile No.</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="inputEmail3" name="phone" placeholder="Phone" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail3" class="col-sm-3 control-label">Edit Description</label>
+								<div class="col-sm-9">
+									<textarea class="form-control" id="inputEmail3" name="address" rows=5 placeholder="Description"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+                        		<label for="inputPassword3" class="col-sm-3 control-label">New Password</label>
+                        		<div class="col-sm-9">
+                            		<input type="password" class="form-control" id="inputPassword3" name="new_password" placeholder="Password" />
+                        		</div>
+                    		</div>
+                    		<div class="form-group">
+          						<label for="inputEmail3" class="col-sm-3 control-label">Select an image</label>
+            					<div class="col-sm-9">
+                					<input type="file" name="file" id="js-upload-files" multiple>
+              					</div>	
+              				</div>
+
+							<div class="form-group-last">
+								<div class="col-sm-offset-5 col-sm-9">
+									<button type="submit" class="btn btn-success btn-sm">Save</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>	
+			</div>
+		</div>
+	</div>
+	<script src="../../static/js/ngoregister.js"></script>
+</body>
+
+</html>
