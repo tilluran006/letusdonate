@@ -6,7 +6,7 @@ from django.template.context_processors import csrf
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-from donate.models import Donor, Volunteer, Admin, NGO, User, Donation, Item
+from donate.models import *
 
 
 def signin(request):
@@ -14,7 +14,6 @@ def signin(request):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('dashboard'))
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
-        print "######", request.user.username
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse('dashboard'))
@@ -83,16 +82,35 @@ def dashboard(request):
 
 
 def create_ad(request):
-    user = request.user
-    if user.is_authenticated() and hasattr(user, 'donor'):
-        ###item = Item
-        ###donation = Donation(donor=user.donor, )
-        return HttpResponseRedirect(reverse('dashboard'))
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated() and hasattr(user, 'donor'):
+            item = Item.objects.get(name=request.POST['item_name'])
+            donation = Donation(
+                donor=user.donor,
+                item=item,
+                quantity=request.POST['quantity'],
+                location=request.POST['address']
+            )
+            donation.save()
+
+            return HttpResponseRedirect(reverse('dashboard'))
 
 def create_event(request):
-    user = request.user
-    if user.is_authenticated() and hasattr(user, 'donor'):
-        pass
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated() and hasattr(user, 'ngo'):
+            event = Event(
+                ngo=user.ngo,
+                type=request.POST['type'],
+                name=request.POST['name'],
+                location=request.POST['location'],
+                time=request.POST['time'],
+                description=request.POST['description']
+            )
+            event.save()
+
+            return HttpResponseRedirect(reverse('dashboard'))
 
 def settings(request):
     if request.method == 'POST':
@@ -119,7 +137,9 @@ def about(request):
     return render(request, 'about.html')
 
 def signup(request):
-    return render(request, 'register.html', {"error_message": ''})
+    context = {"error_message": ''}
+    context.update(csrf(request))
+    return render(request, 'register.html', context)
 
 def home(request):
     print(request.user.username)
@@ -136,7 +156,7 @@ def log_in(request):
 def create_ad_view(request):
     user = request.user
     if user.is_authenticated() and hasattr(user, 'donor'):
-        context = {}
+        context = {'donor': user.donor}
         context.update(csrf(request))
         return render(request, 'donor/create_ad.html', context)
 
