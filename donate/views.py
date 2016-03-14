@@ -43,7 +43,7 @@ def register(request):
         else:
             ngo = NGO(user=user)
             ngo.save()
-            return render(request, 'ngo/ngoregister.html', context)
+            return render(request, 'ngo/contact.html', context)
         # else:
         #     return render(request, reverse(signup), {"error_message": 'Username already taken'})
 
@@ -140,6 +140,11 @@ def ngo_list(request):      # Donor
     if user.is_authenticated() and hasattr(user, 'donor'):
         context = {'ngos': NGO.objects.all()}
         return render(request, 'donor/ngoList.html', context)
+
+
+def view_items(request):    # For donors
+    # Add to urls
+    pass
 
 def log_out(request):
     if request.user.is_authenticated():
