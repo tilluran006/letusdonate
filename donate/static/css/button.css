@@ -1,0 +1,9 @@
+#gray {
+	color: #000000;
+	font-size: 18px;
+	font-weight: bold;
+	border: solid 2px #555;
+	background: #eae8e3;
+	height: 30px;
+	width: 200px;
+}

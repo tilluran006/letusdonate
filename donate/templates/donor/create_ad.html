@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../../static/css/button.css" />
 </head>
 
 <body style="background-image: url('../../static/img/back.jpg')">
@@ -24,27 +25,33 @@
   		</p></h1></center>
   	</div>
   </div> 
+
 		<div class="col-sm-offset-3	 col-sm-6" style="padding-top: 50px">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 						<strong>Create Donation</strong>
 				</div>
-				<div class="panel-body">
+				<div class="panel-body" style="padding-top: 20px">
                	<form class="form-horizontal" role="form" action="{% url 'create_ad' %}" method="post">
-                    		{% csrf_token %}
-                        <div class="dropdown" style="padding-top: 20px">
+                    	{% csrf_token %}
+                      <div class="row">
+                        <div class="dropdown">
                           <label for="inputEmail3" class="col-sm-3 control-label">Item Name</label>
-                          <div class="col-sm-offset-1 col-sm-1">
-                            <button class="btn btn-primary dropdown-toggle" name="type" type="button" data-toggle="dropdown">Item Name<span class="caret"></span></button>
+                          <div class="col-sm-9">
+                            <button id="gray" name="type" type="button" data-toggle="dropdown">
+                              <span id="itemName"></span>
+                              <span class="caret"></span>
+                            </button>
                             <ul class="dropdown-menu dropdown-menu-" id="bulk">
-                              <li><a href="#">Clothes</a></li>
-                              <li><a href="#">Books</a></li>
-                              <li><a href="#">Bed</a></li>
+                              <li id="Clothes" onclick="update(this.id)"><a href="#">Clothes</a></li>
+                              <li id="Books" onclick="update(this.id)"><a href="#">Books</a></li>
+                              <li id="Bed" onclick="update(this.id)"><a href="#">Bed</a></li>
                             </ul>
                           </div>
                         </div>
+                      </div>
 
-                    	<div class="form-group" style="padding-top: 50px">
+                    	<div class="form-group" style="padding-top: 10px">
                         	<label for="inputEmail3" class="col-sm-3 control-label">Quantity 1X</label>
                         	<div class="col-sm-9">
                             	<input type="number" class="form-control" id="inputEmail3" name="quantity" placeholder="Quantity" min="1" />
@@ -59,36 +66,44 @@
                     	</div>
 
                     	<div class="form-group">
-								<label for="inputEmail3" class="col-sm-3 control-label">Address</label>
-								<div class="col-sm-9">
-									<textarea class="form-control" id="inputEmail3" name="address" rows=4 placeholder="Address" required="">
-									</textarea>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-3 control-label">Mobile No.</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputEmail3" name="phone" rows=1 placeholder="Mobile Number" required="" />
-								</div>
-							</div>
+								        <label for="inputEmail3" class="col-sm-3 control-label">Address</label>
+								        <div class="col-sm-9">
+									         <textarea class="form-control" id="inputEmail3" name="address" rows=4 placeholder="Address" required=""></textarea>
+								        </div>
+							         </div>
+
+							         <div class="form-group">
+								        <label for="inputEmail3" class="col-sm-3 control-label">Mobile No.</label>
+								        <div class="col-sm-9">
+									       <input type="text" class="form-control" id="inputEmail3" name="phone" rows=1 placeholder="Mobile Number" required="" />
+								        </div>
+							         </div> 
 							
-                    <div class="form-group last" style="padding-top: 10px">
-                        <div class="col-sm-offset-5 col-sm-9">
+                        <div class="form-group last" style="padding-top: 10px">
+                          <div class="col-sm-offset-5 col-sm-9">
                             <button type="submit" class="btn btn-success btn-sm">
                                Donate
-                               </button>
-                                 <button type="reset" class="btn btn-default btn-sm">
+                            </button>
+                            <button type="reset" class="btn btn-default btn-sm">
                                 Reset</button>
+                          </div>
                         </div>
-                    </div>
                     </form>
                 </div>
 				</div>	
 			</div>
 		</div>
-	</div>
   
-  <script src="../../static/js/itemName.js"></script>
+  <script type="text/javascript">
+    function load() {  
+      document.getElementById('itemName').innerHTML =  "Item Name";
+    }
+    window.onload = load;
+
+    function update(selected){
+      document.getElementById('itemName').innerHTML = selected;
+    }
+  </script>
 </body>
 
 </html>
