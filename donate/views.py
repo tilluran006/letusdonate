@@ -6,7 +6,7 @@ from django.template.context_processors import csrf
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-from donate.models import Donor, Volunteer, Admin, NGO, User, Donation, Item
+from donate.models import *
 
 
 def signin(request):
@@ -14,7 +14,6 @@ def signin(request):
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('dashboard'))
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
-        print "######", request.user.username
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse('dashboard'))
@@ -44,30 +43,31 @@ def register(request):
         else:
             ngo = NGO(user=user)
             ngo.save()
-            return render(request, 'ngo/ngoregister.html', context)
+            return render(request, 'ngo/contact.html', context)
         # else:
         #     return render(request, reverse(signup), {"error_message": 'Username already taken'})
 
 
 def contact(request):
-    user = User.objects.get(username=request.POST['user_name'])
-    if hasattr(user, 'donor'):
-        donor = user.donor
-        donor.address = request.POST['address']
-        donor.pincode = request.POST['pin']
-        donor.phone = request.POST['phone']
-        donor.save()
-    elif hasattr(user, 'volunteer'):
-        pass
-    elif hasattr(user, 'ngo'):
-        ngo = user.ngo
-        ngo.description = request.POST['description']
-        ngo.phone = request.POST['phone']
-        # ngo.pincode = request.POST['pin']
-        ngo.save()
-        user.first_name = request.POST['name']
-        user.save()
-    return HttpResponseRedirect(reverse('login'))
+    if request.method == 'POST':
+        user = User.objects.get(username=request.POST['user_name'])
+        if hasattr(user, 'donor'):
+            donor = user.donor
+            donor.address = request.POST['address']
+            donor.pincode = request.POST['pin']
+            donor.phone = request.POST['phone']
+            donor.save()
+        elif hasattr(user, 'volunteer'):
+            pass
+        elif hasattr(user, 'ngo'):
+            ngo = user.ngo
+            ngo.description = request.POST['description']
+            ngo.phone = request.POST['phone']
+            # ngo.pincode = request.POST['pin']
+            ngo.save()
+            user.first_name = request.POST['name']
+            user.save()
+        return HttpResponseRedirect(reverse('login'))
 
 
 def dashboard(request):
@@ -83,16 +83,35 @@ def dashboard(request):
 
 
 def create_ad(request):
-    user = request.user
-    if user.is_authenticated() and hasattr(user, 'donor'):
-        ###item = Item
-        ###donation = Donation(donor=user.donor, )
-        return HttpResponseRedirect(reverse('dashboard'))
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated() and hasattr(user, 'donor'):
+            item = Item.objects.get(name=request.POST['item_name'])
+            donation = Donation(
+                donor=user.donor,
+                item=item,
+                quantity=request.POST['quantity'],
+                location=request.POST['address']
+            )
+            donation.save()
+
+            return HttpResponseRedirect(reverse('dashboard'))
 
 def create_event(request):
-    user = request.user
-    if user.is_authenticated() and hasattr(user, 'donor'):
-        pass
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated() and hasattr(user, 'ngo'):
+            event = Event(
+                ngo=user.ngo,
+                type=request.POST['type'],
+                name=request.POST['name'],
+                location=request.POST['location'],
+                time=request.POST['time'],
+                description=request.POST['description']
+            )
+            event.save()
+
+            return HttpResponseRedirect(reverse('dashboard'))
 
 def settings(request):
     if request.method == 'POST':
@@ -110,6 +129,23 @@ def settings(request):
             elif hasattr(user, 'ngo'):
                 pass
 
+def view_events(request):
+    user = request.user
+    if user.is_authenticated() and hasattr(user, 'donor'):
+        context = {'events': Event.objects.all()}
+        return render(request, 'donor/viewEvents.html', context)
+
+def ngo_list(request):      # Donor
+    user = request.user
+    if user.is_authenticated() and hasattr(user, 'donor'):
+        context = {'ngos': NGO.objects.all()}
+        return render(request, 'donor/ngoList.html', context)
+
+
+def view_items(request):    # For donors
+    # Add to urls
+    pass
+
 def log_out(request):
     if request.user.is_authenticated():
         logout(request)
@@ -119,7 +155,9 @@ def about(request):
     return render(request, 'about.html')
 
 def signup(request):
-    return render(request, 'register.html', {"error_message": ''})
+    context = {"error_message": ''}
+    context.update(csrf(request))
+    return render(request, 'register.html', context)
 
 def home(request):
     print(request.user.username)
@@ -136,9 +174,19 @@ def log_in(request):
 def create_ad_view(request):
     user = request.user
     if user.is_authenticated() and hasattr(user, 'donor'):
-        context = {}
+        context = {'donor': user.donor}
         context.update(csrf(request))
         return render(request, 'donor/create_ad.html', context)
+
+def settings_view(request):
+    user = request.user
+    if user.is_authenticated():
+        if hasattr(user, 'donor'):
+            return render(request, 'donor/settings.html')
+        elif hasattr(user, 'volunteer'):
+            pass
+        elif hasattr(user, 'ngo'):
+            pass
 
 def guidelines(request):
     user = request.user
@@ -149,11 +197,6 @@ def guidelines(request):
             pass
         elif hasattr(user, 'ngo'):
             pass
-
-def events(request):    #For donor
-    user = request.user
-    if user.is_authenticated() and hasattr(user, 'donor'):
-        pass
 
 def join_as_vol(request):
     user = request.user

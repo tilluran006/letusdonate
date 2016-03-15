@@ -45,7 +45,12 @@ class NGO(models.Model):
 
 
 class Event(models.Model):
-    ngo = models.ForeignKey(NGO, db_constraint=False, on_delete=models.CASCADE)
+    ngo = models.ForeignKey(NGO, db_constraint=False, on_delete=models.CASCADE, related_name='event')
+    name = models.CharField(max_length=20)
+    type = models.CharField(max_length=20)
+    location = models.CharField(max_length=30)
+    time = models.CharField(max_length=15)
+    description = models.CharField(max_length=50)
 
 
 class Item(models.Model):
@@ -55,8 +60,8 @@ class Item(models.Model):
 
 class Donation(models.Model):
     STATUS = (('donor', 'With Donor'), ('vol', 'With volunteer'), ('ngo', 'With NGO'))
-    donor = models.ForeignKey(Donor, on_delete=models.CASCADE, db_constraint=False)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, db_constraint=False)
+    donor = models.ForeignKey(Donor, on_delete=models.CASCADE, db_constraint=False, related_name='donation')
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, db_constraint=False, related_name='donation')
     quantity = models.IntegerField(default=0)
 
     location = models.CharField(max_length=20)

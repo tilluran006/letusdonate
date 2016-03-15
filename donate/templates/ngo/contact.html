@@ -20,7 +20,7 @@
   			<div class="col-sm-4">
   				<center><h1><p>
       		
-  				<a href="settings.html"><button type="button" class="btn btn-primary btn-lg">Setting</button></a>
+  				<a href="{% url 'settings_view' %}"><button type="button" class="btn btn-primary btn-lg">Setting</button></a>
   				<a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg">Logout</button></a>
   				</p></h1></center>
   			</div>
@@ -68,14 +68,15 @@
 										<button type="reset" class="btn btn-default btn-sm">Reset</button>
 									</div>
 								</div>
-							</div>
+							</form>
 						</div>
 					</div>	
 				</div>
 			</div>
 		</div>
 	</div>
-		<script src="../../static/js/ngoregister.js"></script>
+
+	<script src="../../static/js/ngoregister.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>View Items</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" link="../../static/css/oval.css">
+</head>
+
+<body style="background-color: grey">
+	<div class="container-fluid">
+		<div class="row" style="background-image: url('../../static/img/front.jpg'); padding: 20px">
+ 			<div class="col-sm-8">
+ 				<center><a href="{% url 'home' %}"><img src="../../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></a></center>
+ 			</div>
+  			<div class="col-sm-4">
+  				<center><h1><p>
+  				<a href="{% url 'settings_view' %}"><button type="button" class="btn btn-primary btn-lg">Setting</button></a>
+  				<a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg">Logout</button></a>
+  				</p></h1></center>
+  			</div>
+  		</div>
+
+        <div class="row" style=" font-family: 'Open sans', sans-serif; font-size: 30px; padding: 3% 5%">
+          <div class="col-sm-6" style="background-color: white; color: black; border-style: solid; border-radius: 5em; padding: 5% 5%">
+            <div class="row">
+               Item Name:
+             </div>
+             <div class="row">
+               Item Type: 
+             </div>
+             <div class="row">
+               Quantity: 
+             </div>
+           </div>
+          <div class="col-sm-6" style="background-color: black; color: white; border-style: solid; border-radius: 5em; padding: 5% 5%">
+            <div class="row">
+             Item Name:
+            </div>
+            <div class="row">
+              Item Type: 
+            </div>
+            <div class="row">
+              Quantity: 
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style=" font-family: 'Open sans', sans-serif; font-size: 30px; padding: 3% 5%">
+          <div class="col-sm-6" style="background-color: white; color: black; border-style: solid; border-radius: 5em; padding: 5% 5%">
+            <div class="row">
+               Item Name:
+             </div>
+             <div class="row">
+               Item Type: 
+             </div>
+             <div class="row">
+               Quantity: 
+             </div>
+           </div>
+          <div class="col-sm-6" style="background-color: black; color: white; border-style: solid; border-radius: 5em; padding: 5% 5%">
+            <div class="row">
+             Item Name:
+            </div>
+            <div class="row">
+              Item Type: 
+            </div>
+            <div class="row">
+              Quantity: 
+            </div>
+          </div>
+        </div>
+  </div>
+</body>
+</html>
