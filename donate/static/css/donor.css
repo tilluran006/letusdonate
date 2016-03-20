@@ -2,3 +2,17 @@ body{
 	background-image: url(../img/front.jpg),url(../img/back2.jpg);
 	background-repeat: no-repeat;
 }
+h1{
+	color: #58ACFA;
+	font-size: 40px;
+}
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}
+th{
+	background : #3399ff;
+	color: white;
+}
+#item_table{
+	font-size: 20px;
+	padding-top: 30px;
+}

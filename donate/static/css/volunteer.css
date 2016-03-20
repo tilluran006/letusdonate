@@ -1,0 +1,19 @@
+#volunteer{
+	padding-top: 20px;
+	font-size: 20px;
+}
+h2{
+	padding-top: 40px;
+	font-size: 40px;
+	color: #58ACFA;
+}
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}
+th{
+	background : #3399ff;
+	color: white;
+}
+#collect{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
