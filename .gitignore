@@ -64,4 +64,4 @@ target/
 .idea/
 migrations/
 tmp/
-
+Thumbs.db
