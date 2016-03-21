@@ -5,13 +5,6 @@ from django.db import models
 
 # Create your models here.
 
-# class UserClass(models.Model):
-
-    # ACCOUNT_TYPES = (('donor', 'donor'), ('admin', 'admin'), ('ngo', 'NGO'), ('vol', 'volunteer'))
-
-    # account_type = models.CharField(max_length=10, choices=ACCOUNT_TYPES)
-
-
 class Donor(models.Model):
     user = models.OneToOneField(User, related_name='donor')
     address = models.CharField(max_length=100)

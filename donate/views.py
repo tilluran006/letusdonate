@@ -77,6 +77,8 @@ def dashboard(request):
         if hasattr(user, 'donor'):
             return render(request, 'donor/donor.html')
         elif hasattr(user, 'volunteer'):
+            # for deleting multiple elements, iterate through POST.keys(), and check if name attribute matches
+            # Read Querydict docs
             pass
         elif hasattr(user, 'ngo'):
             return render(request, 'ngo/ngo.html')
@@ -143,7 +145,6 @@ def ngo_list(request):      # Donor
 
 
 def view_items(request):    # For donors
-    # Add to urls
     pass
 
 def log_out(request):
