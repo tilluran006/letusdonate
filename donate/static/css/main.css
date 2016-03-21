@@ -18,6 +18,14 @@ body{
 }
 h3{
 	color: white;
+	font-size: 40px;
+	text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+h2{
+	color: #58ACFA;
 	font-size: 30px;
-	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+.carousel-caption{
+	top: 25%;
+transform: translateY(-50%);
 }

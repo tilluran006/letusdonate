@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Create an Event</title>
+	<title>Letusdonate</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -26,30 +26,37 @@
   			</div>
 		</div>
 		<div class="row" style="padding-top: 50px">
-			<div class="col-sm-offset-1 col-sm-4" style="padding: 25px">
-				<img src="../../static/img/build1.jpg" class="img-circle" alt="NGO_Image" width="400" height="300" />
+			<div class="col-sm-12">
+      			<div class="row">
+        			<div class="col-sm-2 col-sm-offset-2" id="createad">
+           				 <a href="{% url 'create_ad_view' %}"><img src="../../static/img/create-events.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+        			</div>
+        			<div class="col-sm-2">
+           				 <a href="{% url 'join_as_vol' %}"><img src="../../static/img/edit-req.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+       				</div>
+       				<div class="col-sm-2" id="createad">
+           				 <a href="{% url 'create_ad_view' %}"><img src="../../static/img/view-items.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+        			</div>
+        			<div class="col-sm-2" id="createad">
+           				 <a href="{% url 'create_ad_view' %}"><img src="../../static/img/req-vol.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+        			</div>
+          		</div>
+        	</div>
+        </div>	
+		
+		<div class="row" style="padding-top: 50px">
+		    <center><h2><b>Organization details</b></h3></center>
+			<div class="col-sm-offset-1 col-sm-3" style="padding: 25px">
+				<img src="../../static/img/cheshire-home.jpg" class="img-circle" alt="NGO_Image" width="400" height="300" />
 			</div>
-			<div class="col-sm-offset-1 col-sm-5">
+			<div class="col-sm-offset-1 col-sm-7">
 				<p id="about-content">
-					Usually set up by ordinary citizens, NGOs may be funded by governments, foundations, schools, businesses, or private people. Some avoid formal funding altogether and are run primarily by volunteers. NGOs are highly diverse groups of organizations engaged in a wide range of activities, and take different forms in different parts of the world. Some may have charitable status, while others may be registered for tax exemption based on recognition of social purposes. Others may be fronts for political, religious, or other interests.
-					The number of NGOs in the United States is estimated at 1.5 million.[1] Russia has 277,000 NGOs.[2] India is estimated to have had around 2 million NGOs in 2009, just over one NGO per 600 Indians, and many times the number of primary schools and primary health centres in India.[3][4]
+					<b>Leonard Cheshire Disability</b> is a major health and welfare charity working in the United Kingdom and running development projects around the world. It was founded in 1948 by RAF pilot Leonard Cheshire.
+					Group Captain  Lord Leonard Cheshire  was very fond of India and made various visits  during his lifetime. He  encourged the  local philanthrophists and social welfare activists to set up   Homes   in their cities to provide  care and support to people with disabilities from the weaker section of the society. In 1961, the Bangalore Cheshire Home started in a small rented cottage on Rustam Bagh Estate, (located directly opposite Manipal Hospital on HAL  Airport Road, Bangalore) with one resident, a young girl named Ivy Paul, who was completely bedridden with arthritis. From this small beginning the Home has expanded over a period of 50 years to the present stage.
 				</p>
 			</div>
 		</div>
-		<div class="row" style="padding-top: 50px">
-			<div class="col-sm-offset-2 col-sm-2">
-				<a href="create_event.html"><button type="button" class="btn btn-success btn-sm">Create Event</button></a>
-			</div>
-			<div class="col-sm-2">
-				<a href=""><button type="button" class="btn btn-success btn-sm">Edit Item Requirements</button></a>
-			</div>
-			<div class="col-sm-2">
-				<a href=""><button type="button" class="btn btn-success btn-sm">View Items Available</button></a>
-			</div>
-			<div class="col-sm-2">
-				<a href=""><button type="button" class="btn btn-success btn-sm">Request Volunteers</button></a>
-			</div>	
-		</div>
+		
 	</div>
 </body>
 </html>
