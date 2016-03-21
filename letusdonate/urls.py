@@ -37,12 +37,13 @@ urlpatterns = [
     url(r'^events$', view_events, name="view_events"),    # Donor
     url(r'^ngos$', ngo_list, name="ngo_list"),   # Donor
 
+
     #different view for each user
     url(r'^contact$', contact, name="contact"),  # Donor,volunteer contact: To be shown after signup
     url(r'^dashboard/?$', dashboard, name="dashboard"),
     url(r'^settings$', settings, name="settings"),
     url(r'^guidelines$', guidelines, name="guidelines"),
     url(r'^settings_view$', settings_view, name="settings_view"),
-
+    url(r'^items$', view_items, name="view_items"),     # List of items available for donation
 ]
 
