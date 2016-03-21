@@ -1,18 +1,27 @@
 #volunteer{
-	padding-top: 20px;
+	padding-top: 50px;
 	font-size: 20px;
 }
+
 h2{
 	padding-top: 40px;
 	font-size: 40px;
 	color: #58ACFA;
 }
+
 tr:nth-child(even) {background: #CCC}
 tr:nth-child(odd) {background: #FFF}
+
 th{
 	background : #3399ff;
 	color: white;
+	text-align: center;
 }
+
+tr{
+	text-align: center;	
+}
+
 #collect{
 	padding-top: 10px;
 	padding-bottom: 10px;

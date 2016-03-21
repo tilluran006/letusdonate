@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Letusdonate</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="../../static/css/volunteer.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-image: url('../../static/img/back2.jpg')">
+<div class="container-fluid">
+	<div class="row" style="background-image: url('../../static/img/front.jpg'); padding: 20px" >
+ 		<div class="col-sm-8">
+      <center><img src="../../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></center>
+    </div>
+  	<div class="col-sm-4">
+  		<center><h1><p>  
+  			<a href="{% url 'settings_view' %}"><button type="button" class="btn btn-primary btn-lg">Setting</button></a>
+  			<a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg">Logout</button></a>
+  		</p></h1></center>
+  	</div>
+	</div>
+  
+  <div class="row col-sm-offset-1 col-sm-10" id="volunteer" style="padding-top: 20px">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Add Requirement</strong>
+      </div>
+    <div class="panel-body">
+      <form class="form-horizontal" role="form" action="{% url 'create_event' %}" method="post">
+       {% csrf_token %}
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-3 control-label">Type of Event</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputEmail3" name="type" placeholder="Event Type" required="" />
+          </div>
+        </div>
+        <div class="form-group-last">
+          <div class="col-sm-offset-5 col-sm-9">
+            <button type="submit" class="btn btn-success btn-sm">Submit</button>
+            <button type="reset" class="btn btn-default btn-sm">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+   </div>
+  </div>
+
+  <div class="row" id="volunteer">  
+   <div class="col-sm-offset-1 col-sm-10">
+     <table class="table">
+      <thead>
+      <tr>
+        <th>Item</th>
+        <th>Type</th>
+        <th>Quantity</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <td>Shirt</td>
+        <td>Clothing</td>
+        <td>15</td>
+      </tr>
+      <tr>
+        <td>Bucket</td>
+        <td>Daily Use</td>
+        <td>12</td>
+      </tr>
+      </tbody>
+    </table>
+    </div>          
+  </div>
+</div>
+</body>
+</html>
