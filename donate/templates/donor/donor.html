@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="../../static/css/donor.css">
-  <link rel="stylesheet" type="text/css" href="../../static/css/spacing.css">
+  <!--<link rel="stylesheet" type="text/css" href="../../static/css/spacing.css">-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
@@ -37,15 +37,15 @@
       </div>
       <div class="row" style="padding-top: 40px">
         <div class="col-sm-4 col-sm-offset-2">
-            <a href="event.html"><img src="../../static/img/event.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+            <a href="{% url 'view_events' %}"><img src="../../static/img/event.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
         </div>
         <div class="col-sm-4">
-            <a href="ngodetails.html"><img src="../../static/img/ngodetail.png" class="img-circle" alt="Cinque Terre" width="156" height="156"> </a>
+            <a href="{% url 'ngo_list' %}"><img src="../../static/img/ngodetail.png" class="img-circle" alt="Cinque Terre" width="156" height="156"> </a>
         </div>
       </div>
        <div class="row" style="padding-top: 40px">
         <div class="col-sm-4 col-sm-offset-2">
-            <a href="itemdonation.html"><img src="../../static/img/itemdonation.png" class="img-circle" alt="Cinque Terre" width="156" height="156"> </a>
+            <a href="{% url 'view_items' %}"><img src="../../static/img/itemdonation.png" class="img-circle" alt="Cinque Terre" width="156" height="156"> </a>
         </div>
         <div class="col-sm-4">
             <a href="{% url 'guidelines' %}"><img src="../../static/img/guidelines.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
