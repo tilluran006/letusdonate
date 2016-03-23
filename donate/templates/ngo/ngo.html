@@ -29,16 +29,16 @@
 			<div class="col-sm-12">
       			<div class="row">
         			<div class="col-sm-2 col-sm-offset-2" id="createad">
-           				 <a href="{% url 'create_ad_view' %}"><img src="../../static/img/create-events.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+           				 <a href="{% url 'create_event_view' %}"><img src="../../static/img/create-events.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
         			</div>
         			<div class="col-sm-2">
-           				 <a href="{% url 'join_as_vol' %}"><img src="../../static/img/edit-req.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+           				 <a href="{% url 'edit_req_view' %}"><img src="../../static/img/edit-req.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
        				</div>
        				<div class="col-sm-2" id="createad">
-           				 <a href="{% url 'create_ad_view' %}"><img src="../../static/img/view-items.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+           				 <a href="{%  %}"><img src="../../static/img/view-items.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
         			</div>
         			<div class="col-sm-2" id="createad">
-           				 <a href="{% url 'create_ad_view' %}"><img src="../../static/img/req-vol.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+           				 <a href="{% url 'req_vol_view' %}"><img src="../../static/img/req-vol.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
         			</div>
           		</div>
         	</div>
@@ -51,17 +51,16 @@
 			</div>
 			<div class="col-sm-offset-1 col-sm-7">
 				<p id="about-content">
-					<b>Leonard Cheshire Disability</b> is a major health and welfare charity working in the United Kingdom and running development projects around the world. It was founded in 1948 by RAF pilot Leonard Cheshire.
-					Group Captain  Lord Leonard Cheshire  was very fond of India and made various visits  during his lifetime. He  encourged the  local philanthrophists and social welfare activists to set up   Homes   in their cities to provide  care and support to people with disabilities from the weaker section of the society. In 1961, the Bangalore Cheshire Home started in a small rented cottage on Rustam Bagh Estate, (located directly opposite Manipal Hospital on HAL  Airport Road, Bangalore) with one resident, a young girl named Ivy Paul, who was completely bedridden with arthritis. From this small beginning the Home has expanded over a period of 50 years to the present stage.
+					{{ngo.description}}
 				</p>
 			</div>
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		function reqVolunteers(){
-			window.alert('Requests have been sent.');
-		}
-	</script>
+	<!--<script type="text/javascript">-->
+		<!--function reqVolunteers(){-->
+			<!--window.alert('Requests have been sent.');-->
+		<!--}-->
+	<!--</script>-->
 </body>
 </html>

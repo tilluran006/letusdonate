@@ -89,7 +89,8 @@ def dashboard(request):
             # Read Querydict docs
             pass
         elif hasattr(user, 'ngo'):
-            return render(request, 'ngo/ngo.html')
+            context = {'ngo': user.ngo}
+            return render(request, 'ngo/ngo.html', context)
     else:
         return redirect('login')
 
@@ -175,6 +176,14 @@ def view_items(request):    # For donors
     return redirect('home')
 
 
+def edit_req(request):
+    pass
+
+
+def req_vol(request):
+    pass
+
+
 def log_out(request):
     if request.user.is_authenticated():
         logout(request)
@@ -214,6 +223,25 @@ def create_ad_view(request):
             return render(request, 'donor/create_ad.html', context)
         return HttpResponse("Invalid page")
     return redirect('login')
+
+
+def create_event_view(request):
+    user = request.user
+    if user.is_authenticated():
+        if hasattr(user, 'ngo'):
+            context = {}
+            context.update(csrf(request))
+            return render(request, 'ngo/create_event.html', context)
+        return HttpResponse("Invalid page")
+    return redirect('login')
+
+
+def edit_req_view(request):
+    pass
+
+
+def req_vol_view(request):
+    pass
 
 
 def settings_view(request):
