@@ -29,16 +29,16 @@
 			<div class="col-sm-12">
       			<div class="row">
         			<div class="col-sm-2 col-sm-offset-2" id="createad">
-           				 <a href="{% url 'create_event_view' %}"><img src="../../static/img/create-events.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+           				 <a href="{% url 'create_event_view' %}"><img src="../../static/img/create-events.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
         			</div>
         			<div class="col-sm-2">
-           				 <a href="{% url 'edit_req_view' %}"><img src="../../static/img/edit-req.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+           				 <a href="{% url 'edit_req_view' %}"><img src="../../static/img/edit-req.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
        				</div>
        				<div class="col-sm-2" id="createad">
-           				 <a href="{%  %}"><img src="../../static/img/view-items.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+           				 <a href="{%  %}"><img src="../../static/img/view-items.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
         			</div>
         			<div class="col-sm-2" id="createad">
-           				 <a href="{% url 'req_vol_view' %}"><img src="../../static/img/req-vol.png" class="img-circle" alt="Cinque Terre" width="156" height="156"></a>
+           				 <a href="{% url 'req_vol_view' %}"><img src="../../static/img/req-vol.png" class="img-circle" alt="Cinque Terre" width="156" height="156" onclick="reqVolunteers()" /></a>
         			</div>
           		</div>
         	</div>
@@ -57,10 +57,10 @@
 		</div>
 	</div>
 
-	<!--<script type="text/javascript">-->
-		<!--function reqVolunteers(){-->
-			<!--window.alert('Requests have been sent.');-->
-		<!--}-->
-	<!--</script>-->
+	<script type="text/javascript">
+		function reqVolunteers(){
+			window.alert('Requests have been sent.');
+		}
+	</script>
 </body>
 </html>
