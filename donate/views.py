@@ -140,7 +140,8 @@ def settings(request):
                     user.set_password(request.POST['new_password'])
                     user.save()
             elif hasattr(user, 'volunteer'):
-                pass
+                user.volunteer.address = request.POST['address']
+                user.volunteer.phone = request.POST['phone']
             elif hasattr(user, 'ngo'):
                 pass
     return redirect('dashboard')
