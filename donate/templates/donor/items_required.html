@@ -31,27 +31,21 @@
       <table class="table" id="table-font">
     <thead>
       <tr>
-        
         <th>Item Name</th>
         <th>Category</th>
         <th>Quantity</th>
       </tr>
     </thead>
     <tbody>
+			{% for item in items %}
       <tr>         
-        <td>English Text Book</td>
-        <td>Books</td>
-        <td>500</td>
+        <td>{{item.name}}</td>
+        <td>{{item.type}}</td>
+        <td>{{item.donation.count()}}</td>
       </tr>
-      <tr>
-        <td>Jeans Pant</td>
-        <td>Clothes</td>
-        <td>100</td>
-       
-      </tr>
+			{% endfor %}
     </tbody>
    </table>
-       
      </div>          
     </div>
 
