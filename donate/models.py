@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 from django.db import models
 
-# Create your models here.
 
+# Create your models here.
 class Donor(models.Model):
     user = models.OneToOneField(User, related_name='donor')
     address = models.CharField(max_length=100)
@@ -16,13 +16,6 @@ class Donor(models.Model):
 
 class Admin(models.Model):
     user = models.OneToOneField(User, related_name='admin')
-    address = models.CharField(max_length=100)
-    pincode = models.IntegerField(default=0)
-    phone = models.BigIntegerField(default=0)
-
-
-class Volunteer(models.Model):
-    user = models.OneToOneField(User, related_name='volunteer')
     address = models.CharField(max_length=100)
     pincode = models.IntegerField(default=0)
     phone = models.BigIntegerField(default=0)
@@ -44,11 +37,29 @@ class Event(models.Model):
     location = models.CharField(max_length=30)
     time = models.CharField(max_length=15)
     description = models.CharField(max_length=50)
+    volunteers_required = models.IntegerField(default=0)
+
+    def volunteers_enrolled(self):
+        pass
+
+
+class Volunteer(models.Model):
+    user = models.OneToOneField(User, related_name='volunteer')
+    address = models.CharField(max_length=100)
+    pincode = models.IntegerField(default=0)
+    phone = models.BigIntegerField(default=0)
+    events_volunteered = models.ManyToManyField(Event, db_constraint=False, related_name="volunteers")
 
 
 class Item(models.Model):
     name = models.CharField(max_length=20, default=None)
     type = models.CharField(max_length=20, default=None)
+
+
+class ItemQuantity(models.Model):
+    item = models.OneToOneField(Item)
+    ngo = models.OneToOneField(NGO)
+    quantity = models.IntegerField(default=0)
 
 
 class Donation(models.Model):

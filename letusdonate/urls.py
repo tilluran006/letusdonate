@@ -31,7 +31,6 @@ urlpatterns = [
     url(r'^create_ads', create_ad_view, name="create_ad_view"),     # Donor
     url(r'^create_events$', create_event_view, name="create_event_view"),  # NGO
     url(r'^requirements$', edit_req_view, name="edit_req_view"),    # NGO
-    url(r'^volunteers$', req_vol_view, name="req_vol_view"),    # NGO
 
     #user specific
     url(r'^create_event$', create_event, name="create_event"),  # NGO
@@ -40,7 +39,8 @@ urlpatterns = [
     url(r'^events$', view_events, name="view_events"),    # Donor
     url(r'^ngos$', ngo_list, name="ngo_list"),   # Donor
     url(r'^edit_requirements$', edit_req, name="edit_req"),    # NGO
-    url(r'^request_volunteers$', req_vol, name="req_vol"),    # NGO
+    url(r'^request_volunteers$', request_vol, name="req_vol"),    # NGO
+    url(r'^volunteer_event$', volunteer_event, name="volunteer_event"),     # Volunteer
 
     #different view for each user
     url(r'^contact$', contact, name="contact"),  # Donor,volunteer contact: To be shown after signup
