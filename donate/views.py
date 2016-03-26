@@ -20,6 +20,7 @@ def signin(request):
             return redirect('dashboard')
         else:
             return HttpResponse("Username and password doesnt match")
+    return redirect('login')
 
 
 def register(request):
@@ -49,7 +50,7 @@ def register(request):
         elif type == 'vol':
             volunteer = Volunteer(user=user)
             volunteer.save()
-            return render(request, 'volunteer/volunteer', context) ### Add volunteer page
+            return render(request, 'volunteer/contact.html', context)
         else:
             ngo = NGO(user=user)
             ngo.save()
@@ -67,16 +68,22 @@ def contact(request):
             donor.phone = request.POST['phone']
             donor.save()
         elif hasattr(user, 'volunteer'):
-            pass
+            vol = user.volunteer
+            vol.address = request.POST['address']
+            vol.pincode = request.POST['pin']
+            vol.phone = request.POST['phone']
+            vol.save()
         elif hasattr(user, 'ngo'):
             ngo = user.ngo
             ngo.description = request.POST['description']
             ngo.phone = request.POST['phone']
             # ngo.pincode = request.POST['pin']
+            # Image upload
             ngo.save()
             user.first_name = request.POST['name']
             user.save()
         return redirect('login')
+    return redirect('home')
 
 
 def dashboard(request):
@@ -108,6 +115,7 @@ def create_ad(request):
             )
             donation.save()
             return redirect('dashboard')
+    return redirect('home')
 
 
 def create_event(request):
@@ -125,6 +133,7 @@ def create_event(request):
             event.save()
 
             return redirect('dashboard')
+    return redirect('home')
 
 
 def settings(request):
@@ -140,9 +149,26 @@ def settings(request):
                     user.set_password(request.POST['new_password'])
                     user.save()
             elif hasattr(user, 'volunteer'):
-                pass
+                user.volunteer.address = request.POST['address']
+                user.volunteer.phone = request.POST['phone']
+                user.volunteer.pincode = request.POST['pincode']
+                user.volunteer.save()
+                if request.POST['new_password']:
+                    user.set_password(request.POST['new_password'])
+                    user.save()
             elif hasattr(user, 'ngo'):
-                pass
+                user.first_name = request.POST['name']
+                if request.POST['new_password']:
+                    user.set_password(request.POST['new_password'])
+                user.save()
+                user.ngo.description = request.POST['description']
+                user.ngo.phone = request.POST['phone']
+                user.ngo.pincode = request.POST['pin']
+                user.ngo.address = request.POST['address']
+                # Image upload
+                # Delete old image
+                # Compare with contact.html and add/remove attributes
+                user.ngo.save()
     return redirect('dashboard')
 
 
@@ -152,6 +178,10 @@ def view_events(request):
         if hasattr(user, 'donor'):
             context = {'events': Event.objects.all()}
             return render(request, 'donor/viewEvents.html', context)
+        elif hasattr(user, 'volunteer'):
+            pass
+        elif hasattr(user, 'ngo'):
+            pass
         return HttpResponse("Invalid page")
     return redirect('home')
 
@@ -180,8 +210,21 @@ def edit_req(request):
     pass
 
 
-def req_vol(request):
+def request_vol(request):
     pass
+
+
+def volunteer_event(request):
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated():
+            if hasattr(user, 'volunteer'):
+                # event =
+                # user.volunteer.events_volunteered.add(event)
+                # vol.save()
+                pass
+            return HttpResponse("Invalid page")
+    return redirect('home')
 
 
 def log_out(request):
@@ -237,10 +280,6 @@ def create_event_view(request):
 
 
 def edit_req_view(request):
-    pass
-
-
-def req_vol_view(request):
     pass
 
 
