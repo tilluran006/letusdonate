@@ -1,34 +1,45 @@
-from django.shortcuts import render
+from django.db import transaction
+
+from django.shortcuts import render, redirect
 
 # Create your views here.
 import logging
 from django.template.context_processors import csrf
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+from django.http import HttpResponse
 from donate.models import *
 
 
 def signin(request):
     if request.method == 'POST':
         if request.user.is_authenticated():
-            return HttpResponseRedirect(reverse('dashboard'))
+            return redirect('dashboard')
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('dashboard'))
+            return redirect('dashboard')
         else:
             return HttpResponse("Username and password doesnt match")
+    return redirect('login')
 
 
 def register(request):
     if request.method == 'POST':
-        user = User.objects.create_user(
-            username=request.POST['username'],
-            email=request.POST['email'],
-            password=request.POST['password']
-        )
-        user.save()
+        user = User.objects.get(username=request.POST['username'])
+        if user:
+            return HttpResponse("Username Already taken")
+
+        try:
+            with transaction.atomic():
+                user = User.objects.create_user(
+                    username=request.POST['username'],
+                    email=request.POST['email'],
+                    password=request.POST['password']
+                )
+                user.save()
+        except:
+            return HttpResponse("Error creating an account. Please register again")
+
         type = request.POST['type']
         context = {'user_name': request.POST['username']}
         context.update(csrf(request))
@@ -39,13 +50,12 @@ def register(request):
         elif type == 'vol':
             volunteer = Volunteer(user=user)
             volunteer.save()
-            return render(request, '', context) ### Add volunteer page
+            return render(request, 'volunteer/contact.html', context)
         else:
             ngo = NGO(user=user)
             ngo.save()
             return render(request, 'ngo/contact.html', context)
-        # else:
-        #     return render(request, reverse(signup), {"error_message": 'Username already taken'})
+    return redirect('signup')
 
 
 def contact(request):
@@ -58,28 +68,38 @@ def contact(request):
             donor.phone = request.POST['phone']
             donor.save()
         elif hasattr(user, 'volunteer'):
-            pass
+            vol = user.volunteer
+            vol.address = request.POST['address']
+            vol.pincode = request.POST['pin']
+            vol.phone = request.POST['phone']
+            vol.save()
         elif hasattr(user, 'ngo'):
             ngo = user.ngo
             ngo.description = request.POST['description']
             ngo.phone = request.POST['phone']
             # ngo.pincode = request.POST['pin']
+            # Image upload
             ngo.save()
             user.first_name = request.POST['name']
             user.save()
-        return HttpResponseRedirect(reverse('login'))
+        return redirect('login')
+    return redirect('home')
 
 
 def dashboard(request):
-    logging.info(request.user.username)
     user = request.user
     if user.is_authenticated():
         if hasattr(user, 'donor'):
             return render(request, 'donor/donor.html')
         elif hasattr(user, 'volunteer'):
+            # for deleting multiple elements, iterate through POST.keys(), and check if name attribute matches
+            # Read Querydict docs
             pass
         elif hasattr(user, 'ngo'):
-            return render(request, 'ngo/ngo.html')
+            context = {'ngo': user.ngo}
+            return render(request, 'ngo/ngo.html', context)
+    else:
+        return redirect('login')
 
 
 def create_ad(request):
@@ -94,8 +114,9 @@ def create_ad(request):
                 location=request.POST['address']
             )
             donation.save()
+            return redirect('dashboard')
+    return redirect('home')
 
-            return HttpResponseRedirect(reverse('dashboard'))
 
 def create_event(request):
     if request.method == 'POST':
@@ -111,7 +132,9 @@ def create_event(request):
             )
             event.save()
 
-            return HttpResponseRedirect(reverse('dashboard'))
+            return redirect('dashboard')
+    return redirect('home')
+
 
 def settings(request):
     if request.method == 'POST':
@@ -122,71 +145,161 @@ def settings(request):
                 user.donor.phone = request.POST['phone']
                 user.donor.address = request.POST['address']
                 user.donor.save()
-                user.set_password(request.POST['new_password'])
-                user.save()
+                if request.POST['new_password']:
+                    user.set_password(request.POST['new_password'])
+                    user.save()
             elif hasattr(user, 'volunteer'):
-                pass
+                user.volunteer.address = request.POST['address']
+                user.volunteer.phone = request.POST['phone']
+                user.volunteer.pincode = request.POST['pincode']
+                user.volunteer.save()
+                if request.POST['new_password']:
+                    user.set_password(request.POST['new_password'])
+                    user.save()
             elif hasattr(user, 'ngo'):
-                pass
+                user.first_name = request.POST['name']
+                if request.POST['new_password']:
+                    user.set_password(request.POST['new_password'])
+                user.save()
+                user.ngo.description = request.POST['description']
+                user.ngo.phone = request.POST['phone']
+                user.ngo.pincode = request.POST['pin']
+                user.ngo.address = request.POST['address']
+                # Image upload
+                # Delete old image
+                # Compare with contact.html and add/remove attributes
+                user.ngo.save()
+    return redirect('dashboard')
+
 
 def view_events(request):
     user = request.user
-    if user.is_authenticated() and hasattr(user, 'donor'):
-        context = {'events': Event.objects.all()}
-        return render(request, 'donor/viewEvents.html', context)
+    if user.is_authenticated():
+        if hasattr(user, 'donor'):
+            context = {'events': Event.objects.all()}
+            return render(request, 'donor/viewEvents.html', context)
+        elif hasattr(user, 'volunteer'):
+            pass
+        elif hasattr(user, 'ngo'):
+            pass
+        return HttpResponse("Invalid page")
+    return redirect('home')
+
 
 def ngo_list(request):      # Donor
     user = request.user
-    if user.is_authenticated() and hasattr(user, 'donor'):
-        context = {'ngos': NGO.objects.all()}
-        return render(request, 'donor/ngoList.html', context)
+    if user.is_authenticated():
+        if hasattr(user, 'donor'):
+            context = {'ngos': NGO.objects.all()}
+            return render(request, 'donor/ngoList.html', context)
+        return HttpResponse("Invalid page")
+    return redirect('home')
 
 
 def view_items(request):    # For donors
-    # Add to urls
+    user = request.user
+    if user.is_authenticated():
+        if hasattr(user, 'donor'):
+            context = {'items': Item.objects.all()}
+            return render(request, 'donor/items_required.html', context)
+        return HttpResponse("Invalid page")
+    return redirect('home')
+
+
+def edit_req(request):
     pass
+
+
+def request_vol(request):
+    pass
+
+
+def volunteer_event(request):
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated():
+            if hasattr(user, 'volunteer'):
+                # event =
+                # user.volunteer.events_volunteered.add(event)
+                # vol.save()
+                pass
+            return HttpResponse("Invalid page")
+    return redirect('home')
+
 
 def log_out(request):
     if request.user.is_authenticated():
         logout(request)
-    return HttpResponseRedirect(reverse('home'))
+    return redirect('home')
+
 
 def about(request):
     return render(request, 'about.html')
+
 
 def signup(request):
     context = {"error_message": ''}
     context.update(csrf(request))
     return render(request, 'register.html', context)
 
+
 def home(request):
     print(request.user.username)
     if request.user.is_authenticated():
-        return HttpResponseRedirect('/dashboard')
+        return redirect('dashboard')
     else:
         return render(request, 'home.html')
+
 
 def log_in(request):
     context = {"error_message": ''}
     context.update(csrf(request))
     return render(request, 'login.html', context)
 
+
 def create_ad_view(request):
     user = request.user
-    if user.is_authenticated() and hasattr(user, 'donor'):
-        context = {'donor': user.donor}
-        context.update(csrf(request))
-        return render(request, 'donor/create_ad.html', context)
+    if user.is_authenticated():
+        if hasattr(user, 'donor'):
+            context = {'donor': user.donor}
+            context.update(csrf(request))
+            return render(request, 'donor/create_ad.html', context)
+        return HttpResponse("Invalid page")
+    return redirect('login')
+
+
+def create_event_view(request):
+    user = request.user
+    if user.is_authenticated():
+        if hasattr(user, 'ngo'):
+            context = {}
+            context.update(csrf(request))
+            return render(request, 'ngo/create_event.html', context)
+        return HttpResponse("Invalid page")
+    return redirect('login')
+
+
+def edit_req_view(request):
+    pass
+
 
 def settings_view(request):
     user = request.user
     if user.is_authenticated():
         if hasattr(user, 'donor'):
-            return render(request, 'donor/settings.html')
+            context = {'donor': user.donor}
+            context.update(csrf(request))
+            return render(request, 'donor/settings.html', context)
         elif hasattr(user, 'volunteer'):
-            pass
+            context = {'volunteer': user.volunteer}
+            context.update(csrf(request))
+            return render(request, 'ngo/settings.html', context)
         elif hasattr(user, 'ngo'):
-            pass
+            context = {'ngo': user.ngo}
+            context.update(csrf(request))
+            return render(request, 'donor/settings.html', context)
+    return redirect('login')
+
 
 def guidelines(request):
     user = request.user
@@ -197,9 +310,12 @@ def guidelines(request):
             pass
         elif hasattr(user, 'ngo'):
             pass
+    return redirect('login')
+
 
 def join_as_vol(request):
     user = request.user
     if user.is_authenticated() and hasattr(user, 'donor'):
         logout(request)
-        return HttpResponseRedirect(reverse('signup'))
+        return redirect('signup')
+    return redirect('login')

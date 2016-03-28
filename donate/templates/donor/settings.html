@@ -12,7 +12,7 @@
 
 <div class="container">
 <div class="row">
- 		<div class="col-sm-8"><center><a href="donor.html"><img src="../../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></a></center></div>
+ 		<div class="col-sm-8"><center><a href="{% url 'dashboard' %}"><img src="../../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></a></center></div>
   		<div class="col-sm-4">
   		<center><h1><p>
       
@@ -37,35 +37,29 @@
 					<div class="panel-body">
 						<form class="form-horizontal" role="form" action="{% url 'settings' %}" method="post">
 							{% csrf_token %}
-							<!--<div class="form-group">-->
-								<!--<label for="inputEmail3" class="col-sm-3 control-label">Change Username</label>-->
-								<!--<div class="col-sm-9">-->
-									<!--<input type="text" class="form-control" id="inputEmail3" name="pincode" placeholder="Username" required="" />-->
-								<!--</div>-->
-							<!--</div>-->
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-3 control-label">Address</label>
 								<div class="col-sm-9">
-									<textarea class="form-control" id="inputEmail3" name="address" rows=5 placeholder="Address" required=""></textarea>
+									<textarea class="form-control" id="inputEmail3" name="address" rows=5 placeholder="Address" required="">{{donor.address}}</textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-3 control-label">Pincode</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputEmail3" name="pincode" placeholder="Pincode" required="" />
+									<input type="text" class="form-control" id="inputEmail3" name="pincode" value="{{donor.pincode}}" required="" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail3" class="col-sm-3 control-label">Mobile No.</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="inputEmail3" name="phone" placeholder="Phone" required="" />
+									<input type="text" class="form-control" id="inputEmail3" name="phone" value="{{donor.phone}}" placeholder="Phone" required="" />
 								</div>
 							</div>
 							<div class="form-group">
                         		<label for="inputPassword3" class="col-sm-3 control-label">
                            		New Password</label>
                        			 <div class="col-sm-9">
-                           			 <input type="password" class="form-control" id="inputPassword3" name="new_password" placeholder="Password" required="">
+                           			 <input type="password" class="form-control" id="inputPassword3" name="new_password" placeholder="Password">
                         		</div>
                     		</div>
 

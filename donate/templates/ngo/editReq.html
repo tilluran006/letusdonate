@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Letusdonate</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="../../static/css/volunteer.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-image: url('../../static/img/back2.jpg')">
+<div class="container-fluid">
+	<div class="row" style="background-image: url('../../static/img/front.jpg'); padding: 20px" >
+ 		<div class="col-sm-8">
+      <center><a href="{% url 'dashboard' %}"><img src="../../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></center>
+    </div>
+  	<div class="col-sm-4">
+  		<center><h1><p>  
+  			<a href="{% url 'settings_view' %}"><button type="button" class="btn btn-primary btn-lg">Setting</button></a>
+  			<a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg">Logout</button></a>
+  		</p></h1></center>
+  	</div>
+	</div>
+  
+  <div class="row col-sm-offset-3 col-sm-6" id="volunteer" style="padding-top: 30px">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>Add Requirement</strong>
+      </div>
+    <div class="panel-body">
+      <form class="form-horizontal" role="form" onsubmit="return showItem()" action="" method="post">
+       {% csrf_token %}
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-offset-1 col-sm-3 control-label">Item Name</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputEmail3" name="item_name" placeholder="Item Name" required="" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-offset-1 col-sm-3 control-label">Item Type</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputEmail3" name="item_type" placeholder="Item Type" required="" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-offset-1 col-sm-3 control-label">Quantity</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="inputEmail3" name="item_quantity" placeholder="Quantity" required="" />
+          </div>
+        </div>
+        <div class="form-group-last">
+          <div class="col-sm-offset-5 col-sm-9">
+            <button type="submit" class="btn btn-success btn-sm">Submit</button>
+            <button type="reset" class="btn btn-default btn-sm">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+   </div>
+  </div>
+
+  <div class="row" id="volunteer">  
+   <div class="col-sm-offset-1 col-sm-10" style="padding-top: 50px">
+     <table class="table">
+      <thead>
+      <tr>
+        <th>Item</th>
+        <th>Type</th>
+        <th>Quantity</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr>
+        <td>Shirt</td>
+        <td>Clothing</td>
+        <td>15</td>
+      </tr>
+      <tr>
+        <td>Bucket</td>
+        <td>Daily Use</td>
+        <td>12</td>
+      </tr>
+      <tr id="new_item" style="visibility: collapse;">
+        <td id="id_item_name"></td>
+        <td id="id_item_type"></td>
+        <td id="id_item_quantity"></td>
+      </tr>
+      </tbody>
+    </table>
+    </div>          
+  </div>
+</div>
+
+<script type="text/javascript">
+  function showItem(){
+    document.getElementById('id_item_name').innerHTML = document.getElementsByName('item_name')[0].value;
+    document.getElementById('id_item_type').innerHTML = document.getElementsByName('item_type')[0].value;
+    document.getElementById('id_item_quantity').innerHTML = document.getElementsByName('item_quantity')[0].value;
+    document.getElementById('new_item').style.visibility = 'visible';
+    return false;
+  }  
+</script>
+
+</body>
+</html>
