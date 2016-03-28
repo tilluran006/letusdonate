@@ -1,0 +1,27 @@
+.event:nth-of-type(2n+1) {
+    background-color: white;
+    color: #555555;
+    padding: 60px;
+}
+
+.event:nth-of-type(2n) {
+    background-color: gray;
+    color: white;
+    padding: 60px;
+}
+
+.head{
+	font-family: 'Open sans', sans-serif;
+	font-size: 60px;
+	padding: 5%;
+}
+
+.desc{
+	 font-family: 'Open sans', sans-serif;
+	 font-size: 16px;
+}
+
+.loc{
+	font-family: 'Open sans', sans-serif;
+	font-size: 20px;
+}
