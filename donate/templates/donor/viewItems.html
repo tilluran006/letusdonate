@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="../../static/css/donor.css">
-   <link rel="stylesheet" type="text/css" href="../../static/css/ngo.css">
+  <link rel="stylesheet" type="text/css" href="../../static/css/ngo.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 <div class="container-fluid">
-	<div class="row" style="background-image: url('../../static/img/front.jpg'); background-repeat: repeat; padding: 20px" >
+	<div class="row" style="background-image: url('../../static/img/front.jpg'); padding: 20px" >
  		<div class="col-sm-8">
          <center><a href="{% url 'dashboard' %}"><img src="../../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></a></center>
         </div>
@@ -27,7 +27,7 @@
 
     <ul class="nav nav-tabs" style="font-size: 25px">
           <li class="active"><a data-toggle="tab" href="#my">My Donations</a></li>
-          <li><a data-toggle="tab" href="#all">All Items</a></li>
+          <li><a data-toggle="tab" href="#all">Items Required</a></li>
     </ul>
 
     <div class="tab-content">
@@ -71,24 +71,20 @@
             <form>
                 <div class="row" id="ngo">  
                     <div class="col-sm-offset-1 col-sm-10">
-                        <h2><b>Item list</b></h2>
+                        <h2><b>Item Required</b></h2>
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Item</th>
-                                <th>Address</th>
-                                <th>Mobile No.</th>
-                                <th>PIN</th>
+                                <th>Item Name</th>
+                                <th>Item Type</th>
+                                <th>Quantity</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
-                                <td>Manith Shetty</td>
-                                <td>Bed</td>
-                                <td>MT1,NITK Hostels,NITK Surathkal</td>
-                                <td>9012345678</td>
-                                <td>575025</td>       
+                                <td>Shirt</td>
+                                <td>Clothes</td>
+                                <td>5</td>       
                             </tr>
                             </tbody>
                         </table>
