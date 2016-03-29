@@ -7,12 +7,20 @@ h2{
 	font-size: 40px;
 	color: #58ACFA;
 }
+
+tr{
+	text-align: center;		
+}
+
 tr:nth-child(even) {background: #CCC}
 tr:nth-child(odd) {background: #FFF}
+
 th{
 	background : #3399ff;
 	color: white;
+	text-align: center;
 }
+
 #collect{
 	padding-top: 10px;
 	padding-bottom: 10px;
