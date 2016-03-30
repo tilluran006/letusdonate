@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import Count
 
 from django.shortcuts import render, redirect
 
@@ -12,8 +13,6 @@ from donate.models import *
 
 def signin(request):
     if request.method == 'POST':
-        if request.user.is_authenticated():
-            return redirect('dashboard')
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             login(request, user)
@@ -25,7 +24,7 @@ def signin(request):
 
 def register(request):
     if request.method == 'POST':
-        user = User.objects.get(username=request.POST['username'])
+        user = User.objects.filter(username=request.POST['username'])
         if user:
             return HttpResponse("Username Already taken")
 
@@ -98,41 +97,45 @@ def dashboard(request):
         elif hasattr(user, 'ngo'):
             context = {'ngo': user.ngo}
             return render(request, 'ngo/ngo.html', context)
-    else:
-        return redirect('login')
+    return redirect('login')
 
 
 def create_ad(request):
     if request.method == 'POST':
         user = request.user
-        if user.is_authenticated() and hasattr(user, 'donor'):
-            item = Item.objects.get(name=request.POST['item_name'])
-            donation = Donation(
-                donor=user.donor,
-                item=item,
-                quantity=request.POST['quantity'],
-                location=request.POST['address']
-            )
-            donation.save()
-            return redirect('dashboard')
+        if user.is_authenticated():
+            if hasattr(user, 'donor'):
+                item = Item.objects.get(name=request.POST['itemname'])
+                donation = Donation(
+                    donor=user.donor,
+                    item=item,
+                    quantity=request.POST['quantity'],
+                    description=request.POST['description'],
+                    location=request.POST['address'],
+                    contact=request.POST['phone'],
+                )
+                donation.save()
+                return redirect('dashboard')
+            return redirect('login')
     return redirect('home')
 
 
 def create_event(request):
     if request.method == 'POST':
         user = request.user
-        if user.is_authenticated() and hasattr(user, 'ngo'):
-            event = Event(
-                ngo=user.ngo,
-                type=request.POST['type'],
-                name=request.POST['name'],
-                location=request.POST['location'],
-                time=request.POST['time'],
-                description=request.POST['description']
-            )
-            event.save()
-
-            return redirect('dashboard')
+        if user.is_authenticated():
+            if hasattr(user, 'ngo'):
+                event = Event(
+                    ngo=user.ngo,
+                    type=request.POST['type'],
+                    name=request.POST['name'],
+                    location=request.POST['location'],
+                    time=request.POST['time'],
+                    description=request.POST['description']
+                )
+                event.save()
+                return redirect('dashboard')
+            return redirect('login')
     return redirect('home')
 
 
@@ -179,9 +182,11 @@ def view_events(request):
             context = {'events': Event.objects.all()}
             return render(request, 'donor/viewEvents.html', context)
         elif hasattr(user, 'volunteer'):
-            pass
+            context = {'events': Event.objects.all()}
+            return render(request, 'ngo/viewEvents.html', context)
         elif hasattr(user, 'ngo'):
-            pass
+            context = {'events': Event.objects.all()}
+            return render(request, 'volunteer/viewEvents.html', context)
         return HttpResponse("Invalid page")
     return redirect('home')
 
@@ -261,7 +266,8 @@ def create_ad_view(request):
     user = request.user
     if user.is_authenticated():
         if hasattr(user, 'donor'):
-            context = {'donor': user.donor}
+            items = Item.objects.all()
+            context = {'donor': user.donor, 'items': items}
             context.update(csrf(request))
             return render(request, 'donor/create_ad.html', context)
         return HttpResponse("Invalid page")
