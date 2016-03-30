@@ -33,7 +33,8 @@ def register(request):
                 user = User.objects.create_user(
                     username=request.POST['username'],
                     email=request.POST['email'],
-                    password=request.POST['password']
+                    password=request.POST['password'],
+                    first_name=request.POST['name']
                 )
                 user.save()
         except:
@@ -76,11 +77,10 @@ def contact(request):
             ngo = user.ngo
             ngo.description = request.POST['description']
             ngo.phone = request.POST['phone']
-            # ngo.pincode = request.POST['pin']
+            ngo.pincode = request.POST['pin']
+            ngo.address = request.POST['address']
             # Image upload
             ngo.save()
-            user.first_name = request.POST['name']
-            user.save()
         return redirect('login')
     return redirect('home')
 
