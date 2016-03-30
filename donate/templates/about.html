@@ -13,32 +13,76 @@
 
 <div class="container-fluid">
 	<div class="row" style="background-image: url('../static/img/front.jpg')">
- 		<div class="col-sm-8"><center>
-      <a href="{% url 'dashboard' %}"><img src="../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></a></center></div>
-  		<div class="col-sm-4">
-  		<center><h1><p>
-      <a href="about.html"><button type="button" class="btn btn-primary btn-lg">About</button></a>
-  			<a href="{% url 'settings_view' %}"><button type="button" class="btn btn-primary btn-lg">Setting</button></a>
-  			<a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg">Logout</button></a>
-  		</p></h1></center>
-  		</div>
+ 		<div class="col-sm-8">
+    <center>
+      <a href="{% url 'dashboard' %}">
+        <img src="../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;">
+        </a>
+      </center>
+    </div>
+  		<div class="col-sm-3">
+        <center>
+          <h1>
+            <p>
+              <a href="{% url 'login' %}">
+                <button type="button" class="btn btn-primary btn-lg">Login</button>
+              </a>
+              <a href="{% url 'signup' %}">
+                <button type="button" class="btn btn-primary btn-lg">Register</button>
+              </a>
+            </p>
+          </h1>
+        </center>
+      </div>
 
 </div>
 
-	<div class="row" id="about"><center><h2 id="about-head"><strong>What is Letusdonate?</strong></h2>
+	<div class="row" id="about"><center><h2 id="about-head"><strong>About Us</strong></h2></center>
 	
 	 </div>
 	 <div class="row">
        <div class="col-sm-offset-2 col-sm-8">
-       	<p id="about-content"> Letusdonate is a Non-Profit network that facilitates interaction between donors and NGO's from different parts of the country. It is place where donors can make donation to variety of charity and for the good cause,aslo NGO's can reach out to people for organizing charity events and also get in contact with volunteers.</p></center>
-       </div></div>
+       	<p id="about-content"> Letusdonate is a Non-Profit network that facilitates interaction between  donors and NGO's from different parts of the country. It is place where donors can make donation to variety of charity and for the good cause,aslo NGO's can reach out to people for organizing charity events and also get in contact with volunteers.</p>
+          <p id="about-content">Here is how this works, When donors make donation in the website,volunteer collects the items from donors and distributes to the NGO's as per the NGO requirements.The donors can also volunteer for any charity events,if he wants to volunteer to collect items he can request for the same.</p>
+          <p id="about-content">Our mission is to make a best platform for Donors and Volunteers to connect with NGO.We want to ensure that anyone from any part of country can donate for novel cause and also ensure NGO can create more events and drives to help the one in need.In simple words we make the art of donation more easy by providing a platform.</p>
+       
+       </div>
+    </div>
 
-<div class="row" id="about"><center><h2 id="about-head"><strong>How it works</strong></h2>
+<div class="row" id="about"><center><h2 id="about-head"><strong>Letusdonate Creators</strong></h2>
 	
-	 </div>
-	 <div class="row">
-       <div class="col-sm-offset-2 col-sm-8">
-       	<p id="about-content"> When donors make donation in the website,volunteer collects the items from donors and distributes to the NGO's as per the NGO requirements.The donors can also volunteer for any charity events,if he wants to volunteer to collect items he can request for the same.</p></center>
-       </div></div>
+</div>
+	 <div class="row" style="padding-bottom: 40px;">
+ 
+       <div class="col-sm-offset-3 col-sm-3 ">
+        <center>
+           <h2 id="about-content">
+             <strong>Abhishek D V</strong>
+           </h2>
+      
+        </center>
+       </div>
+      <div class="col-sm-3">
+        
+        <center>
+          <h2 id="about-content">
+            <strong>Manith Shetty</strong>
+          </h2>
+      
+        </center>
+        
+      </div>
+      <div class="col-sm-2">
+        
+        <center>
+         <h2 id="about-content">
+            <strong>Tilak Raj</strong>
+          </h2>
+        </center>
+        
+        </div>
+       </div>
+   
+</div>
 </body>
 </html>
