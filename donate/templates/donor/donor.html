@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="../../static/css/donor.css">
-  <!--<link rel="stylesheet" type="text/css" href="../../static/css/spacing.css">-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
@@ -61,28 +60,25 @@
       <div class="col-sm-2 col-sm-offset-2">
         <center><h1>
             <p>           
-              <a href="../about.html">
+              <a href="{% url 'about' %}">
                 <button type="button" class="btn btn-primary btn-lg">About</button>
               </a>
             </p>
           </h1></center>
       </div>
       <div class="col-sm-4">
-        
           <center><h1>
             <p>           
-              <a href="../faq.html">
+              <a href="{% url 'faq' %}">
                 <button type="button" class="btn btn-primary btn-lg">FAQ</button>
               </a>
             </p>
           </h1></center>
-        
       </div>
       <div class="col-sm-2">
-        
         <center><h1>
             <p>           
-              <a href="../contact-form.html">
+              <a href="{% url 'contact_us_view' %}">
                 <button type="button" class="btn btn-primary btn-lg">Contact Us</button>
               </a>
             </p>
