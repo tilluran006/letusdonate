@@ -246,7 +246,11 @@ def log_out(request):
 
 
 def about(request):
-    return render(request, 'about.html')
+    if request.user.is_authenticated():
+        context = {'logged_in': True}
+    else:
+        context = {'logged_in': False}
+    return render(request, 'about.html', context)
 
 
 def signup(request):
@@ -332,3 +336,25 @@ def join_as_vol(request):
         logout(request)
         return redirect('signup')
     return redirect('login')
+
+
+def faq(request):
+    if request.user.is_authenticated():
+        context = {'logged_in': True}
+    else:
+        context = {'logged_in': False}
+    return render(request, 'faq.html', context)
+
+
+def contact_us_view(request):
+    if request.user.is_authenticated():
+        context = {'logged_in': True}
+    else:
+        context = {'logged_in': False}
+    context.update(csrf(request))
+    return render(request, 'contact-form.html', context)
+
+
+def contact_us(request):
+    # send mail to ??
+    pass

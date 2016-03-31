@@ -25,12 +25,16 @@ urlpatterns = [
     url(r'^logout$', log_out, name="logout"),
     url(r'^$', home, name="home"),  # Before logging in
     url(r'^signup$', signup, name="signup"),
+    url(r'^about$', about, name="about"),
+    url(r'^faq$', faq, name="faq"),
+    url(r'^contact_us_response$', contact_us, name="contact_us"),
 
     #Dummy views
     url(r'^login$', log_in, name="login"),
     url(r'^create_ads', create_ad_view, name="create_ad_view"),     # Donor
     url(r'^create_events$', create_event_view, name="create_event_view"),  # NGO
     url(r'^requirements$', edit_req_view, name="edit_req_view"),    # NGO
+    url(r'^contact_us$', contact_us_view, name="contact_us_view"),
 
     #user specific
     url(r'^create_event$', create_event, name="create_event"),  # NGO
