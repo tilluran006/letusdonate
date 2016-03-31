@@ -178,16 +178,14 @@ def settings(request):
 def view_events(request):
     user = request.user
     if user.is_authenticated():
+        context = {'events': Event.objects.all()}
         if hasattr(user, 'donor'):
-            context = {'events': Event.objects.all()}
             return render(request, 'donor/viewEvents.html', context)
         elif hasattr(user, 'volunteer'):
-            context = {'events': Event.objects.all()}
             return render(request, 'ngo/viewEvents.html', context)
         elif hasattr(user, 'ngo'):
-            context = {'events': Event.objects.all()}
             return render(request, 'volunteer/viewEvents.html', context)
-        return HttpResponse("Invalid page")
+        return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
 
 
@@ -197,7 +195,7 @@ def ngo_list(request):      # Donor
         if hasattr(user, 'donor'):
             context = {'ngos': NGO.objects.all()}
             return render(request, 'donor/ngoList.html', context)
-        return HttpResponse("Invalid page")
+        return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
 
 
@@ -210,20 +208,12 @@ def view_items(request):
         elif hasattr(user, 'ngo'):
             context = {}
             return render(request, 'ngo/view-items.html', context)
-        return HttpResponse("Invalid page")
+        return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
 
 
 def edit_req(request):
     pass
-
-
-def request_vol(request):
-    user = request.user
-    if user.is_authenticated():
-        if hasattr(user, 'ngo'):
-            pass
-    return redirect('dashboard')
 
 
 def volunteer_event(request):
@@ -235,7 +225,7 @@ def volunteer_event(request):
                 # user.volunteer.events_volunteered.add(event)
                 # vol.save()
                 pass
-            return HttpResponse("Invalid page")
+            return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
 
 
@@ -281,7 +271,7 @@ def create_ad_view(request):
             context = {'donor': user.donor, 'items': items}
             context.update(csrf(request))
             return render(request, 'donor/create_ad.html', context)
-        return HttpResponse("Invalid page")
+        return HttpResponse("User is not authorized to view the requested page")
     return redirect('login')
 
 
@@ -292,12 +282,19 @@ def create_event_view(request):
             context = {}
             context.update(csrf(request))
             return render(request, 'ngo/create_event.html', context)
-        return HttpResponse("Invalid page")
+        return HttpResponse("User is not authorized to view the requested page")
     return redirect('login')
 
 
 def edit_req_view(request):
-    pass
+    user = request.user
+    if user.is_authenticated():
+        if hasattr(user, 'ngo'):
+            context = {}
+            context.update(csrf(request))
+            return render(request, 'ngo/editReq.html', context)
+        return HttpResponse("User is not authorized to view the requested page")
+    return redirect('login')
 
 
 def settings_view(request):
@@ -310,11 +307,11 @@ def settings_view(request):
         elif hasattr(user, 'volunteer'):
             context = {'volunteer': user.volunteer}
             context.update(csrf(request))
-            return render(request, 'ngo/settings.html', context)
+            return render(request, 'volunteer/settings.html', context)
         elif hasattr(user, 'ngo'):
             context = {'ngo': user.ngo}
             context.update(csrf(request))
-            return render(request, 'donor/settings.html', context)
+            return render(request, 'ngo/settings.html', context)
     return redirect('login')
 
 
