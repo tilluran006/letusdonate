@@ -201,12 +201,15 @@ def ngo_list(request):      # Donor
     return redirect('home')
 
 
-def view_items(request):    # For donors
+def view_items(request):
     user = request.user
     if user.is_authenticated():
         if hasattr(user, 'donor'):
             context = {'items': Item.objects.all()}
             return render(request, 'donor/items_required.html', context)
+        elif hasattr(user, 'ngo'):
+            context = {}
+            return render(request, 'ngo/view-items.html', context)
         return HttpResponse("Invalid page")
     return redirect('home')
 
@@ -216,7 +219,11 @@ def edit_req(request):
 
 
 def request_vol(request):
-    pass
+    user = request.user
+    if user.is_authenticated():
+        if hasattr(user, 'ngo'):
+            pass
+    return redirect('dashboard')
 
 
 def volunteer_event(request):
