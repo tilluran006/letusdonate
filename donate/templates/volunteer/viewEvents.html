@@ -26,27 +26,27 @@
   		</div>
 
   		<div class="row">
-  			
+				{% for event in events %}
   			<div class="event">
   				<div class="row">
   					<div class="col-sm-offset-0 col-sm-4">
   						<div class="head">
-							Event Name
+							{{event.name}}
 						</div>
   					</div>
   					<div class="col-sm-4">
   						<div class="desc">
-  							We have different views for different users - Donor, Volunteer, NGO Donors can donate items, view heir previous donated history, register as a volunteer, view list of NGOs registered and their events.
-							NGOs can view the list of donated items, create events and charity drives and request for volunteers.
-							Volunteers ensure that the item donated is delivered to the NGO and help organise an event with an NGO.
+  							{{event.description}}
   						</div>
   					</div>
   					<div class="col-sm-4">
   						<div class="loc">
-							Time : <br/>
-							Venue :<br/>
-							Type :<br/>
-							Contact :<br/>
+								Time: {{event.time}}<br/>
+								Venue: {{event.location}}<br/>
+								City: {{event.city}}<br/>
+								Type :{{event.type}<br/>
+								Contact: {{event.ngo.phone}} ({{event.ngo.user.first_name}})<br/>
+								Volunteers enrolled: {{event.volunteers_enrolled}}/{{event.volunteers_required}}
 						</div>
 						<div class="loc" style="padding: 5%">
             				<center>
@@ -58,37 +58,37 @@
   				</div>
   			</div>
 
-  			<div class="event">
-  				<div class="row">  				
-  					<div class="col-sm-offset-0 col-sm-4">
-  						<div class="head">
-							Event Name
-						</div>
-  					</div>
-  					<div class="col-sm-4">
-  						<div class="desc">
-  							We have different views for different users - Donor, Volunteer, NGO Donors can donate items, view heir previous donated history, register as a volunteer, view list of NGOs registered and their events.
-							NGOs can view the list of donated items, create events and charity drives and request for volunteers.
-							Volunteers ensure that the item donated is delivered to the NGO and help organise an event with an NGO.
-  						</div>
-  					</div>
-  					<div class="col-sm-4">
-  						<div class="loc">
-							Time : <br/>
-							Venue :<br/>
-							Type :<br/>
-							Contact :<br/>
-						</div>
-						<div class="loc" style="padding: 5%">
-            				<center>
-              				<span style="font-weight: bold;font-size: 26px">Do you want to volunteer?</span><br/>
-              				<button class="btn btn-primary btn-lg" name="event_volunteer" onclick="">Click Here</button>
-            				</center>
-           				</div>
-  					</div>
-  				</div>
-  			</div>
-
+  			<!--<div class="event">-->
+  				<!--<div class="row">  				-->
+  					<!--<div class="col-sm-offset-0 col-sm-4">-->
+  						<!--<div class="head">-->
+							<!--Event Name-->
+						<!--</div>-->
+  					<!--</div>-->
+  					<!--<div class="col-sm-4">-->
+  						<!--<div class="desc">-->
+  							<!--We have different views for different users - Donor, Volunteer, NGO Donors can donate items, view heir previous donated history, register as a volunteer, view list of NGOs registered and their events.-->
+							<!--NGOs can view the list of donated items, create events and charity drives and request for volunteers.-->
+							<!--Volunteers ensure that the item donated is delivered to the NGO and help organise an event with an NGO.-->
+  						<!--</div>-->
+  					<!--</div>-->
+  					<!--<div class="col-sm-4">-->
+  						<!--<div class="loc">-->
+							<!--Time : <br/>-->
+							<!--Venue :<br/>-->
+							<!--Type :<br/>-->
+							<!--Contact :<br/>-->
+						<!--</div>-->
+						<!--<div class="loc" style="padding: 5%">-->
+            				<!--<center>-->
+              				<!--<span style="font-weight: bold;font-size: 26px">Do you want to volunteer?</span><br/>-->
+              				<!--<button class="btn btn-primary btn-lg" name="event_volunteer" onclick="">Click Here</button>-->
+            				<!--</center>-->
+           				<!--</div>-->
+  					<!--</div>-->
+  				<!--</div>-->
+  			<!--</div>-->
+				{% endfor %}
   		</div>
 
   	</div>

@@ -41,7 +41,7 @@ def register(request):
             return HttpResponse("Error creating an account. Please register again")
 
         type = request.POST['type']
-        context = {'user_name': request.POST['username']}
+        context = {}
         context.update(csrf(request))
         if type == 'donor':
             donor = Donor(user=user)
@@ -64,12 +64,14 @@ def contact(request):
         if hasattr(user, 'donor'):
             donor = user.donor
             donor.address = request.POST['address']
+            donor.city = request.POST['city']
             donor.pincode = request.POST['pin']
             donor.phone = request.POST['phone']
             donor.save()
         elif hasattr(user, 'volunteer'):
             vol = user.volunteer
             vol.address = request.POST['address']
+            vol.city = request.POST['city']
             vol.pincode = request.POST['pin']
             vol.phone = request.POST['phone']
             vol.save()
@@ -79,6 +81,7 @@ def contact(request):
             ngo.phone = request.POST['phone']
             ngo.pincode = request.POST['pin']
             ngo.address = request.POST['address']
+            ngo.city = request.POST['city']
             # Image upload
             ngo.save()
         return redirect('login')
@@ -145,34 +148,42 @@ def settings(request):
         user = request.user
         if user.is_authenticated():
             if hasattr(user, 'donor'):
-                user.donor.pincode = request.POST['pincode']
-                user.donor.phone = request.POST['phone']
-                user.donor.address = request.POST['address']
-                user.donor.save()
-                if request.POST['new_password']:
-                    user.set_password(request.POST['new_password'])
-                    user.save()
-            elif hasattr(user, 'volunteer'):
-                user.volunteer.address = request.POST['address']
-                user.volunteer.phone = request.POST['phone']
-                user.volunteer.pincode = request.POST['pincode']
-                user.volunteer.save()
-                if request.POST['new_password']:
-                    user.set_password(request.POST['new_password'])
-                    user.save()
-            elif hasattr(user, 'ngo'):
+                donor = user.donor
+                donor.pincode = request.POST['pincode']
+                donor.phone = request.POST['phone']
+                donor.address = request.POST['address']
+                donor.city = request.POST['city']
+                donor.save()
                 user.first_name = request.POST['name']
                 if request.POST['new_password']:
                     user.set_password(request.POST['new_password'])
                 user.save()
-                user.ngo.description = request.POST['description']
-                user.ngo.phone = request.POST['phone']
-                user.ngo.pincode = request.POST['pin']
-                user.ngo.address = request.POST['address']
+            elif hasattr(user, 'volunteer'):
+                vol = user.volunteer
+                vol.address = request.POST['address']
+                vol.city = request.POST['city']
+                vol.phone = request.POST['phone']
+                vol.pincode = request.POST['pincode']
+                vol.save()
+                user.first_name = request.POST['name']
+                if request.POST['new_password']:
+                    user.set_password(request.POST['new_password'])
+                user.save()
+            elif hasattr(user, 'ngo'):
+                ngo = user.ngo
+                user.first_name = request.POST['name']
+                if request.POST['new_password']:
+                    user.set_password(request.POST['new_password'])
+                user.save()
+                ngo.description = request.POST['description']
+                ngo.phone = request.POST['phone']
+                ngo.pincode = request.POST['pincode']
+                ngo.address = request.POST['address']
+                ngo.city = request.POST['city']
                 # Image upload
                 # Delete old image
                 # Compare with contact.html and add/remove attributes
-                user.ngo.save()
+                ngo.save()
     return redirect('dashboard')
 
 
@@ -306,7 +317,7 @@ def settings_view(request):
             context.update(csrf(request))
             return render(request, 'donor/settings.html', context)
         elif hasattr(user, 'volunteer'):
-            context = {'volunteer': user.volunteer}
+            context = {'vol': user.volunteer}
             context.update(csrf(request))
             return render(request, 'volunteer/settings.html', context)
         elif hasattr(user, 'ngo'):
