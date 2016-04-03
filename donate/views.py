@@ -97,6 +97,7 @@ def dashboard(request):
         elif hasattr(user, 'ngo'):
             context = {'ngo': user.ngo}
             return render(request, 'ngo/ngo.html', context)
+        logout(request)
     return redirect('login')
 
 
