@@ -38,45 +38,50 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-3 control-label">Address</label>
+								<label for="address" class="col-sm-3 control-label">Address</label>
 								<div class="col-sm-9">
 									<textarea class="form-control" id="address" name="address" rows=5 placeholder="Address">{{ngo.address}}</textarea>
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-3 control-label">Pincode</label>
+								<label for="city" class="col-sm-3 control-label">City</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="pincode" name="pin" value="{{ngo.pincode}}" placeholder="Pincode" />
+									<input type="text" class="form-control" id="city" name="city" value="{{ngo.city}}" placeholder="City" required="" />
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-3 control-label">Mobile No</label>
+								<label for="pincode" class="col-sm-3 control-label">Pincode</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="pincode" name="pincode" value="{{ngo.pincode}}" placeholder="Pincode" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="phone" class="col-sm-3 control-label">Mobile No</label>
 								<div class="col-sm-9">
 									<input type="text" class="form-control" id="phone" name="phone" value="{{ngo.phone}}" placeholder="Phone" />
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="inputEmail3" class="col-sm-3 control-label">Description</label>
+								<label for="description" class="col-sm-3 control-label">Description</label>
 								<div class="col-sm-9">
-									<textarea class="form-control" id="inputEmail3" name="description" rows=5 placeholder="Description">{{ngo.description}}</textarea>
+									<textarea class="form-control" id="description" name="description" rows=5 placeholder="Description">{{ngo.description}}</textarea>
 								</div>
 							</div>
 							<div class="form-group">
-                        		<label for="inputPassword3" class="col-sm-3 control-label">New Password</label>
-                        		<div class="col-sm-9">
-                            		<input type="password" class="form-control" id="inputPassword3" name="new_password" placeholder="New Password" />
-                        		</div>
-                    		</div>
-                    		<div class="form-group">
-          						<label for="inputEmail3" class="col-sm-3 control-label">Select an image</label>
-            					<div class="col-sm-9">
-                					<input type="file" name="file" id="js-upload-files" multiple>
-              					</div>	
-              				</div>
-
+								<label for="inputPassword3" class="col-sm-3 control-label">New Password</label>
+									<div class="col-sm-9">
+										<input type="password" class="form-control" id="inputPassword3" name="new_password" placeholder="New Password" />
+									</div>
+							</div>
+							<div class="form-group">
+								<label for="js-upload-files" class="col-sm-3 control-label">Select an image</label>
+									<div class="col-sm-9">
+										<input type="file" name="file" id="js-upload-files" multiple>
+									</div>
+							</div>
 							<div class="form-group-last">
 								<div class="col-sm-offset-5 col-sm-9">
-									<button type="submit" class="btn btn-success btn-sm">Save</button>
+									<button type="submit" class="btn btn-success btn-sm" id="imagesubmit">Save</button>
 								</div>
 							</div>
 						</form>

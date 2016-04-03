@@ -7,54 +7,58 @@ from django.db import models
 # Create your models here.
 class Donor(models.Model):
     user = models.OneToOneField(User, related_name='donor')
-    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=50)
+    city = models.CharField(max_length=10)
     pincode = models.IntegerField(default=0)
     phone = models.BigIntegerField(default=0)
 
     collection_time = models.CharField(max_length=20) ##Not required currently
 
     def __str__(self):
-        return self.user.username
+        return str(self.user.username)
 
 
 class NGO(models.Model):
     user = models.OneToOneField(User, related_name='ngo')
-    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=50)
+    city = models.CharField(max_length=10)
     pincode = models.IntegerField(default=0)
     phone = models.BigIntegerField(default=0)
     description = models.CharField(max_length=200)
     # image = models.ImageField()
 
     def __str__(self):
-        return self.user.username
+        return str(self.user.username)
 
 
 class Event(models.Model):
     name = models.CharField(max_length=20)
     ngo = models.ForeignKey(NGO, db_constraint=False, on_delete=models.CASCADE, related_name='event')
     type = models.CharField(max_length=20)
-    location = models.CharField(max_length=30)
+    location = models.CharField(max_length=50)
+    city = models.CharField(max_length=10)
     time = models.CharField(max_length=15)
     description = models.CharField(max_length=50)
     volunteers_required = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     def volunteers_enrolled(self):
         #return self.volunteers.count()
-        pass
+        return 0
 
 
 class Volunteer(models.Model):
     user = models.OneToOneField(User, related_name='volunteer')
-    address = models.CharField(max_length=100)
+    address = models.CharField(max_length=50)
+    city = models.CharField(max_length=10)
     pincode = models.IntegerField(default=0)
     phone = models.BigIntegerField(default=0)
     events_volunteered = models.ManyToManyField(Event, db_constraint=False, related_name="volunteers")
 
     def __str__(self):
-        return self.user.username
+        return str(self.user.username)
 
 
 class Item(models.Model):
@@ -62,7 +66,7 @@ class Item(models.Model):
     type = models.CharField(max_length=20, default=None)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     def quantity(self):
         return self.item_quantity.count()
@@ -74,7 +78,7 @@ class ItemQuantity(models.Model):
     quantity = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.quantity
+        return str(self.quantity)
 
 
 class Donation(models.Model):
@@ -84,9 +88,10 @@ class Donation(models.Model):
     quantity = models.IntegerField(default=0)
     description = models.CharField(max_length=50)
 
-    location = models.CharField(max_length=20)         # Address of item
+    location = models.CharField(max_length=50)         # Address of item
+    city = models.CharField(max_length=10)
     contact = models.BigIntegerField(default=0)        # Contact No
     status = models.CharField(max_length=10, choices=STATUS, default='donor')
 
     def __str__(self):
-        return self.donor + ", " + self.item
+        return str(self.donor) + ", " + str(self.item)
