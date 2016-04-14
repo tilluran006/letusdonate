@@ -41,7 +41,7 @@ def register(request):
             return HttpResponse("Error creating an account. Please register again")
 
         type = request.POST['type']
-        context = {}
+        context = {'user_name': request.POST['username']}
         context.update(csrf(request))
         if type == 'donor':
             donor = Donor(user=user)
@@ -96,7 +96,13 @@ def dashboard(request):
         elif hasattr(user, 'volunteer'):
             # for deleting multiple elements, iterate through POST.keys(), and check if name attribute matches
             # Read Querydict docs
-            pass
+            context = {
+                'donor_items': Donation.objects.filter(status="donor"),
+                'vol_items': Donation.objects.filter(status="vol"),
+                'ngo_items': Donation.objects.filter(status="ngo"),
+            }
+            context.update(csrf(request))
+            return render(request, 'volunteer/volunteer.html', context)
         elif hasattr(user, 'ngo'):
             context = {'ngo': user.ngo}
             return render(request, 'ngo/ngo.html', context)
@@ -117,6 +123,7 @@ def create_ad(request):
                     description=request.POST['description'],
                     location=request.POST['address'],
                     contact=request.POST['phone'],
+                    status="donor"
                 )
                 donation.save()
                 return redirect('dashboard')
@@ -225,7 +232,33 @@ def view_items(request):
 
 
 def edit_req(request):
-    pass
+    return redirect('dashboard')
+
+
+def collect_items(request):     # Volunteer - collect from donors
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated():
+            if hasattr(user, 'volunteer'):
+                for id in request.POST['donation']:
+                    donation = Donation.objects.get(id=id)
+                    donation.status = "vol"
+                    donation.save()
+            return HttpResponse("User is not authorized to view the requested page")
+    return redirect('dashboard')
+
+
+def deliver_items(request):     # Volunteer - deliver to ngo
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated():
+            if hasattr(user, 'volunteer'):
+                for id in request.POST['donation']:
+                    donation = Donation.objects.get(id=id)
+                    donation.status = "ngo"
+                    donation.save()
+            return HttpResponse("User is not authorized to view the requested page")
+    return redirect('dashboard')
 
 
 def volunteer_event(request):
