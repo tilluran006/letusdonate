@@ -38,7 +38,6 @@
   </div>
 
   <center><h2><b>Item list</b></h2></center>
-  <form name="donor_items" action="" method="post">
   			<ul class="nav nav-tabs" style="font-size: 25px;padding-left:400px;padding-bottom: 10px;">
             <li class="active"><a data-toggle="tab" href="#my">Collect Items</a></li>
             <li><a data-toggle="tab" href="#all">Collected items</a></li>
@@ -46,7 +45,9 @@
             </ul>
   <div class="tab-content">
   <div id="my" class="tab-pane fade in active">
-  <div class="row" id="volunteer">
+	  <form name="donor_items" action="{% url 'collect_items' %}" method="post">
+		  {% csrf_token %}
+    <div class="row" id="donor_items">
    <div class="col-sm-10 col-sm-offset-1">
    <button type="submit" class="btn btn-success btn-sm">Collected</button>
    <p></p>
@@ -81,10 +82,14 @@
     </tbody>
    </table>
   </div>      
-</div>
-</div>
+	</div>
+    </form>
+	</div>
+
   <div id="all" class="tab-pane fade">
-  <div class="row" id="volunteer">
+	  <form name="vol_items" action="{% url 'deliver_items' %}" method="post">
+		  {% csrf_token %}
+  <div class="row" id="vol_items">
    <div class="col-sm-10 col-sm-offset-1">
    <button type="submit" class="btn btn-success btn-sm">Delivered</button>
    <p></p>
@@ -102,7 +107,7 @@
     </thead>
     <tbody>
       <tr>
-         <td><input type="checkbox" name="collected" value="collected" /></td>
+         <td><input type="checkbox" name="donation[]" value="collected" /></td>
         <td>Manith Shetty</td>
         <td>Bed</td>
         <td>MT1,NITK Hostels,NITK Surathkal</td>
@@ -110,7 +115,7 @@
         <td>575025</td>
       </tr>
       <tr>
-        <td><input type="checkbox" name="collected" value="collected" /></td>
+        <td><input type="checkbox" name="donation[]" value="collected" /></td>
         <td>Manith Shetty</td>
         <td>Bed</td>
         <td>MT1,NITK Hostels,NITK Surathkal</td>
@@ -118,10 +123,12 @@
         <td>575025</td>
       </tr>
     </tbody>
-   </table>
-  </div>      
+    </table>
+    </div>
+  </div>
+	</form>
 </div>
-</div>
+
 <div id="del" class="tab-pane fade	">
 <div class="row" id="volunteer">
    <div class="col-sm-10 col-sm-offset-1">
@@ -162,7 +169,6 @@
 
 </div>
 
-</form>
 <div class="row" style="background-image: url('../../static/img/front.jpg'); padding: 20px;">
       <div class="col-sm-2 col-sm-offset-2">
         <center><h1>
