@@ -41,7 +41,7 @@ def register(request):
             return HttpResponse("Error creating an account. Please register again")
 
         type = request.POST['type']
-        context = {}
+        context = {'user_name': request.POST['username']}
         context.update(csrf(request))
         if type == 'donor':
             donor = Donor(user=user)
@@ -96,7 +96,8 @@ def dashboard(request):
         elif hasattr(user, 'volunteer'):
             # for deleting multiple elements, iterate through POST.keys(), and check if name attribute matches
             # Read Querydict docs
-            pass
+            context = {}
+            return render(request, 'volunteer/volunteer.html', context)
         elif hasattr(user, 'ngo'):
             context = {'ngo': user.ngo}
             return render(request, 'ngo/ngo.html', context)
