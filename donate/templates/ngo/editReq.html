@@ -30,7 +30,7 @@
         <strong>Add Requirement</strong>
       </div>
     <div class="panel-body">
-      <form class="form-horizontal" role="form" onsubmit="return showItem()" action="{% url 'edit_req' %}" method="post">
+      <form class="form-horizontal" role="form" action="{% url 'edit_req' %}" method="post">
        {% csrf_token %}
         <div class="form-group">
           <label for="inputEmail3" class="col-sm-offset-1 col-sm-3 control-label">Item Name</label>
@@ -83,26 +83,11 @@
         <td>Daily Use</td>
         <td>12</td>
       </tr>
-      <tr id="new_item" style="visibility: collapse;">
-        <td id="id_item_name"></td>
-        <td id="id_item_type"></td>
-        <td id="id_item_quantity"></td>
-      </tr>
       </tbody>
     </table>
     </div>          
   </div>
 </div>  
-
-<script type="text/javascript">
-  function showItem(){
-    document.getElementById('id_item_name').innerHTML = document.getElementsByName('item_name')[0].value;
-    document.getElementById('id_item_type').innerHTML = document.getElementsByName('item_type')[0].value;
-    document.getElementById('id_item_quantity').innerHTML = document.getElementsByName('item_quantity')[0].value;
-    document.getElementById('new_item').style.visibility = 'visible';
-    return false;
-  }  
-</script>
 
 </body>
 </html>
