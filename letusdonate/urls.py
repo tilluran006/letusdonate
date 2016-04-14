@@ -40,10 +40,11 @@ urlpatterns = [
     url(r'^create_event$', create_event, name="create_event"),  # NGO
     url(r'^create_ad$', create_ad, name="create_ad"),   # Donor
     url(r'^join_as_vol$', join_as_vol, name="join_as_vol"),     # Donor
-    url(r'^events$', view_events, name="view_events"),    # Donor
     url(r'^ngos$', ngo_list, name="ngo_list"),   # Donor
     url(r'^edit_requirements$', edit_req, name="edit_req"),    # NGO
     url(r'^volunteer_event$', volunteer_event, name="volunteer_event"),     # Volunteer
+    url(r'^collect_items', collect_items, name="collect_items"),            # Volunteer
+    url(r'^deliver_items', deliver_items, name="deliver_items"),            # Volunteer
 
     #different view for each user
     url(r'^contact$', contact, name="contact"),  # Donor,volunteer contact: To be shown after signup
@@ -52,5 +53,6 @@ urlpatterns = [
     url(r'^guidelines$', guidelines, name="guidelines"),
     url(r'^settings$', settings_view, name="settings_view"),
     url(r'^items$', view_items, name="view_items"),     # List of items available for donation
+    url(r'^events$', view_events, name="view_events"),
 ]
 
