@@ -39,10 +39,17 @@
 
   <center><h2><b>Item list</b></h2></center>
   <form name="donor_items" action="" method="post">
-    {% csrf_token %}
-  <center><button type="submit" class="btn btn-success btn-sm">Collected</button></center>
-  <div class="row" id="volunteer">  
+  			<ul class="nav nav-tabs" style="font-size: 25px;padding-left:400px;padding-bottom: 10px;">
+            <li class="active"><a data-toggle="tab" href="#my">Collect Items</a></li>
+            <li><a data-toggle="tab" href="#all">Collected items</a></li>
+            <li><a data-toggle="tab" href="#del">Delivered</a></li>
+            </ul>
+  <div class="tab-content">
+  <div id="my" class="tab-pane fade in active">
+  <div class="row" id="volunteer">
    <div class="col-sm-10 col-sm-offset-1">
+   <button type="submit" class="btn btn-success btn-sm">Collected</button>
+   <p></p>
    <table class="table">
     <thead>
       <tr>
@@ -75,6 +82,86 @@
    </table>
   </div>      
 </div>
+</div>
+  <div id="all" class="tab-pane fade">
+  <div class="row" id="volunteer">
+   <div class="col-sm-10 col-sm-offset-1">
+   <button type="submit" class="btn btn-success btn-sm">Delivered</button>
+   <p></p>
+
+   <table class="table"  style="padding-bottom: 20px;">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Item</th>
+        <th>Address</th>
+        <th>Mobile No.</th>
+        <th>PIN</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+         <td><input type="checkbox" name="collected" value="collected" /></td>
+        <td>Manith Shetty</td>
+        <td>Bed</td>
+        <td>MT1,NITK Hostels,NITK Surathkal</td>
+        <td>9012345678</td>
+        <td>575025</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="collected" value="collected" /></td>
+        <td>Manith Shetty</td>
+        <td>Bed</td>
+        <td>MT1,NITK Hostels,NITK Surathkal</td>
+        <td>9012345678</td>
+        <td>575025</td>
+      </tr>
+    </tbody>
+   </table>
+  </div>      
+</div>
+</div>
+<div id="del" class="tab-pane fade	">
+<div class="row" id="volunteer">
+   <div class="col-sm-10 col-sm-offset-1">
+   
+   <table class="table">
+    <thead>
+      <tr>
+        
+        <th>Name</th>
+        <th>Item</th>
+        <th>Address</th>
+        <th>Mobile No.</th>
+        <th>PIN</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+         
+        <td>Manith Shetty</td>
+        <td>Bed</td>
+        <td>MT1,NITK Hostels,NITK Surathkal</td>
+        <td>9012345678</td>
+        <td>575025</td>
+      </tr>
+      <tr>
+        
+        <td>Manith Shetty</td>
+        <td>Bed</td>
+        <td>MT1,NITK Hostels,NITK Surathkal</td>
+        <td>9012345678</td>
+        <td>575025</td>
+      </tr>
+    </tbody>
+   </table>
+  </div>      
+</div>
+</div>
+
+</div>
+
 </form>
 <div class="row" style="background-image: url('../../static/img/front.jpg'); padding: 20px;">
       <div class="col-sm-2 col-sm-offset-2">
