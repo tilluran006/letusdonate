@@ -28,10 +28,10 @@
     <div class="col-sm-12">
       <div class="row">
         <div class="col-sm-2 col-sm-offset-4" id="createad">
-          <a href="{}"><img src="../../static/img/event.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
+          <a href="{% url 'view_events' %}"><img src="../../static/img/event.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
         </div>
         <div class="col-sm-2">
-          <a href="{}"><img src="../../static/img/view-items.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
+          <a href="{% url 'view_items' %}"><img src="../../static/img/view-items.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
 	  <form name="donor_items" action="{% url 'collect_items' %}" method="post">
 		  {% csrf_token %}
     <div class="row" id="donor_items">
-   <div class="col-sm-10 col-sm-offset-1">
+   <div class="col-sm-12">
    <button type="submit" class="btn btn-success btn-sm">Collected</button>
    <p></p>
    <table class="table">
@@ -57,28 +57,32 @@
         <th></th>
         <th>Name</th>
         <th>Item</th>
+	      <th>Quantity</th>
         <th>Address</th>
+	      <th>City</th>
         <th>Mobile No.</th>
-        <th>PIN</th>
       </tr>
     </thead>
     <tbody>
+      {% for donation in donor_items %}
       <tr>
-         <td><input type="checkbox" name="donation[]" value="collected" /></td>
-        <td>Manith Shetty</td>
-        <td>Bed</td>
-        <td>MT1,NITK Hostels,NITK Surathkal</td>
-        <td>9012345678</td>
-        <td>575025</td>
+         <td><input type="checkbox" name="donation[]" value="{{donation.id}}" /></td>
+        <td>{{donation.donor.user.first_name}}</td>
+        <td>{{donation.item.name}}</td>
+	      <td>{{donation.quantity}}</td>
+        <td>{{donation.location}}</td>
+        <td>{{donation.city}}</td>
+        <td>{{donation.contact}}</td>
       </tr>
-      <tr>
-        <td><input type="checkbox" name="donation[]" value="collected" /></td>
-        <td>Manith Shetty</td>
-        <td>Bed</td>
-        <td>MT1,NITK Hostels,NITK Surathkal</td>
-        <td>9012345678</td>
-        <td>575025</td>
-      </tr>
+      {% endfor %}
+      <!--<tr>-->
+        <!--<td><input type="checkbox" name="donation[]" value="collected" /></td>-->
+        <!--<td>Manith Shetty</td>-->
+        <!--<td>Bed</td>-->
+        <!--<td>MT1,NITK Hostels,NITK Surathkal</td>-->
+        <!--<td>9012345678</td>-->
+        <!--<td>575025</td>-->
+      <!--</tr>-->
     </tbody>
    </table>
   </div>      
@@ -90,7 +94,7 @@
 	  <form name="vol_items" action="{% url 'deliver_items' %}" method="post">
 		  {% csrf_token %}
   <div class="row" id="vol_items">
-   <div class="col-sm-10 col-sm-offset-1">
+   <div class="col-sm-12">
    <button type="submit" class="btn btn-success btn-sm">Delivered</button>
    <p></p>
 
@@ -100,28 +104,32 @@
         <th></th>
         <th>Name</th>
         <th>Item</th>
+	      <th>Quantity</th>
         <th>Address</th>
+	      <th>City</th>
         <th>Mobile No.</th>
-        <th>PIN</th>
       </tr>
     </thead>
     <tbody>
+      {% for donation in vol_items %}
       <tr>
-         <td><input type="checkbox" name="donation[]" value="collected" /></td>
-        <td>Manith Shetty</td>
-        <td>Bed</td>
-        <td>MT1,NITK Hostels,NITK Surathkal</td>
-        <td>9012345678</td>
-        <td>575025</td>
+         <td><input type="checkbox" name="donation[]" value="{{donation.id}}" /></td>
+        <td>{{donation.donor.user.first_name}}</td>
+        <td>{{donation.item.name}}</td>
+	      <td>{{donation.quantity}}</td>
+        <td>{{donation.location}}</td>
+        <td>{{donation.city}}</td>
+        <td>{{donation.contact}}</td>
       </tr>
-      <tr>
-        <td><input type="checkbox" name="donation[]" value="collected" /></td>
-        <td>Manith Shetty</td>
-        <td>Bed</td>
-        <td>MT1,NITK Hostels,NITK Surathkal</td>
-        <td>9012345678</td>
-        <td>575025</td>
-      </tr>
+      {% endfor %}
+      <!--<tr>-->
+        <!--<td><input type="checkbox" name="donation[]" value="collected" /></td>-->
+        <!--<td>Manith Shetty</td>-->
+        <!--<td>Bed</td>-->
+        <!--<td>MT1,NITK Hostels,NITK Surathkal</td>-->
+        <!--<td>9012345678</td>-->
+        <!--<td>575025</td>-->
+      <!--</tr>-->
     </tbody>
     </table>
     </div>
@@ -131,36 +139,36 @@
 
 <div id="del" class="tab-pane fade	">
 <div class="row" id="volunteer">
-   <div class="col-sm-10 col-sm-offset-1">
-   
+   <div class="col-sm-12">
    <table class="table">
     <thead>
       <tr>
-        
         <th>Name</th>
         <th>Item</th>
+	      <th>Quantity</th>
         <th>Address</th>
+	      <th>City</th>
         <th>Mobile No.</th>
-        <th>PIN</th>
       </tr>
     </thead>
     <tbody>
+      {% for donation in ngo_items %}
       <tr>
-         
-        <td>Manith Shetty</td>
-        <td>Bed</td>
-        <td>MT1,NITK Hostels,NITK Surathkal</td>
-        <td>9012345678</td>
-        <td>575025</td>
+        <td>{{donation.donor.user.first_name}}</td>
+        <td>{{donation.item.name}}</td>
+	      <td>{{donation.quantity}}</td>
+        <td>{{donation.location}}</td>
+        <td>{{donation.city}}</td>
+        <td>{{donation.contact}}</td>
       </tr>
-      <tr>
-        
-        <td>Manith Shetty</td>
-        <td>Bed</td>
-        <td>MT1,NITK Hostels,NITK Surathkal</td>
-        <td>9012345678</td>
-        <td>575025</td>
-      </tr>
+      {% endfor %}
+      <!--<tr>-->
+        <!--<td>Manith Shetty</td>-->
+        <!--<td>Bed</td>-->
+        <!--<td>MT1,NITK Hostels,NITK Surathkal</td>-->
+        <!--<td>9012345678</td>-->
+        <!--<td>575025</td>-->
+      <!--</tr>-->
     </tbody>
    </table>
   </div>      
@@ -191,7 +199,6 @@
         
       </div>
       <div class="col-sm-2">
-        
         <center><h1>
             <p>           
               <a href="{% url 'contact_us_view' %}">
@@ -199,7 +206,6 @@
               </a>
             </p>
           </h1></center>
-        
       </div>
     </div>
 </body>

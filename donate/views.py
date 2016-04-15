@@ -227,6 +227,8 @@ def view_items(request):
         elif hasattr(user, 'ngo'):
             context = {}
             return render(request, 'ngo/view-items.html', context)
+        elif hasattr(user, 'volunteer'):
+            return render(request, 'volunteer/items_required.html')
         return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
 
