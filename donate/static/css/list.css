@@ -1,0 +1,25 @@
+.event:nth-of-type(2n+1) {
+    background-color: #0099DD;
+    color: white;
+    padding: 30px;
+}
+
+.event:nth-of-type(2n) {
+    background-color: white;
+    color: #555555;
+    padding: 30px;
+}
+
+#heading{
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#text{
+	font-size: 20px;
+}
+
+.event{
+
+}
