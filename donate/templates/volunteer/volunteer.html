@@ -64,6 +64,11 @@
       </tr>
     </thead>
     <tbody>
+      {% if not donor_items %}
+      <tr>
+        <td colspan="6">No Items to Display</td>
+      </tr>
+      {% endif %}
       {% for donation in donor_items %}
       <tr>
          <td><input type="checkbox" name="donation[]" value="{{donation.id}}" /></td>
@@ -111,6 +116,11 @@
       </tr>
     </thead>
     <tbody>
+      {% if not vol_items %}
+      <tr>
+        <td colspan="6">No Items to Display</td>
+      </tr>
+      {% endif %}
       {% for donation in vol_items %}
       <tr>
          <td><input type="checkbox" name="donation[]" value="{{donation.id}}" /></td>
@@ -142,7 +152,7 @@
    <div class="col-sm-12">
    <table class="table">
     <thead>
-      <tr>
+      <tr style="font-size: 15px">
         <th>Name</th>
         <th>Item</th>
 	      <th>Quantity</th>
@@ -152,6 +162,11 @@
       </tr>
     </thead>
     <tbody>
+      {% if not ngo_items %}
+      <tr>
+        <td colspan="6">No Items to Display</td>
+      </tr>
+      {% endif %}
       {% for donation in ngo_items %}
       <tr>
         <td>{{donation.donor.user.first_name}}</td>
