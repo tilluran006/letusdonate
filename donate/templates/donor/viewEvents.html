@@ -26,7 +26,12 @@
   		</div>
 
   		<div class="row">
-  			{% for event in events %}
+  			{% if not events %}
+			    <div class="pgcenter">
+				    No Events registered
+			    </div>
+			  {% endif %}
+			  {% for event in events %}
   			<div class="event">
   				<div class="row">
   					<div class="col-sm-offset-0 col-sm-4">
