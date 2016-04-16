@@ -29,37 +29,37 @@
 							<strong>Contact Details</strong>
 						</div>
 						<div class="panel-body">
-							<form class="form-horizontal" role="form" action="{% url 'contact' %}" method="post">
+							<form class="form-horizontal" role="form" action="{% url 'contact' %}" method="post" >
 							{% csrf_token %}
 								<input type="hidden" name="user_name" value="{{ user_name }}">
 								<div class="form-group">
 									<label for="address" class="col-sm-3 control-label">Address</label>
 									<div class="col-sm-9">
-										<textarea class="form-control" id="address" name="address" rows=5 placeholder="Address" required=""></textarea>
+										<textarea class="form-control" id="address" name="address" rows=5 placeholder="Address" required></textarea>
 									</div>
 								</div>
 								<div class="form-group">
 								<label for="city" class="col-sm-3 control-label">City</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" id="city" name="city" placeholder="City" required="" />
+									<input type="text" class="form-control" id="city" name="city" placeholder="City" required />
 								</div>
 							</div>
 								<div class="form-group">
 									<label for="pin" class="col-sm-3 control-label">PIN</label>
 									<div class="col-sm-9">
-										<input type="text" class="form-control" id="pin" name="pin" placeholder="PIN" required="" />
+										<input type="text" class="form-control" id="pin" name="pin" placeholder="PIN" required />
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="phone" class="col-sm-3 control-label">Phone</label>
 									<div class="col-sm-9">
-										<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required="" />
+										<input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required />
 									</div>
 								</div>
 								<div class="form-group-last">
 									<div class="col-sm-offset-5 col-sm-9">
-										<a href=""><button type="submit" class="btn btn-success btn-sm">Confirm</button></a>
-										<button type="reset" class="btn btn-default btn-sm">Reset</button>
+										<input type="submit" class="btn btn-success btn-sm" value="Confirm"/>
+										<input type="reset" class="btn btn-default btn-sm" value="Reset" />
 									</div>
 								</div>
 							</form>
@@ -69,6 +69,10 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		
+	</script>
 </body>
 
 </html>
