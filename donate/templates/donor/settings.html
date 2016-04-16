@@ -10,25 +10,18 @@
 </head>
 <body background="../../static/img/back.jpg">
 
-<div class="container">
-<div class="row">
- 		<div class="col-sm-8"><center><a href="{% url 'dashboard' %}"><img src="../../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></a></center></div>
+<div class="container-fluid">
+<div class="row" style="padding: 20px">
+ 		<div class="col-sm-8"><center><a href="{% url 'dashboard' %}">
+ 			<img src="../../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></a></center></div>
   		<div class="col-sm-4">
-  		<center><h1><p>
-      
+  			<center><h1><p>    
   			<a href="{% url 'settings_view' %}"><button type="button" class="btn btn-primary btn-lg">Settings</button></a>
   			<a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg">Logout</button></a>
-  		</p></h1></center>
+  			</p></h1></center>
   		</div>
- <div class="row"><p>                                                                </p></div>
-  <div class="row"><p>                                                                </p></div>
-   <div class="row"><p>                                                                </p></div>
-    <div class="row"><p>                                                                </p></div>
-     <div class="row"><p>                                                                </p></div>
-  <div class="row"><p>                                                                </p></div>
-   <div class="row"><p>                                                                </p></div>
-    <div class="row"><p>                                                                </p></div>
-		<div class="row">
+
+		<div class="row" style="padding-top: 150px">
 			<div class="col-sm-offset-3	 col-sm-6">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -75,7 +68,7 @@
 							</div>
 							<div class="form-group-last">
 								<div class="col-sm-offset-5 col-sm-9">
-									<button type="submit" class="btn btn-success btn-sm">Save</button></a>
+									<input type="submit" class="btn btn-success btn-sm" value="Save" />
 								</div>
 							</div>
 						</form>
