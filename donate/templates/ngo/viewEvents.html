@@ -39,58 +39,72 @@
         <div class="tab-content">
 
           <div id="my" class="tab-pane fade in active">
+	          {% if not my_events %}
+			      <div class="pgcenter">
+				        No Events registered
+			      </div>
+			      {% endif %}
+	          {% for event in my_events %}
   			    <div class="event">
               <div class="row">
   			        <div class="col-sm-offset-0 col-sm-4">
   				        <div class="head">
-						        Event Name
+						        {{event.name}}
 					        </div>
   			        </div>
   			        <div class="col-sm-4">
   				        <div class="desc">
-  					       We have different views for different users - Donor, Volunteer, NGO Donors can donate items, view heir previous donated history, register as a volunteer, view list of NGOs registered and their events. NGOs can view the list of donated items, create events and charity drives and request for volunteers. Volunteers ensure that the item donated is delivered to the NGO and help organise an event with an NGO.
+  					       {{event.description}}
   				        </div>
   			        </div>
   			        <div class="col-sm-4">
   				        <div class="loc">
-					         Time : <br/>
-					         Venue :<br/>
-					         Type :<br/>
-					         Contact :<br/>
+					         Time: {{event.time}}<br/>
+					         Venue: {{event.location}}<br/>
+					         City: {{event.city}}<br/>
+					         Type: {{event.type}<br/>
+					         Volunteers enrolled: {{event.volunteers_enrolled}}/{{event.volunteers_required}}
 				          </div>
                 </div>
   				    </div>
             </div>
+	          {% endfor %}
   			  </div>
 
           <div id="all" class="tab-pane fade">
+	          {% if not events %}
+			      <div class="pgcenter">
+				        No Events registered
+			      </div>
+			      {% endif %}
+	          {% for event in events %}
   			    <div class="event">
               <div class="row"> 				
   				      <div class="col-sm-offset-0 col-sm-4">
   				         <div class="head">
-						         Event Namesf
+						         {{event.name}}
 						       </div>    
   					    </div>
   					    <div class="col-sm-4">
   						    <div class="desc">
-  						      We have different views for different users - Donor, Volunteer, NGO Donors can donate items, view heir previous donated history, register as a volunteer, view list of NGOs registered and their events.	NGOs can view the list of donated items, create events and charity drives and request for volunteers.Volunteers ensure that the item donated is delivered to the NGO and help organise an event with an NGO.
+  						      {{event.description}}
   						    </div>  
   					    </div>
   					    <div class="col-sm-4">
   						    <div class="loc">
-							      Time : <br/>
-							      Venue :<br/>
-							      Type :<br/>
-							      Contact :<br/>
+							      Time: {{event.time}}<br/>
+							      Venue: {{event.location}}<br/>
+							      City: {{event.city}}<br/>
+							      Type: {{event.type}<br/>
+							      Contact: {{event.ngo.phone}} ({{event.ngo.user.first_name}})<br/>
 						      </div>
   					    </div>
   				    </div>
             </div>
+	          {% endfor %}
   			  </div>
-
   		  </div>
       </div>
-
   </div>
 </body>
 </html>

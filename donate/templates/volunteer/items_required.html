@@ -37,7 +37,12 @@
       </tr>
     </thead>
     <tbody>
-			{% for item in items %}
+			{% if not items %}
+      <tr>
+        <td colspan="3"><center>No Items to Display</center></td>
+      </tr>
+      {% endif %}
+      {% for item in items %}
       <tr>         
         <td>{{item.name}}</td>
         <td>{{item.type}}</td>
@@ -48,8 +53,6 @@
    </table>
      </div>          
     </div>
-
-     
   </div>
 </body>
 </html>

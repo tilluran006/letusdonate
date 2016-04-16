@@ -27,11 +27,14 @@
   <div class="row" style="padding-top: 50px">
     <div class="col-sm-12">
       <div class="row">
-        <div class="col-sm-2 col-sm-offset-4" id="createad">
+        <div class="col-sm-2 col-sm-offset-3" id="createad">
           <a href="{% url 'view_events' %}"><img src="../../static/img/event.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
         </div>
         <div class="col-sm-2">
           <a href="{% url 'view_items' %}"><img src="../../static/img/view-items.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
+        </div>
+        <div class="col-sm-2">
+          <a href="{% url 'guidelines' %}"><img src="../../static/img/guidelines.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
         </div>
       </div>
     </div>
@@ -64,6 +67,11 @@
       </tr>
     </thead>
     <tbody>
+      {% if not donor_items %}
+      <tr>
+        <td colspan="6">No Items to Display</td>
+      </tr>
+      {% endif %}
       {% for donation in donor_items %}
       <tr>
          <td><input type="checkbox" name="donation[]" value="{{donation.id}}" /></td>
@@ -111,6 +119,11 @@
       </tr>
     </thead>
     <tbody>
+      {% if not vol_items %}
+      <tr>
+        <td colspan="6">No Items to Display</td>
+      </tr>
+      {% endif %}
       {% for donation in vol_items %}
       <tr>
          <td><input type="checkbox" name="donation[]" value="{{donation.id}}" /></td>
@@ -142,7 +155,7 @@
    <div class="col-sm-12">
    <table class="table">
     <thead>
-      <tr>
+      <tr style="font-size: 15px">
         <th>Name</th>
         <th>Item</th>
 	      <th>Quantity</th>
@@ -152,6 +165,11 @@
       </tr>
     </thead>
     <tbody>
+      {% if not ngo_items %}
+      <tr>
+        <td colspan="6">No Items to Display</td>
+      </tr>
+      {% endif %}
       {% for donation in ngo_items %}
       <tr>
         <td>{{donation.donor.user.first_name}}</td>

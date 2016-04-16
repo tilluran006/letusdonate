@@ -1,6 +1,6 @@
 from django.db import transaction
 from django.db.models import Count
-
+import yagmail
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -94,8 +94,6 @@ def dashboard(request):
         if hasattr(user, 'donor'):
             return render(request, 'donor/donor.html')
         elif hasattr(user, 'volunteer'):
-            # for deleting multiple elements, iterate through POST.keys(), and check if name attribute matches
-            # Read Querydict docs
             context = {
                 'donor_items': Donation.objects.filter(status="donor"),
                 'vol_items': Donation.objects.filter(status="vol"),
@@ -122,6 +120,7 @@ def create_ad(request):
                     quantity=request.POST['quantity'],
                     description=request.POST['description'],
                     location=request.POST['address'],
+                    city=request.POST['city'],
                     contact=request.POST['phone'],
                     status="donor"
                 )
@@ -201,9 +200,11 @@ def view_events(request):
         if hasattr(user, 'donor'):
             return render(request, 'donor/viewEvents.html', context)
         elif hasattr(user, 'volunteer'):
-            return render(request, 'ngo/viewEvents.html', context)
-        elif hasattr(user, 'ngo'):
+            context.update(csrf(request))
             return render(request, 'volunteer/viewEvents.html', context)
+        elif hasattr(user, 'ngo'):
+            context['my_events'] = Event.objects.filter(ngo=user.ngo)
+            return render(request, 'ngo/viewEvents.html', context)
         return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
 
@@ -234,6 +235,15 @@ def view_items(request):
 
 
 def edit_req(request):
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated():
+            if hasattr(user, 'ngo'):
+                item = Item.objects.get(name=request.POST['item_name'])
+                item_quantity = ItemQuantity(item=item, ngo=user.ngo, quantity=request.POST['item_quantity'])
+                item_quantity.save()
+                return redirect('edit_req_view')
+            return HttpResponse("User is not authorized to view the requested page")
     return redirect('dashboard')
 
 
@@ -337,7 +347,7 @@ def edit_req_view(request):
     user = request.user
     if user.is_authenticated():
         if hasattr(user, 'ngo'):
-            context = {}
+            context = {'item_quantities': ItemQuantity.objects.filter(ngo=user.ngo)}
             context.update(csrf(request))
             return render(request, 'ngo/editReq.html', context)
         return HttpResponse("User is not authorized to view the requested page")
@@ -368,9 +378,9 @@ def guidelines(request):
         if hasattr(user, 'donor'):
             return render(request, 'donor/guidelines.html')
         elif hasattr(user, 'volunteer'):
-            pass
+            return render(request, 'volunteer/guidelines.html')
         elif hasattr(user, 'ngo'):
-            pass
+            return render(request, 'ngo/guidelines.html')
     return redirect('login')
 
 
@@ -391,14 +401,28 @@ def faq(request):
 
 
 def contact_us_view(request):
-    if request.user.is_authenticated():
-        context = {'logged_in': True}
+    user = request.user
+    if user.is_authenticated():
+        context = {
+            'logged_in': True,
+            'name': user.first_name,
+            'email': user.email
+        }
     else:
-        context = {'logged_in': False}
+        context = {
+            'logged_in': False,
+            'name': "",
+            'email': ""
+        }
     context.update(csrf(request))
     return render(request, 'contact-form.html', context)
 
 
 def contact_us(request):
-    # send mail to ??
-    pass
+    mail = yagmail.SMTP('d.v.a.bhishek@gmail.com')
+    mail_from = request.POST['name']
+    email_id = request.POST['email']
+    subject = "LetUsDonate: " + request.POST['subject']
+    content = "Name: %s\nEmail ID: %s\n\n\n%s" % (mail_from, email_id, request.POST['message'])
+    mail.send('manithcooldude@gmail.com', subject, content)
+    return redirect('home')
