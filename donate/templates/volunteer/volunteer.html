@@ -45,7 +45,7 @@
             <li class="active"><a data-toggle="tab" href="#my">Collect Items</a></li>
             <li><a data-toggle="tab" href="#all">Collected items</a></li>
             <li><a data-toggle="tab" href="#del">Delivered</a></li>
-            </ul>
+        </ul>
   <div class="tab-content">
   <div id="my" class="tab-pane fade in active">
 	  <form name="donor_items" action="{% url 'collect_items' %}" method="post">
@@ -67,6 +67,11 @@
       </tr>
     </thead>
     <tbody>
+      {% if not donor_items %}
+      <tr>
+        <td colspan="6">No Items to Display</td>
+      </tr>
+      {% endif %}
       {% for donation in donor_items %}
       <tr>
          <td><input type="checkbox" name="donation[]" value="{{donation.id}}" /></td>
@@ -114,6 +119,11 @@
       </tr>
     </thead>
     <tbody>
+      {% if not vol_items %}
+      <tr>
+        <td colspan="6">No Items to Display</td>
+      </tr>
+      {% endif %}
       {% for donation in vol_items %}
       <tr>
          <td><input type="checkbox" name="donation[]" value="{{donation.id}}" /></td>
@@ -145,7 +155,7 @@
    <div class="col-sm-12">
    <table class="table">
     <thead>
-      <tr>
+      <tr style="font-size: 15px">
         <th>Name</th>
         <th>Item</th>
 	      <th>Quantity</th>
@@ -155,6 +165,11 @@
       </tr>
     </thead>
     <tbody>
+      {% if not ngo_items %}
+      <tr>
+        <td colspan="6">No Items to Display</td>
+      </tr>
+      {% endif %}
       {% for donation in ngo_items %}
       <tr>
         <td>{{donation.donor.user.first_name}}</td>
