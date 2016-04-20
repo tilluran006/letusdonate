@@ -1,14 +1,16 @@
+import os
+
 from django.db import transaction
-from django.db.models import Count
-import yagmail
 from django.shortcuts import render, redirect
 
 # Create your views here.
-import logging
 from django.template.context_processors import csrf
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from donate.models import *
+from django.core.mail import send_mail
+
+IMG_PATH="donate/static/user_uploads/"
 
 
 def signin(request):
@@ -82,7 +84,18 @@ def contact(request):
             ngo.pincode = request.POST['pin']
             ngo.address = request.POST['address']
             ngo.city = request.POST['city']
-            # Image upload
+            image_upload = request.FILES['file']
+            if image_upload:
+                try:
+                    with transaction.atomic():
+                        with open(IMG_PATH + str(user.id) + '.jpg', 'wb+') as f:
+                            for chunk in image_upload.chunks():
+                                f.write(chunk)
+                        ngo.image = 'static/user_uploads/' + str(user.id) + '.jpg'
+                except:
+                    ngo.image = 'static/user_uploads/default.jpg'
+                    ngo.save()
+                    return HttpResponse("User Details Saved. Error uploading image. Go to settings and retry")
             ngo.save()
         return redirect('login')
     return redirect('home')
@@ -92,7 +105,8 @@ def dashboard(request):
     user = request.user
     if user.is_authenticated():
         if hasattr(user, 'donor'):
-            return render(request, 'donor/donor.html')
+            context = {'donations': Donation.objects.filter(donor=user.donor)}
+            return render(request, 'donor/donor.html', context)
         elif hasattr(user, 'volunteer'):
             context = {
                 'donor_items': Donation.objects.filter(status="donor"),
@@ -140,6 +154,7 @@ def create_event(request):
                     type=request.POST['type'],
                     name=request.POST['name'],
                     location=request.POST['location'],
+                    city=request.POST['city'],
                     time=request.POST['time'],
                     description=request.POST['description']
                 )
@@ -186,9 +201,19 @@ def settings(request):
                 ngo.pincode = request.POST['pincode']
                 ngo.address = request.POST['address']
                 ngo.city = request.POST['city']
-                # Image upload
-                # Delete old image
-                # Compare with contact.html and add/remove attributes
+                image_upload = request.FILES['file']
+
+                if image_upload:
+                    try:
+                        with transaction.atomic():
+                            with open(IMG_PATH + str(user.id) + '.jpg', 'wb+') as f:
+                                for chunk in image_upload.chunks():
+                                    f.write(chunk)
+                            ngo.image = 'static/user_uploads/' + str(user.id) + '.jpg'
+                    except:
+                        ngo.image = 'static/user_uploads/default.jpg'
+                        ngo.save()
+                        return HttpResponse("User Settings Saved. Error uploading image. Go back to settings and retry")
                 ngo.save()
     return redirect('dashboard')
 
@@ -196,14 +221,18 @@ def settings(request):
 def view_events(request):
     user = request.user
     if user.is_authenticated():
-        context = {'events': Event.objects.all()}
         if hasattr(user, 'donor'):
+            context = {'events': Event.objects.all()}
             return render(request, 'donor/viewEvents.html', context)
         elif hasattr(user, 'volunteer'):
+            context = {
+                'events': Event.objects.filter(volunteers=None),
+                'events_vol': Event.objects.exclude(volunteers=None)
+            }
             context.update(csrf(request))
             return render(request, 'volunteer/viewEvents.html', context)
         elif hasattr(user, 'ngo'):
-            context['my_events'] = Event.objects.filter(ngo=user.ngo)
+            context = {'events': Event.objects.all(), 'my_events': Event.objects.filter(ngo=user.ngo)}
             return render(request, 'ngo/viewEvents.html', context)
         return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
@@ -226,7 +255,7 @@ def view_items(request):
             context = {'items': Item.objects.all()}
             return render(request, 'donor/items_required.html', context)
         elif hasattr(user, 'ngo'):
-            context = {}
+            context = {'donations': Donation.objects.filter(status="vol")}
             return render(request, 'ngo/view-items.html', context)
         elif hasattr(user, 'volunteer'):
             return render(request, 'volunteer/items_required.html')
@@ -278,10 +307,10 @@ def volunteer_event(request):
         user = request.user
         if user.is_authenticated():
             if hasattr(user, 'volunteer'):
-                # event =
-                # user.volunteer.events_volunteered.add(event)
-                # vol.save()
-                pass
+                event = Event.objects.get(id=request.POST['event_id'])
+                user.volunteer.events_volunteered.add(event)
+                user.volunteer.save()
+                return redirect('view_events')
             return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
 
@@ -301,7 +330,7 @@ def about(request):
 
 
 def signup(request):
-    context = {"error_message": ''}
+    context = {}
     context.update(csrf(request))
     return render(request, 'register.html', context)
 
@@ -315,7 +344,7 @@ def home(request):
 
 
 def log_in(request):
-    context = {"error_message": ''}
+    context = {}
     context.update(csrf(request))
     return render(request, 'login.html', context)
 
@@ -419,10 +448,12 @@ def contact_us_view(request):
 
 
 def contact_us(request):
-    mail = yagmail.SMTP('d.v.a.bhishek@gmail.com')
-    mail_from = request.POST['name']
-    email_id = request.POST['email']
-    subject = "LetUsDonate: " + request.POST['subject']
-    content = "Name: %s\nEmail ID: %s\n\n\n%s" % (mail_from, email_id, request.POST['message'])
-    mail.send('manithcooldude@gmail.com', subject, content)
+    if request.method == 'POST':
+        mail_from = request.POST['name']
+        email_id = request.POST['email']
+        subject = "LetUsDonate: " + request.POST['subject']
+        content = "Name: %s\nEmail ID: %s\n\n\n%s" % (mail_from, email_id, request.POST['message'])
+        status = send_mail(subject, content, email_id, ['manithcooldude@gmail.com'], fail_silently=True)
+        if status == 0:
+            return HttpResponse("Email failed to send")
     return redirect('home')

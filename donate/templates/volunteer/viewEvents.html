@@ -35,7 +35,7 @@
   		</div>
 
   		<div class="row">
-				{% if not events %}
+				{% if not events and not events_vol %}
 			    <div class="pgcenter">
 				    No Events registered
 			    </div>
@@ -58,17 +58,47 @@
 								Time: {{event.time}}<br/>
 								Venue: {{event.location}}<br/>
 								City: {{event.city}}<br/>
-								Type: {{event.type}<br/>
+								Type: {{event.type}}<br/>
 								Contact: {{event.ngo.phone}} ({{event.ngo.user.first_name}})<br/>
 								Volunteers enrolled: {{event.volunteers_enrolled}}/{{event.volunteers_required}}
 						</div>
-						<div class="loc" style="padding: 5%">
-            				<center>
-                      <form method="post" action="" >
-                        <input type="submit" class="button" value="Volunteer" />
-                      </form>
-            				</center>
-           				</div>
+						{% if event.volunteers_enrolled <= event.volunteers_required %}
+						  <div class="loc" style="padding: 5%">
+								<center>
+									<form action="{% url 'volunteer_event' %}" method="post" >
+										{% csrf_token %}
+										<input type="hidden" name="event_id" value="{{event.id}}" />
+										<input type="submit" class="button" value="Volunteer" />
+									</form>
+								</center>
+							</div>
+						{% endif %}
+  					</div>
+  				</div>
+  			</div>
+				{% endfor %}
+			  {% for event in events_vol %}
+  			<div class="event">
+  				<div class="row">
+  					<div class="col-sm-offset-0 col-sm-4">
+  						<div class="head">
+							{{event.name}}
+						</div>
+  					</div>
+  					<div class="col-sm-4">
+  						<div class="desc">
+  							{{event.description}}
+  						</div>
+  					</div>
+  					<div class="col-sm-4">
+  						<div class="loc">
+								Time: {{event.time}}<br/>
+								Venue: {{event.location}}<br/>
+								City: {{event.city}}<br/>
+								Type: {{event.type}}<br/>
+								Contact: {{event.ngo.phone}} ({{event.ngo.user.first_name}})<br/>
+								Volunteers enrolled: {{event.volunteers_enrolled}}/{{event.volunteers_required}}
+							</div>
   					</div>
   				</div>
   			</div>

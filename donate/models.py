@@ -25,7 +25,7 @@ class NGO(models.Model):
     pincode = models.IntegerField(default=0)
     phone = models.BigIntegerField(default=0)
     description = models.CharField(max_length=200)
-    image = models.CharField(max_length=50)
+    image = models.CharField(max_length=50, default="static/user_uploads/default.jpg")
 
     def __str__(self):
         return str(self.user.username)
@@ -45,8 +45,7 @@ class Event(models.Model):
         return str(self.name)
 
     def volunteers_enrolled(self):
-        #return self.volunteers.count()
-        return 0
+        return self.volunteers.count()
 
 
 class Volunteer(models.Model):
