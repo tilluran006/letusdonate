@@ -175,8 +175,13 @@ def settings(request):
                 donor.city = request.POST['city']
                 donor.save()
                 user.first_name = request.POST['name']
-                if request.POST['new_password']:
-                    user.set_password(request.POST['new_password'])
+                if request.POST['old_password']:
+                    user = authenticate(username=user.username, password=request.POST['old_password'])
+                    if user:
+                        user.set_password(request.POST['new_password'])
+                    else:
+                        user.save()
+                        return HttpResponse("Error: Old and New Passwords dont match")
                 user.save()
             elif hasattr(user, 'volunteer'):
                 vol = user.volunteer
@@ -186,20 +191,30 @@ def settings(request):
                 vol.pincode = request.POST['pincode']
                 vol.save()
                 user.first_name = request.POST['name']
-                if request.POST['new_password']:
-                    user.set_password(request.POST['new_password'])
+                if request.POST['old_password']:
+                    user = authenticate(username=user.username, password=request.POST['old_password'])
+                    if user:
+                        user.set_password(request.POST['new_password'])
+                    else:
+                        user.save()
+                        return HttpResponse("Error: Old and New Passwords dont match")
                 user.save()
             elif hasattr(user, 'ngo'):
                 ngo = user.ngo
-                user.first_name = request.POST['name']
-                if request.POST['new_password']:
-                    user.set_password(request.POST['new_password'])
-                user.save()
                 ngo.description = request.POST['description']
                 ngo.phone = request.POST['phone']
                 ngo.pincode = request.POST['pincode']
                 ngo.address = request.POST['address']
                 ngo.city = request.POST['city']
+                user.first_name = request.POST['name']
+                if request.POST['old_password']:
+                    user = authenticate(username=user.username, password=request.POST['old_password'])
+                    if user:
+                        user.set_password(request.POST['new_password'])
+                    else:
+                        user.save()
+                        return HttpResponse("Error: Old and New Passwords dont match")
+                user.save()
 
                 if 'file' in request.FILES:
                     image_upload = request.FILES['file']
@@ -257,7 +272,8 @@ def view_items(request):
             context = {'donations': Donation.objects.filter(status="vol")}
             return render(request, 'ngo/view-items.html', context)
         elif hasattr(user, 'volunteer'):
-            return render(request, 'volunteer/items_required.html')
+            context = {'items': Item.objects.all()}
+            return render(request, 'volunteer/items_required.html', context)
         return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
 
