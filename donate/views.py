@@ -9,6 +9,7 @@ from django.template.context_processors import csrf
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from donate.models import *
+from django.core.mail import send_mail
 
 
 def signin(request):
@@ -140,6 +141,7 @@ def create_event(request):
                     type=request.POST['type'],
                     name=request.POST['name'],
                     location=request.POST['location'],
+                    city=request.POST['city'],
                     time=request.POST['time'],
                     description=request.POST['description']
                 )
@@ -226,7 +228,7 @@ def view_items(request):
             context = {'items': Item.objects.all()}
             return render(request, 'donor/items_required.html', context)
         elif hasattr(user, 'ngo'):
-            context = {}
+            context = {'donations': Donation.objects.filter(status="vol")}
             return render(request, 'ngo/view-items.html', context)
         elif hasattr(user, 'volunteer'):
             return render(request, 'volunteer/items_required.html')
@@ -419,10 +421,12 @@ def contact_us_view(request):
 
 
 def contact_us(request):
-    mail = yagmail.SMTP('d.v.a.bhishek@gmail.com')
-    mail_from = request.POST['name']
-    email_id = request.POST['email']
-    subject = "LetUsDonate: " + request.POST['subject']
-    content = "Name: %s\nEmail ID: %s\n\n\n%s" % (mail_from, email_id, request.POST['message'])
-    mail.send('manithcooldude@gmail.com', subject, content)
+    if request.method == 'POST':
+        mail_from = request.POST['name']
+        email_id = request.POST['email']
+        subject = "LetUsDonate: " + request.POST['subject']
+        content = "Name: %s\nEmail ID: %s\n\n\n%s" % (mail_from, email_id, request.POST['message'])
+        status = send_mail(subject, content, email_id, ['manithcooldude@gmail.com'], fail_silently=True)
+        if status == 0:
+            return HttpResponse("Email failed to send")
     return redirect('home')

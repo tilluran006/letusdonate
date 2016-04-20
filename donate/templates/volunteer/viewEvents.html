@@ -58,13 +58,14 @@
 								Time: {{event.time}}<br/>
 								Venue: {{event.location}}<br/>
 								City: {{event.city}}<br/>
-								Type: {{event.type}<br/>
+								Type: {{event.type}}<br/>
 								Contact: {{event.ngo.phone}} ({{event.ngo.user.first_name}})<br/>
 								Volunteers enrolled: {{event.volunteers_enrolled}}/{{event.volunteers_required}}
 						</div>
 						<div class="loc" style="padding: 5%">
             				<center>
-                      <form method="post" action="" >
+                      <form action="{% url 'volunteer_event' %}" method="post" >
+	                      {% csrf_token %}
                         <input type="submit" class="button" value="Volunteer" />
                       </form>
             				</center>
