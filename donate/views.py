@@ -1,5 +1,3 @@
-import os
-
 from django.db import transaction
 from django.shortcuts import render, redirect
 
@@ -84,8 +82,8 @@ def contact(request):
             ngo.pincode = request.POST['pin']
             ngo.address = request.POST['address']
             ngo.city = request.POST['city']
-            image_upload = request.FILES['file']
-            if image_upload:
+            if 'file' in request.FILES:
+                image_upload = request.FILES['file']
                 try:
                     with transaction.atomic():
                         with open(IMG_PATH + str(user.id) + '.jpg', 'wb+') as f:
@@ -119,7 +117,7 @@ def dashboard(request):
             context = {'ngo': user.ngo}
             return render(request, 'ngo/ngo.html', context)
         logout(request)
-    return redirect('login')
+    return redirect('home')
 
 
 def create_ad(request):
@@ -156,7 +154,8 @@ def create_event(request):
                     location=request.POST['location'],
                     city=request.POST['city'],
                     time=request.POST['time'],
-                    description=request.POST['description']
+                    description=request.POST['description'],
+                    volunteers_required=request.POST['vol_req']
                 )
                 event.save()
                 return redirect('dashboard')
@@ -201,9 +200,9 @@ def settings(request):
                 ngo.pincode = request.POST['pincode']
                 ngo.address = request.POST['address']
                 ngo.city = request.POST['city']
-                image_upload = request.FILES['file']
 
-                if image_upload:
+                if 'file' in request.FILES:
+                    image_upload = request.FILES['file']
                     try:
                         with transaction.atomic():
                             with open(IMG_PATH + str(user.id) + '.jpg', 'wb+') as f:
@@ -281,10 +280,12 @@ def collect_items(request):     # Volunteer - collect from donors
         user = request.user
         if user.is_authenticated():
             if hasattr(user, 'volunteer'):
-                for id in request.POST['donation']:
-                    donation = Donation.objects.get(id=id)
-                    donation.status = "vol"
-                    donation.save()
+                if 'donation[]' in request.POST:
+                    for id in request.POST.getlist('donation[]'):
+                        donation = Donation.objects.get(id=id)
+                        donation.status = "vol"
+                        donation.save()
+                return redirect('dashboard')
             return HttpResponse("User is not authorized to view the requested page")
     return redirect('dashboard')
 
@@ -294,10 +295,12 @@ def deliver_items(request):     # Volunteer - deliver to ngo
         user = request.user
         if user.is_authenticated():
             if hasattr(user, 'volunteer'):
-                for id in request.POST['donation']:
-                    donation = Donation.objects.get(id=id)
-                    donation.status = "ngo"
-                    donation.save()
+                if 'donation[]' in request.POST:
+                    for id in request.POST.getlist('donation[]'):
+                        donation = Donation.objects.get(id=id)
+                        donation.status = "ngo"
+                        donation.save()
+                return redirect('dashboard')
             return HttpResponse("User is not authorized to view the requested page")
     return redirect('dashboard')
 
