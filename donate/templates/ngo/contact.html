@@ -34,7 +34,7 @@
 							<strong>NGO Registration</strong>
 						</div>
 						<div class="panel-body">
-							<form class="form-horizontal" role="form" action="{% url 'contact' %}" method="post">
+							<form class="form-horizontal" role="form" onsubmit="return validate(this)" action="{% url 'contact' %}" method="post">
 								{% csrf_token %}
 								<input type="hidden" name="user_name" value="{{ user_name }}">
 								<div class="form-group">
@@ -76,8 +76,8 @@
               					</div>
 								<div class="form-group-last">
 									<div class="col-sm-offset-5 col-sm-9">
-										<a href=""><button type="submit" class="btn btn-success btn-sm" id="imagesubmit">Confirm</button></a>
-										<button type="reset" class="btn btn-default btn-sm">Reset</button>
+										<input type="submit" class="btn btn-success btn-sm" id="imagesubmit" value="Submit" />
+										<input type="reset" class="btn btn-default btn-sm" value="Reset" />
 									</div>
 								</div>
 							</form>
@@ -89,6 +89,23 @@
 	</div>
 
 	<script src="../../static/js/ngoregister.js"></script>
+	<script type="text/javascript">
+		function validate(form){
+			var phone = form.phone.value
+			var zip = form.pin.value
+			
+			if (/^\d{6}$/.test(zip) == 0) {
+				alert("Enter valid PIN Code")
+    			return false
+    		}
+
+			if (/^\d{10}$/.test(phone) == 0) {
+    			alert("Enter valid Mobile Number")
+    			return false
+			}
+			return true
+		}
+	</script>
 </body>
 
 </html>
