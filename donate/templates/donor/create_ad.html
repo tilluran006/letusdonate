@@ -32,7 +32,7 @@
 						<strong>Create Donation</strong>
 				</div>
 				<div class="panel-body" style="padding-top: 20px">
-               	<form class="form-horizontal" role="form" onsubmit="return validate()" action="{% url 'create_ad' %}" method="post">
+               	<form class="form-horizontal" role="form" onsubmit="return validate(this)" action="{% url 'create_ad' %}" method="post">
                     	{% csrf_token %}
                       <div class="row">
                         <div class="dropdown">
@@ -114,11 +114,17 @@
       document.getElementsByName('itemname')[0].value = selected;
     }
 
-    function validate(){
-      itemName = document.getElementsByName('itemname')[0].value;
+    function validate(form){
+      itemName = form.itemname.value;
+      phone = form.phone.value;
+      
       if(itemName == '0'){
         window.alert('Select Item Name');
         return false;
+      }
+      if (/^\d{10}$/.test(phone) == 0) {
+        alert("Enter valid Mobile Number")
+        return false
       }
       return true;
     }
