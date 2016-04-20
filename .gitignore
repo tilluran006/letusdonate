@@ -65,3 +65,4 @@ target/
 migrations/
 tmp/
 Thumbs.db
+user_uploads/

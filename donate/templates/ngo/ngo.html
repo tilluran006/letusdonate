@@ -37,7 +37,7 @@
        				<div class="col-sm-2" id="view_items">
            				 <a href="{% url 'view_items' %}"><img src="../../static/img/view-items.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
         			</div>
-              <div class="col-sm-2" id="view_items">
+              <div class="col-sm-2" id="guidelines">
                    <a href="{% url 'guidelines' %}"><img src="../../static/img/guidelines.png" class="img-circle" alt="Cinque Terre" width="156" height="156" /></a>
               </div>
 						</div>
@@ -47,7 +47,7 @@
 		<div class="row" style="padding-top: 50px">
 		    <center><h2><b>Organization details</b></h2></center>
 			<div class="col-sm-offset-1 col-sm-3" style="padding: 25px">
-				<img src="../../static/img/cheshire-home.jpg" class="img-circle" alt="NGO_Image" width="400" height="300" />
+				<img src="../../{{ngo.image}}" class="img-circle" alt="NGO_Image" width="400" height="300" />
 			</div>
 			<div class="col-sm-offset-1 col-sm-7">
 				<p id="about-content">

@@ -69,7 +69,7 @@
     <tbody>
       {% if not donor_items %}
       <tr>
-        <td colspan="6">No Items to Display</td>
+        <td colspan="7">No Items to Display</td>
       </tr>
       {% endif %}
       {% for donation in donor_items %}
@@ -83,14 +83,6 @@
         <td>{{donation.contact}}</td>
       </tr>
       {% endfor %}
-      <!--<tr>-->
-        <!--<td><input type="checkbox" name="donation[]" value="collected" /></td>-->
-        <!--<td>Manith Shetty</td>-->
-        <!--<td>Bed</td>-->
-        <!--<td>MT1,NITK Hostels,NITK Surathkal</td>-->
-        <!--<td>9012345678</td>-->
-        <!--<td>575025</td>-->
-      <!--</tr>-->
     </tbody>
    </table>
   </div>      
@@ -115,7 +107,6 @@
 	      <th>Quantity</th>
         <th>Address</th>
 	      <th>City</th>
-        <th>Mobile No.</th>
       </tr>
     </thead>
     <tbody>
@@ -132,17 +123,8 @@
 	      <td>{{donation.quantity}}</td>
         <td>{{donation.location}}</td>
         <td>{{donation.city}}</td>
-        <td>{{donation.contact}}</td>
       </tr>
       {% endfor %}
-      <!--<tr>-->
-        <!--<td><input type="checkbox" name="donation[]" value="collected" /></td>-->
-        <!--<td>Manith Shetty</td>-->
-        <!--<td>Bed</td>-->
-        <!--<td>MT1,NITK Hostels,NITK Surathkal</td>-->
-        <!--<td>9012345678</td>-->
-        <!--<td>575025</td>-->
-      <!--</tr>-->
     </tbody>
     </table>
     </div>
@@ -161,13 +143,12 @@
 	      <th>Quantity</th>
         <th>Address</th>
 	      <th>City</th>
-        <th>Mobile No.</th>
       </tr>
     </thead>
     <tbody>
       {% if not ngo_items %}
       <tr>
-        <td colspan="6">No Items to Display</td>
+        <td colspan="5">No Items to Display</td>
       </tr>
       {% endif %}
       {% for donation in ngo_items %}
@@ -177,16 +158,8 @@
 	      <td>{{donation.quantity}}</td>
         <td>{{donation.location}}</td>
         <td>{{donation.city}}</td>
-        <td>{{donation.contact}}</td>
       </tr>
       {% endfor %}
-      <!--<tr>-->
-        <!--<td>Manith Shetty</td>-->
-        <!--<td>Bed</td>-->
-        <!--<td>MT1,NITK Hostels,NITK Surathkal</td>-->
-        <!--<td>9012345678</td>-->
-        <!--<td>575025</td>-->
-      <!--</tr>-->
     </tbody>
    </table>
   </div>      
