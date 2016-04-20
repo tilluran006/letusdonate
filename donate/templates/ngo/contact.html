@@ -34,7 +34,7 @@
 							<strong>NGO Registration</strong>
 						</div>
 						<div class="panel-body">
-							<form class="form-horizontal" role="form" onsubmit="return validate(this)" action="{% url 'contact' %}" method="post">
+							<form class="form-horizontal" role="form" onsubmit="return validate(this)" action="{% url 'contact' %}" method="post" enctype="multipart/form-data">
 								{% csrf_token %}
 								<input type="hidden" name="user_name" value="{{ user_name }}">
 								<div class="form-group">

@@ -30,7 +30,7 @@
         <strong>Add Requirement</strong>
       </div>
     <div class="panel-body">
-      <form class="form-horizontal" role="form" action="{% url 'edit_req' %}" method="post">
+      <form class="form-horizontal" name="add" role="form" action="{% url 'edit_req' %}" method="post">
        {% csrf_token %}
         <div class="form-group">
           <label for="item_name" class="col-sm-offset-1 col-sm-3 control-label">Item Name</label>
@@ -61,7 +61,7 @@
    </div>
   </div>
 
-  <div class="row" id="volunteer">  
+  <div class="row" id="table">
    <div class="col-sm-offset-1 col-sm-10" style="padding-top: 50px">
      <table class="table">
       <thead>

@@ -1,15 +1,16 @@
+import os
+
 from django.db import transaction
-from django.db.models import Count
-import yagmail
 from django.shortcuts import render, redirect
 
 # Create your views here.
-import logging
 from django.template.context_processors import csrf
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from donate.models import *
 from django.core.mail import send_mail
+
+IMG_PATH="donate/static/user_uploads/"
 
 
 def signin(request):
@@ -83,7 +84,18 @@ def contact(request):
             ngo.pincode = request.POST['pin']
             ngo.address = request.POST['address']
             ngo.city = request.POST['city']
-            # Image upload
+            image_upload = request.FILES['file']
+            if image_upload:
+                try:
+                    with transaction.atomic():
+                        with open(IMG_PATH + str(user.id) + '.jpg', 'wb+') as f:
+                            for chunk in image_upload.chunks():
+                                f.write(chunk)
+                        ngo.image = 'static/user_uploads/' + str(user.id) + '.jpg'
+                except:
+                    ngo.image = 'static/user_uploads/default.jpg'
+                    ngo.save()
+                    return HttpResponse("User Details Saved. Error uploading image. Go to settings and retry")
             ngo.save()
         return redirect('login')
     return redirect('home')
@@ -93,7 +105,8 @@ def dashboard(request):
     user = request.user
     if user.is_authenticated():
         if hasattr(user, 'donor'):
-            return render(request, 'donor/donor.html')
+            context = {'donations': Donation.objects.filter(donor=user.donor)}
+            return render(request, 'donor/donor.html', context)
         elif hasattr(user, 'volunteer'):
             context = {
                 'donor_items': Donation.objects.filter(status="donor"),
@@ -188,9 +201,19 @@ def settings(request):
                 ngo.pincode = request.POST['pincode']
                 ngo.address = request.POST['address']
                 ngo.city = request.POST['city']
-                # Image upload
-                # Delete old image
-                # Compare with contact.html and add/remove attributes
+                image_upload = request.FILES['file']
+
+                if image_upload:
+                    try:
+                        with transaction.atomic():
+                            with open(IMG_PATH + str(user.id) + '.jpg', 'wb+') as f:
+                                for chunk in image_upload.chunks():
+                                    f.write(chunk)
+                            ngo.image = 'static/user_uploads/' + str(user.id) + '.jpg'
+                    except:
+                        ngo.image = 'static/user_uploads/default.jpg'
+                        ngo.save()
+                        return HttpResponse("User Settings Saved. Error uploading image. Go back to settings and retry")
                 ngo.save()
     return redirect('dashboard')
 
@@ -307,7 +330,7 @@ def about(request):
 
 
 def signup(request):
-    context = {"error_message": ''}
+    context = {}
     context.update(csrf(request))
     return render(request, 'register.html', context)
 
@@ -321,7 +344,7 @@ def home(request):
 
 
 def log_in(request):
-    context = {"error_message": ''}
+    context = {}
     context.update(csrf(request))
     return render(request, 'login.html', context)
 

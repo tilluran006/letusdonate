@@ -54,26 +54,18 @@
 
     <div class="col-sm-4" style="margin: 0 auto; overflow-y: auto; height: 600px;">
       <ul type="none">
+        {% for donation in donations %}
         <div class="event">
           <li>
-          <h4 id="heading">Item Number 1</h4>
-          <p id="text">
-            Quantity: <br/>
-            Type: <br/>
-            Description: <br/>
-          </p>
+          <h4 id="heading_{{forloop.counter}}">{{donation.item.name}}</h4>
+            <p id="text_{{forloop.counter}}">
+            Quantity: {{donation.quantity}}<br/>
+            Type: {{donation.item.type}}<br/>
+            Status: <br/>
+            </p>
           </li>
         </div>
-        <div class="event">
-          <li>
-          <h4 id="heading">Item Number 2</h4>
-          <p id="text">
-            Quantity: <br/>
-            Type: <br/>
-            Description: <br/>
-          </p>
-          </li>
-        </div>
+        {% endfor %}
       </ul>
     </div>
 
