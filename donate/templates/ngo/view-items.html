@@ -28,32 +28,31 @@
     <form>
         <div class="row" id="ngo">  
             <div class="col-sm-offset-1 col-sm-10">
-                <h2><b>Item list</b></h2>
+                <h2><b>Items with Volunteers</b></h2>
                 <table class="table">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Item</th>
-                    <th>Address</th>
-                    <th>Mobile No.</th>
-                    <th>PIN</th>
+                  <th>Item</th>
+                  <th>Type</th>
+                  <th>Quantity</th>
+                  <th>City</th>
                 </tr>
                 </thead>
                 <tbody>
+                {% if not donations %}
+                  <tr>
+                    <td colspan="4"><center>No Items to Display</center></td>
+                  </tr>
+                {% endif %}
+                {% for donation in donations %}
                 <tr>
-                    <td>Manith Shetty</td>
-                    <td>Bed</td>
-                    <td>MT1,NITK Hostels,NITK Surathkal</td>
-                    <td>9012345678</td>
-                    <td>575025</td>
+                  <td>{{donation.item.name}}</td>
+                  <td>{{donation.item.type}}</td>
+                  <td>{{donation.quantity}}</td>
+                  <td>{{donation.quantity}}</td>
+                  <td>{{donation.city}}</td>
                 </tr>
-                <tr>
-                    <td>Manith Shetty</td>
-                    <td>Bed</td>
-                    <td>MT1,NITK Hostels,NITK Surathkal</td>
-                    <td>9012345678</td>
-                    <td>575025</td>       
-                </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>          
