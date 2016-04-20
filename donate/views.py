@@ -198,14 +198,18 @@ def settings(request):
 def view_events(request):
     user = request.user
     if user.is_authenticated():
-        context = {'events': Event.objects.all()}
         if hasattr(user, 'donor'):
+            context = {'events': Event.objects.all()}
             return render(request, 'donor/viewEvents.html', context)
         elif hasattr(user, 'volunteer'):
+            context = {
+                'events': Event.objects.filter(volunteers=None),
+                'events_vol': Event.objects.exclude(volunteers=None)
+            }
             context.update(csrf(request))
             return render(request, 'volunteer/viewEvents.html', context)
         elif hasattr(user, 'ngo'):
-            context['my_events'] = Event.objects.filter(ngo=user.ngo)
+            context = {'events': Event.objects.all(), 'my_events': Event.objects.filter(ngo=user.ngo)}
             return render(request, 'ngo/viewEvents.html', context)
         return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
@@ -280,10 +284,10 @@ def volunteer_event(request):
         user = request.user
         if user.is_authenticated():
             if hasattr(user, 'volunteer'):
-                # event =
-                # user.volunteer.events_volunteered.add(event)
-                # vol.save()
-                pass
+                event = Event.objects.get(id=request.POST['event_id'])
+                user.volunteer.events_volunteered.add(event)
+                user.volunteer.save()
+                return redirect('view_events')
             return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
 

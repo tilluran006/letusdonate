@@ -45,8 +45,7 @@ class Event(models.Model):
         return str(self.name)
 
     def volunteers_enrolled(self):
-        #return self.volunteers.count()
-        return 0
+        return self.volunteers.count()
 
 
 class Volunteer(models.Model):
