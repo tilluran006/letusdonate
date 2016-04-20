@@ -10,8 +10,8 @@
 </head>
 <body background="../../static/img/back.jpg">
 
-<div class="container">
-<div class="row">
+<div class="container-fluid">
+	<div class="row" style="padding: 20px">
  		<div class="col-sm-8"><center><a href="{% url 'dashboard' %}"><img src="../../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></a></center></div>
   		<div class="col-sm-4">
   		<center><h1><p>
@@ -19,23 +19,16 @@
   			<a href="{% url 'settings_view' %}"><button type="button" class="btn btn-primary btn-lg">Settings</button></a>
   			<a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg">Logout</button></a>
   		</p></h1></center>
-  		</div>
- <div class="row"><p>                                                                </p></div>
-  <div class="row"><p>                                                                </p></div>
-   <div class="row"><p>                                                                </p></div>
-    <div class="row"><p>                                                                </p></div>
-     <div class="row"><p>                                                                </p></div>
-  <div class="row"><p>                                                                </p></div>
-   <div class="row"><p>                                                                </p></div>
-    <div class="row"><p>                                                                </p></div>
-		<div class="row">
+	</div>
+
+		<div class="row" style="padding-top: 150px">
 			<div class="col-sm-offset-3	 col-sm-6">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<strong>Change-info</strong>
 					</div>
 					<div class="panel-body">
-						<form class="form-horizontal" role="form" action="{% url 'settings' %}" method="post">
+						<form class="form-horizontal" role="form" onsubmit="return validate(this)" action="{% url 'settings' %}" method="post">
 							{% csrf_token %}
 							<div class="form-group">
 								<label for="name" class="col-sm-3 control-label">Name</label>
@@ -67,16 +60,25 @@
 									<input type="text" class="form-control" id="phone" name="phone" value="{{vol.phone}}" placeholder="Phone" required="" />
 								</div>
 							</div>
+							<div class="panel-heading" style="background-color: gray">
+								<strong>Change Password</strong>
+							</div>
+							<div class="form-group" style="padding-top: 20px">
+								<label for="inputPassword3" class="col-sm-3 control-label">Old Password</label>
+								<div class="col-sm-9">
+									<input type="password" class="form-control" id="inputPassword3" name="new_password" placeholder="Password" />
+								</div>
+							</div>
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-3 control-label">New Password</label>
-									<div class="col-sm-9">
-										<input type="password" class="form-control" id="inputPassword3" name="new_password" placeholder="Password" />
-									</div>
+								<div class="col-sm-9">
+									<input type="password" class="form-control" id="inputPassword3" name="new_password" placeholder="Password" />
+								</div>
 							</div>
 
 							<div class="form-group-last">
 								<div class="col-sm-offset-5 col-sm-9">
-									<button type="submit" class="btn btn-success btn-sm">Save</button></a>
+									<input type="submit" class="btn btn-success btn-sm" value="Save" />
 								</div>
 							</div>
 						</form>
@@ -85,6 +87,27 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		function validate(form){
+			var phone = form.phone.value
+			var zip = form.pincode.value
+			
+			if (/^\d{6}$/.test(zip) == 0) {
+				alert("Enter valid PIN Code")
+    			return false
+    		}
+
+			if (/^\d{10}$/.test(phone) == 0) {
+    			alert("Enter valid Mobile Number")
+    			return false
+			}
+
+			if
+			return true
+		}
+	</script>
+
 </body>
 
 </html>

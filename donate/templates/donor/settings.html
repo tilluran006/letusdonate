@@ -11,7 +11,7 @@
 <body background="../../static/img/back.jpg">
 
 <div class="container-fluid">
-<div class="row" style="padding: 20px">
+	<div class="row" style="padding: 20px">
  		<div class="col-sm-8"><center><a href="{% url 'dashboard' %}">
  			<img src="../../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></a></center></div>
   		<div class="col-sm-4">
@@ -19,7 +19,7 @@
   			<a href="{% url 'settings_view' %}"><button type="button" class="btn btn-primary btn-lg">Settings</button></a>
   			<a href="{% url 'logout' %}"><button type="button" class="btn btn-primary btn-lg">Logout</button></a>
   			</p></h1></center>
-  		</div>
+  	</div>
 
 		<div class="row" style="padding-top: 150px">
 			<div class="col-sm-offset-3	 col-sm-6">
@@ -60,23 +60,23 @@
 									<input type="text" class="form-control" id="phone" name="phone" value="{{donor.phone}}" placeholder="Phone" required="" />
 								</div>
 							</div>
-							<div class="panel-heading" style="background-color: gray">
+							<div class="panel-heading" style="background-color: #E8E8E8 ">
 								<strong>Change Password</strong>
 							</div>
 							<div class="form-group" style="padding-top: 20px">
-								<label for="inputPassword3" class="col-sm-3 control-label">Old Password</label>
+								<label for="old_password" class="col-sm-3 control-label">Old Password</label>
 								<div class="col-sm-9">
-									<input type="password" class="form-control" id="inputPassword3" name="new_password" placeholder="Password" />
+									<input type="password" class="form-control" id="old_password" name="old_password" placeholder="Old Password" />
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="inputPassword3" class="col-sm-3 control-label">New Password</label>
+								<label for="new_password" class="col-sm-3 control-label">New Password</label>
 								<div class="col-sm-9">
-									<input type="password" class="form-control" id="inputPassword3" name="new_password" placeholder="Password" />
+									<input type="password" class="form-control" id="new_password" name="new_password" placeholder="New Password" />
 								</div>
 							</div>
 							<div class="form-group-last">
-								<div class="col-sm-offset-5 col-sm-9">
+								<div class="col-sm-offset-5 col-sm-7">
 									<input type="submit" class="btn btn-success btn-sm" value="Save" />
 								</div>
 							</div>
@@ -90,7 +90,7 @@
 	<script type="text/javascript">
 		function validate(form){
 			var phone = form.phone.value
-			var zip = form.Pincode.value
+			var zip = form.pincode.value
 			
 			if (/^\d{6}$/.test(zip) == 0) {
 				alert("Enter valid PIN Code")
