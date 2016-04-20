@@ -9,6 +9,7 @@ from django.template.context_processors import csrf
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from donate.models import *
+from django.core.mail import send_mail
 
 
 def signin(request):
@@ -140,6 +141,7 @@ def create_event(request):
                     type=request.POST['type'],
                     name=request.POST['name'],
                     location=request.POST['location'],
+                    city=request.POST['city'],
                     time=request.POST['time'],
                     description=request.POST['description']
                 )
@@ -196,14 +198,18 @@ def settings(request):
 def view_events(request):
     user = request.user
     if user.is_authenticated():
-        context = {'events': Event.objects.all()}
         if hasattr(user, 'donor'):
+            context = {'events': Event.objects.all()}
             return render(request, 'donor/viewEvents.html', context)
         elif hasattr(user, 'volunteer'):
+            context = {
+                'events': Event.objects.filter(volunteers=None),
+                'events_vol': Event.objects.exclude(volunteers=None)
+            }
             context.update(csrf(request))
             return render(request, 'volunteer/viewEvents.html', context)
         elif hasattr(user, 'ngo'):
-            context['my_events'] = Event.objects.filter(ngo=user.ngo)
+            context = {'events': Event.objects.all(), 'my_events': Event.objects.filter(ngo=user.ngo)}
             return render(request, 'ngo/viewEvents.html', context)
         return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
@@ -226,7 +232,7 @@ def view_items(request):
             context = {'items': Item.objects.all()}
             return render(request, 'donor/items_required.html', context)
         elif hasattr(user, 'ngo'):
-            context = {}
+            context = {'donations': Donation.objects.filter(status="vol")}
             return render(request, 'ngo/view-items.html', context)
         elif hasattr(user, 'volunteer'):
             return render(request, 'volunteer/items_required.html')
@@ -278,10 +284,10 @@ def volunteer_event(request):
         user = request.user
         if user.is_authenticated():
             if hasattr(user, 'volunteer'):
-                # event =
-                # user.volunteer.events_volunteered.add(event)
-                # vol.save()
-                pass
+                event = Event.objects.get(id=request.POST['event_id'])
+                user.volunteer.events_volunteered.add(event)
+                user.volunteer.save()
+                return redirect('view_events')
             return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
 
@@ -419,10 +425,12 @@ def contact_us_view(request):
 
 
 def contact_us(request):
-    mail = yagmail.SMTP('d.v.a.bhishek@gmail.com')
-    mail_from = request.POST['name']
-    email_id = request.POST['email']
-    subject = "LetUsDonate: " + request.POST['subject']
-    content = "Name: %s\nEmail ID: %s\n\n\n%s" % (mail_from, email_id, request.POST['message'])
-    mail.send('manithcooldude@gmail.com', subject, content)
+    if request.method == 'POST':
+        mail_from = request.POST['name']
+        email_id = request.POST['email']
+        subject = "LetUsDonate: " + request.POST['subject']
+        content = "Name: %s\nEmail ID: %s\n\n\n%s" % (mail_from, email_id, request.POST['message'])
+        status = send_mail(subject, content, email_id, ['manithcooldude@gmail.com'], fail_silently=True)
+        if status == 0:
+            return HttpResponse("Email failed to send")
     return redirect('home')
