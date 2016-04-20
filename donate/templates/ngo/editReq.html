@@ -63,9 +63,12 @@
 
   <div class="row" id="table">
    <div class="col-sm-offset-1 col-sm-10" style="padding-top: 50px">
+      <button type="submit" class="btn btn-success btn-sm">Delete</button>
+      <p></p>
      <table class="table">
       <thead>
       <tr>
+        <th></th>
         <th>Item</th>
         <th>Type</th>
         <th>Quantity</th>
@@ -80,6 +83,7 @@
       {% endif %}
       {% for item_quantity in item_quantities %}
       <tr>
+        <td><input type="checkbox" name="donation[]" value="{{donation.id}}" /></td>
         <td>{{item_quantity.item.name}}</td>
         <td>{{item_quantity.item.type}}</td>
         <td>{{item_quantity.quantity}}</td>
