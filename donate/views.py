@@ -283,9 +283,27 @@ def edit_req(request):
         user = request.user
         if user.is_authenticated():
             if hasattr(user, 'ngo'):
-                item = Item.objects.get(name=request.POST['item_name'])
-                item_quantity = ItemQuantity(item=item, ngo=user.ngo, quantity=request.POST['item_quantity'])
+                item = Item.objects.get(name=request.POST['itemname'])
+                item_quantity = ItemQuantity.objects.filter(item=item, ngo=user.ngo)
+                if item_quantity:
+                    item_quantity.quantity += request.POST['item_quantity']
+                else:
+                    item_quantity = ItemQuantity(item=item, ngo=user.ngo, quantity=request.POST['item_quantity'])
                 item_quantity.save()
+                return redirect('edit_req_view')
+            return HttpResponse("User is not authorized to view the requested page")
+    return redirect('dashboard')
+
+
+def delete_req(request):
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated():
+            if hasattr(user, 'ngo'):
+                if 'item_quant[]' in request.POST:
+                    for id in request.POST.getlist('item_quant[]'):
+                        item_quantity = ItemQuantity.objects.get(id=id)
+                        item_quantity.delete()
                 return redirect('edit_req_view')
             return HttpResponse("User is not authorized to view the requested page")
     return redirect('dashboard')
@@ -395,7 +413,10 @@ def edit_req_view(request):
     user = request.user
     if user.is_authenticated():
         if hasattr(user, 'ngo'):
-            context = {'item_quantities': ItemQuantity.objects.filter(ngo=user.ngo)}
+            context = {
+                'item_quantities': ItemQuantity.objects.filter(ngo=user.ngo),
+                'items': Item.objects.all()
+            }
             context.update(csrf(request))
             return render(request, 'ngo/editReq.html', context)
         return HttpResponse("User is not authorized to view the requested page")

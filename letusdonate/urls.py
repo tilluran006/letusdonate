@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^volunteer_event$', volunteer_event, name="volunteer_event"),     # Volunteer
     url(r'^collect_items', collect_items, name="collect_items"),            # Volunteer
     url(r'^deliver_items', deliver_items, name="deliver_items"),            # Volunteer
+    url(r'^delete_req', delete_req, name="delete_req"),        # NGO
 
     #different view for each user
     url(r'^contact$', contact, name="contact"),  # Donor,volunteer contact: To be shown after signup
