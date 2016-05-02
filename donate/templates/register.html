@@ -11,7 +11,7 @@
 <body background="../static/img/back.jpg">
 
 <div class="container-fluid">
-  <div class="row">
+  <div class="row" style="padding: 20px">
     <div class="col-sm-offset-1 col-sm-10">
       <center><a href="{% url 'home' %}"><img src="../static/img/Untitled.png" alt="Logo" id="logo" style="width:424px;height:84px;"></a></center>
     </div>
@@ -24,7 +24,7 @@
             <strong>Register</strong>
             </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" action="{% url 'register' %}" method="post">
+                    <form class="form-horizontal" role="form" onsubmit="return validate(this)" action="{% url 'register' %}" method="post">
                       {% csrf_token %}
                       <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">Name</label>
@@ -67,6 +67,19 @@
         </div>
     </div>
 </div>
+
+  <script>
+    function validate(form){
+      var password = form.password;
+
+      if(password.value.length < 8){
+        alert("Password must be atleast 8 characters long.");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
 
 </body>
 </html>

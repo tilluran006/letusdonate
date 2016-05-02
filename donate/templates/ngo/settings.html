@@ -29,7 +29,7 @@
 						<strong>Settings</strong>
 					</div>
 					<div class="panel-body">
-						<form class="form-horizontal" role="form" action="{% url 'settings' %}" method="post" enctype="multipart/form-data">
+						<form class="form-horizontal" role="form" onsubmit="return validate(this)" action="{% url 'settings' %}" method="post" enctype="multipart/form-data">
 							{% csrf_token %}
 							<div class="form-group">
 								<label for="name" class="col-sm-3 control-label">Name</label>
@@ -67,23 +67,26 @@
 									<textarea class="form-control" id="description" name="description" rows=5 placeholder="Description">{{ngo.description}}</textarea>
 								</div>
 							</div>
-							<div class="form-group" style="padding-top: 20px">
-								<label for="old_password" class="col-sm-3 control-label">Old Password</label>
-								<div class="col-sm-9">
-									<input type="password" class="form-control" id="old_password" name="old_password" placeholder="Password" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="new_password" class="col-sm-3 control-label">New Password</label>
-								<div class="col-sm-9">
-									<input type="password" class="form-control" id="new_password" name="new_password" placeholder="Password" />
-								</div>
-							</div>
 							<div class="form-group">
 								<label for="js-upload-files" class="col-sm-3 control-label">Select an image</label>
 									<div class="col-sm-9">
 										<input type="file" name="file" id="js-upload-files">
 									</div>
+							</div>
+							<div class="panel-heading" style="background-color: #E8E8E8 ">
+								<strong>Change Password</strong>
+							</div>
+							<div class="form-group" style="padding-top: 20px">
+								<label for="old_password" class="col-sm-3 control-label">Old Password</label>
+								<div class="col-sm-9">
+									<input type="password" class="form-control" id="old_password" name="old_password" placeholder="Old Password" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="new_password" class="col-sm-3 control-label">New Password</label>
+								<div class="col-sm-9">
+									<input type="password" class="form-control" id="new_password" name="new_password" placeholder="New Password" />
+								</div>
 							</div>
 							<div class="form-group-last">
 								<div class="col-sm-offset-5 col-sm-9">
@@ -97,6 +100,36 @@
 		</div>
 	</div>
 	<script src="../../static/js/ngoregister.js"></script>
+	<script type="text/javascript">
+		function validate(form){
+			var phone = form.phone.value
+			var zip = form.pincode.value
+			var old_password = form.old_password
+			var new_password = form.new_password
+
+			if (/^\d{6}$/.test(zip) == 0) {
+				alert("Enter valid PIN Code")
+    			return false
+    		}
+
+			if (/^\d{10}$/.test(phone) == 0) {
+    			alert("Enter valid Mobile Number")
+    			return false
+			}
+
+			if(old_password.value.length < 8){
+				alert("Old Password must be atleast 8 characters long.")
+				return false
+			}
+
+			if(new_password.value.length < 8){
+				alert("New Password must be atleast 8 characters long.")
+				return false
+			}
+
+			return true			
+		}
+	</script>
 </body>
 
 </html>

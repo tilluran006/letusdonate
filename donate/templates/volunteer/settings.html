@@ -60,22 +60,21 @@
 									<input type="text" class="form-control" id="phone" name="phone" value="{{vol.phone}}" placeholder="Phone" required="" />
 								</div>
 							</div>
-							<div class="panel-heading" style="background-color: gray">
+							<div class="panel-heading" style="background-color: #E8E8E8 ">
 								<strong>Change Password</strong>
 							</div>
 							<div class="form-group" style="padding-top: 20px">
 								<label for="old_password" class="col-sm-3 control-label">Old Password</label>
 								<div class="col-sm-9">
-									<input type="password" class="form-control" id="old_password" name="old_password" placeholder="Password" />
+									<input type="password" class="form-control" id="old_password" name="old_password" placeholder="Old Password" />
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="new_password" class="col-sm-3 control-label">New Password</label>
 								<div class="col-sm-9">
-									<input type="password" class="form-control" id="new_password" name="new_password" placeholder="Password" />
+									<input type="password" class="form-control" id="new_password" name="new_password" placeholder="New Password" />
 								</div>
 							</div>
-
 							<div class="form-group-last">
 								<div class="col-sm-offset-5 col-sm-9">
 									<input type="submit" class="btn btn-success btn-sm" value="Save" />
@@ -92,7 +91,9 @@
 		function validate(form){
 			var phone = form.phone.value
 			var zip = form.pincode.value
-			
+			var old_password = form.old_password
+			var new_password = form.new_password
+
 			if (/^\d{6}$/.test(zip) == 0) {
 				alert("Enter valid PIN Code")
     			return false
@@ -103,8 +104,17 @@
     			return false
 			}
 
-			if
-			return true
+			if(old_password.value.length < 8){
+				alert("Old Password must be atleast 8 characters long.")
+				return false
+			}
+
+			if(new_password.value.length < 8){
+				alert("New Password must be atleast 8 characters long.")
+				return false
+			}
+
+			return true			
 		}
 	</script>
 
