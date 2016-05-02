@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
    <link rel="stylesheet" type="text/css" href="../../static/css/volunteer.css">
+  <link rel="stylesheet" href="../../static/css/button.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
@@ -29,21 +30,28 @@
       <div class="panel-heading">
         <strong>Add Requirement</strong>
       </div>
+
     <div class="panel-body">
-      <form class="form-horizontal" name="add" role="form" action="{% url 'edit_req' %}" method="post">
+      <form class="form-horizontal" role="form" onsubmit="return validate(this)" action="{% url 'edit_req' %}" method="post">
        {% csrf_token %}
-        <div class="form-group">
-          <label for="item_name" class="col-sm-offset-1 col-sm-3 control-label">Item Name</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="item_name" name="item_name" placeholder="Item Name" required="" />
+        <div class="row">
+          <div class="dropdown">
+            <label for="inputEmail3" class="col-sm-offset-1 col-sm-3 control-label">Item Name</label>
+            <div class="col-sm-6">
+              <button id="gray" name="type" type="button" data-toggle="dropdown">
+                <span id="itemName"></span>
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-" id="bulk">
+                {% for item in items %}
+                <li id="{{item.name}}" onclick="update(this.id)"><a href="#">{{item.name}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="item_type" class="col-sm-offset-1 col-sm-3 control-label">Item Type</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="item_type" name="item_type" placeholder="Item Type" required="" />
-          </div>
-        </div>
+        <br/>
+        <input name="itemname" type="hidden" value="0" />
         <div class="form-group">
           <label for="inputEmail3" class="col-sm-offset-1 col-sm-3 control-label">Quantity</label>
           <div class="col-sm-6">
@@ -61,11 +69,16 @@
    </div>
   </div>
 
+  <form action="{% url 'delete_req' %}" method="post">
+    {% csrf_token %}
   <div class="row" id="table">
    <div class="col-sm-offset-1 col-sm-10" style="padding-top: 50px">
+      <input type="submit" class="btn btn-success btn-sm" value="Delete" />
+      <p></p>
      <table class="table">
       <thead>
       <tr>
+        <th></th>
         <th>Item</th>
         <th>Type</th>
         <th>Quantity</th>
@@ -75,11 +88,12 @@
       <tbody>
       {% if not item_quantities %}
       <tr>
-        <td colspan="3"><center>No Items to Display</center></td>
+        <td colspan="4"><center>No Items to Display</center></td>
       </tr>
       {% endif %}
       {% for item_quantity in item_quantities %}
       <tr>
+        <td><input type="checkbox" name="item_quant[]" value="{{item_quantity.id}}" /></td>
         <td>{{item_quantity.item.name}}</td>
         <td>{{item_quantity.item.type}}</td>
         <td>{{item_quantity.quantity}}</td>
@@ -89,7 +103,29 @@
     </table>
     </div>          
   </div>
+  <form/>
 </div>  
 
+  <script type="text/javascript">
+    function load() {
+      document.getElementById('itemName').innerHTML =  "Item Name";
+    }
+    window.onload = load;
+
+    function validate(form){
+      itemName = form.itemname.value;
+
+      if(itemName == '0'){
+        window.alert('Select Item Name');
+        return false;
+      }
+      return true;
+    }
+
+    function update(selected){
+      document.getElementById('itemName').innerHTML = selected;
+      document.getElementsByName('itemname')[0].value = selected;
+    }
+    </script>
 </body>
 </html>

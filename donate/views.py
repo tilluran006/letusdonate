@@ -175,8 +175,13 @@ def settings(request):
                 donor.city = request.POST['city']
                 donor.save()
                 user.first_name = request.POST['name']
-                if request.POST['new_password']:
-                    user.set_password(request.POST['new_password'])
+                if request.POST['old_password']:
+                    user = authenticate(username=user.username, password=request.POST['old_password'])
+                    if user:
+                        user.set_password(request.POST['new_password'])
+                    else:
+                        user.save()
+                        return HttpResponse("Error: Old and New Passwords dont match")
                 user.save()
             elif hasattr(user, 'volunteer'):
                 vol = user.volunteer
@@ -186,20 +191,30 @@ def settings(request):
                 vol.pincode = request.POST['pincode']
                 vol.save()
                 user.first_name = request.POST['name']
-                if request.POST['new_password']:
-                    user.set_password(request.POST['new_password'])
+                if request.POST['old_password']:
+                    user = authenticate(username=user.username, password=request.POST['old_password'])
+                    if user:
+                        user.set_password(request.POST['new_password'])
+                    else:
+                        user.save()
+                        return HttpResponse("Error: Old and New Passwords dont match")
                 user.save()
             elif hasattr(user, 'ngo'):
                 ngo = user.ngo
-                user.first_name = request.POST['name']
-                if request.POST['new_password']:
-                    user.set_password(request.POST['new_password'])
-                user.save()
                 ngo.description = request.POST['description']
                 ngo.phone = request.POST['phone']
                 ngo.pincode = request.POST['pincode']
                 ngo.address = request.POST['address']
                 ngo.city = request.POST['city']
+                user.first_name = request.POST['name']
+                if request.POST['old_password']:
+                    user = authenticate(username=user.username, password=request.POST['old_password'])
+                    if user:
+                        user.set_password(request.POST['new_password'])
+                    else:
+                        user.save()
+                        return HttpResponse("Error: Old and New Passwords dont match")
+                user.save()
 
                 if 'file' in request.FILES:
                     image_upload = request.FILES['file']
@@ -257,7 +272,8 @@ def view_items(request):
             context = {'donations': Donation.objects.filter(status="vol")}
             return render(request, 'ngo/view-items.html', context)
         elif hasattr(user, 'volunteer'):
-            return render(request, 'volunteer/items_required.html')
+            context = {'items': Item.objects.all()}
+            return render(request, 'volunteer/items_required.html', context)
         return HttpResponse("User is not authorized to view the requested page")
     return redirect('home')
 
@@ -267,9 +283,27 @@ def edit_req(request):
         user = request.user
         if user.is_authenticated():
             if hasattr(user, 'ngo'):
-                item = Item.objects.get(name=request.POST['item_name'])
-                item_quantity = ItemQuantity(item=item, ngo=user.ngo, quantity=request.POST['item_quantity'])
+                item = Item.objects.get(name=request.POST['itemname'])
+                item_quantity = ItemQuantity.objects.filter(item=item, ngo=user.ngo)
+                if item_quantity:
+                    item_quantity.quantity += request.POST['item_quantity']
+                else:
+                    item_quantity = ItemQuantity(item=item, ngo=user.ngo, quantity=request.POST['item_quantity'])
                 item_quantity.save()
+                return redirect('edit_req_view')
+            return HttpResponse("User is not authorized to view the requested page")
+    return redirect('dashboard')
+
+
+def delete_req(request):
+    if request.method == 'POST':
+        user = request.user
+        if user.is_authenticated():
+            if hasattr(user, 'ngo'):
+                if 'item_quant[]' in request.POST:
+                    for id in request.POST.getlist('item_quant[]'):
+                        item_quantity = ItemQuantity.objects.get(id=id)
+                        item_quantity.delete()
                 return redirect('edit_req_view')
             return HttpResponse("User is not authorized to view the requested page")
     return redirect('dashboard')
@@ -379,7 +413,10 @@ def edit_req_view(request):
     user = request.user
     if user.is_authenticated():
         if hasattr(user, 'ngo'):
-            context = {'item_quantities': ItemQuantity.objects.filter(ngo=user.ngo)}
+            context = {
+                'item_quantities': ItemQuantity.objects.filter(ngo=user.ngo),
+                'items': Item.objects.all()
+            }
             context.update(csrf(request))
             return render(request, 'ngo/editReq.html', context)
         return HttpResponse("User is not authorized to view the requested page")

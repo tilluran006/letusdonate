@@ -6,11 +6,13 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="../../static/css/ngolist.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../static/css/events.css">
 </head>
 
-<body>
+<body style="background-image: url('../../static/img/back2.jpg');">
 	<div class="container-fluid">
 		<div class="row" style="background-image: url('../../static/img/front.jpg'); padding: 20px">
  			<div class="col-sm-8">
@@ -24,10 +26,17 @@
   			</div>
   		</div>
 
-  		<div class="row">
+
+			<div class="row">
+  			{% if not ngos %}
+			    <div class="pgcenter">
+				    No NGO available
+			    </div>
+			  {% endif %}
   			{% for ngo in ngos %}
-  			<div class="row" style="background-color: white; padding: 5% 1%">
-  				<div class="col-sm-offset-0 col-sm-4" style="font-family: 'Open sans', sans-serif; color: #555555; font-size: 60px;">
+        <div class="event">
+  			<div class="row">
+  				<div class="col-sm-offset-0 col-sm-4" style="font-family: 'Open sans', sans-serif; font-size: 40px;">
             <div class="row">
 					   <center><img src="../../{{ngo.image}}" class="img-circle" width="250" height="250" alt="ngo" /></center>
   				  </div>
@@ -35,18 +44,19 @@
               <center>{{ngo.user.first_name}}</center>
             </div>
           </div>
-  				<div class="col-sm-offset-1 col-sm-7" style="font-family: 'Open sans', sans-serif; color: #555555; font-size: 22px;">
+  				<div class="col-sm-offset-1 col-sm-7" style="font-family: 'Open sans', sans-serif; font-size: 22px;">
             <div class="row" style="padding: 3% 2%">
   					 {{ngo.description}}
-           </div>
-           <div class="row" style="padding: 3% 2%">
-            Contact No: {{ngo.phone}}<br/>
-            Email: {{ngo.user.email}}<br/>
-           </div>
+            </div>
+            <div class="row" style="padding: 3% 2%">
+              Contact No: {{ngo.phone}}<br/>
+              Email: {{ngo.user.email}}<br/>
+            </div>
   				</div>
   			</div>
+				</div>
 				{% endfor %}
-  		</div>
+			</div>
 
   	</div>
 </body>
