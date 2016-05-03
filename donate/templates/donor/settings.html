@@ -91,7 +91,9 @@
 		function validate(form){
 			var phone = form.phone.value
 			var zip = form.pincode.value
-			
+			var old_password = form.old_password
+			var new_password = form.new_password
+
 			if (/^\d{6}$/.test(zip) == 0) {
 				alert("Enter valid PIN Code")
     			return false
@@ -102,10 +104,20 @@
     			return false
 			}
 
-			if
-			return true
+			if(old_password.value.length < 8){
+				alert("Old Password must be atleast 8 characters long.")
+				return false
+			}
+
+			if(new_password.value.length < 8){
+				alert("New Password must be atleast 8 characters long.")
+				return false
+			}
+
+			return true			
 		}
 	</script>
+
 </body>
 
 </html>
