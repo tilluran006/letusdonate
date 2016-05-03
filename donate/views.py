@@ -286,7 +286,8 @@ def edit_req(request):
                 item = Item.objects.get(name=request.POST['itemname'])
                 item_quantity = ItemQuantity.objects.filter(item=item, ngo=user.ngo)
                 if item_quantity:
-                    item_quantity.quantity += request.POST['item_quantity']
+                    item_quantity = item_quantity[0]
+                    item_quantity.quantity += long(request.POST['item_quantity'])
                 else:
                     item_quantity = ItemQuantity(item=item, ngo=user.ngo, quantity=request.POST['item_quantity'])
                 item_quantity.save()

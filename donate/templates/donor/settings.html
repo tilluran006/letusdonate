@@ -104,15 +104,11 @@
     			return false
 			}
 
-			if(old_password.value.length < 8){
-				alert("Old Password must be atleast 8 characters long.")
-				return false
-			}
-
-			if(new_password.value.length < 8){
-				alert("New Password must be atleast 8 characters long.")
-				return false
-			}
+			if(old_password.value.length != 0)
+				if(new_password.value.length < 8){
+					alert("New Password must be atleast 8 characters long.")
+					return false
+				}
 
 			return true			
 		}
