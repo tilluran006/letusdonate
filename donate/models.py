@@ -68,7 +68,10 @@ class Item(models.Model):
         return str(self.name)
 
     def quantity(self):
-        return self.item_quantity.count()
+        total = 0
+        for element in self.item_quantity.all():
+            total += element.quantity
+        return total
 
 
 class ItemQuantity(models.Model):
