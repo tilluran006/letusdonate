@@ -48,16 +48,17 @@
         </div>	
 		
 		<div class="row" style="padding-top: 50px">
-		    <center><h2><b>Organization details</b></h2></center>
+		    <center><h2><b>Organization details: {{ngo.user.first_name}}</b></h2></center>
 			<div class="col-sm-offset-1 col-sm-3" style="padding: 25px">
 				<img src="../../{{ngo.image}}" class="img-circle" alt="NGO_Image" width="400" height="300" />
 			</div>
-			<div class="col-sm-offset-1 col-sm-7">
-				<p id="about-content">
+			<div class="col-sm-offset-2 col-sm-6">
+				<p id="about-content" style="padding: 20px">
 					{{ngo.description}}
 				</p>
 			</div>
 		</div>
+    
 		<div class="row" style="background-image: url('../../static/img/front.jpg'); padding: 20px;">
       <div class="col-sm-2 col-sm-offset-2">
         <center><h1>

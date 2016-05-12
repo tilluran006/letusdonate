@@ -7,8 +7,8 @@ from django.db import models
 # Create your models here.
 class Donor(models.Model):
     user = models.OneToOneField(User, related_name='donor')
-    address = models.CharField(max_length=100)
-    city = models.CharField(max_length=15)
+    address = models.CharField(max_length=200)
+    city = models.CharField(max_length=20)
     pincode = models.IntegerField(default=0)
     phone = models.BigIntegerField(default=0)
 
@@ -20,11 +20,11 @@ class Donor(models.Model):
 
 class NGO(models.Model):
     user = models.OneToOneField(User, related_name='ngo')
-    address = models.CharField(max_length=100)
-    city = models.CharField(max_length=15)
+    address = models.CharField(max_length=200)
+    city = models.CharField(max_length=20)
     pincode = models.IntegerField(default=0)
     phone = models.BigIntegerField(default=0)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=500)
     image = models.CharField(max_length=40, default="static/user_uploads/default.jpg")
 
     def __str__(self):
@@ -32,13 +32,13 @@ class NGO(models.Model):
 
 
 class Event(models.Model):
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=50)
     ngo = models.ForeignKey(NGO, db_constraint=False, on_delete=models.CASCADE, related_name='event')
     type = models.CharField(max_length=20)
     location = models.CharField(max_length=50)
-    city = models.CharField(max_length=15)
-    time = models.CharField(max_length=15)
-    description = models.CharField(max_length=50)
+    city = models.CharField(max_length=20)
+    time = models.CharField(max_length=20)
+    description = models.CharField(max_length=200)
     volunteers_required = models.IntegerField(default=0)
 
     def __str__(self):
@@ -50,8 +50,8 @@ class Event(models.Model):
 
 class Volunteer(models.Model):
     user = models.OneToOneField(User, related_name='volunteer')
-    address = models.CharField(max_length=100)
-    city = models.CharField(max_length=15)
+    address = models.CharField(max_length=200)
+    city = models.CharField(max_length=20)
     pincode = models.IntegerField(default=0)
     phone = models.BigIntegerField(default=0)
     events_volunteered = models.ManyToManyField(Event, db_constraint=False, related_name="volunteers")
@@ -68,7 +68,10 @@ class Item(models.Model):
         return str(self.name)
 
     def quantity(self):
-        return self.item_quantity.count()
+        total = 0
+        for element in self.item_quantity.all():
+            total += element.quantity
+        return total
 
 
 class ItemQuantity(models.Model):
@@ -88,7 +91,7 @@ class Donation(models.Model):
     description = models.CharField(max_length=50)
 
     location = models.CharField(max_length=100)         # Address of item
-    city = models.CharField(max_length=15)
+    city = models.CharField(max_length=20)
     contact = models.BigIntegerField(default=0)        # Contact No
     status = models.CharField(max_length=10, choices=STATUS, default='donor')
 
